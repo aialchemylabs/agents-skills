@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "aialchemy-agent-skills",
+  "version": "1.0.0",
+  "description": "Reusable AI Alchemy Labs skills for AI gateways and related infrastructure.",
+  "owner": {
+    "name": "AI Alchemy Labs"
+  },
+  "plugins": [
+    {
+      "name": "ai-gateway",
+      "description": "Operate and secure AI gateways, including LiteLLM identity and access workflows.",
+      "version": "0.1.0",
+      "author": {
+        "name": "AI Alchemy Labs"
+      },
+      "homepage": "https://github.com/aialchemylabs/agents-skills",
+      "repository": "https://github.com/aialchemylabs/agents-skills",
+      "keywords": [
+        "ai-gateway",
+        "litellm",
+        "microsoft-entra",
+        "oidc",
+        "sso"
+      ],
+      "category": "infrastructure",
+      "tags": [
+        "identity-and-access",
+        "docker-compose",
+        "security"
+      ],
+      "source": "./plugins/ai-gateway",
+      "strict": true
+    }
+  ]
+}
