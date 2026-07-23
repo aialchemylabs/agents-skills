@@ -1,0 +1,104 @@
+{
+  "fixture_version": 1,
+  "name": "partial-provider-failure",
+  "description": "One member receives two scripted 503 responses while two members and the chairman succeed.",
+  "models": [
+    "fixture-model-a",
+    "fixture-model-b",
+    "fixture-model-c",
+    "fixture-chair"
+  ],
+  "events": [
+    {
+      "stage": "independent",
+      "model": "fixture-model-a",
+      "status": "success",
+      "content_ref": "architecture-consensus.json#/gateway/events/0/content"
+    },
+    {
+      "stage": "independent",
+      "model": "fixture-model-b",
+      "status": "http_error",
+      "http_status": 503,
+      "retry_after_seconds": 0
+    },
+    {
+      "stage": "independent",
+      "model": "fixture-model-b",
+      "status": "http_error",
+      "http_status": 503,
+      "retry_after_seconds": 0
+    },
+    {
+      "stage": "independent",
+      "model": "fixture-model-c",
+      "status": "success",
+      "content_ref": "architecture-consensus.json#/gateway/events/2/content"
+    },
+    {
+      "stage": "critique",
+      "model": "fixture-model-a",
+      "status": "success",
+      "content": {
+        "evaluations": [
+          {
+            "candidate_label": "Candidate A",
+            "strengths": [
+              "Uses the supplied synchronous requirement."
+            ],
+            "weaknesses": [],
+            "unsupported_claims": [],
+            "scores": {
+              "evidence_quality": 4,
+              "correctness": 4,
+              "feasibility": 4,
+              "risk_awareness": 4,
+              "instruction_fit": 4
+            }
+          },
+          {
+            "candidate_label": "Candidate B",
+            "strengths": [
+              "Limits event infrastructure."
+            ],
+            "weaknesses": [],
+            "unsupported_claims": [],
+            "scores": {
+              "evidence_quality": 4,
+              "correctness": 4,
+              "feasibility": 4,
+              "risk_awareness": 4,
+              "instruction_fit": 4
+            }
+          }
+        ],
+        "ranking": [
+          "Candidate A",
+          "Candidate B"
+        ],
+        "revised_position": "Use direct commands and a narrow event path.",
+        "confidence": 0.8
+      }
+    },
+    {
+      "stage": "critique",
+      "model": "fixture-model-c",
+      "status": "success",
+      "content_from_event": 4
+    },
+    {
+      "stage": "chairman",
+      "model": "fixture-chair",
+      "status": "success",
+      "content_ref": "architecture-consensus.json#/gateway/events/6/content"
+    }
+  ],
+  "expected": {
+    "status": "partial",
+    "successful_members": 2,
+    "failed_members": 1,
+    "failed_model": "fixture-model-b",
+    "retry_count": 1,
+    "chairman_status": "complete"
+  }
+}

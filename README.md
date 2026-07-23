@@ -9,6 +9,7 @@ claude plugin marketplace add aialchemylabs/agents-skills
 claude plugin install ai-gateway@aialchemy-agent-skills
 claude plugin install engineering@aialchemy-agent-skills
 claude plugin install business@aialchemy-agent-skills
+claude plugin install ai-orchestration@aialchemy-agent-skills
 ```
 
 Run `/reload-plugins` in Claude Code after installing or updating the plugin.
@@ -20,6 +21,16 @@ The `ai-gateway` plugin contains LiteLLM operational skills. Its first skill is:
 - `ai-gateway:configuring-litellm-entra-sso` — configure and harden direct Microsoft Entra OIDC SSO for a LiteLLM Admin UI while keeping API clients on scoped virtual keys.
 
 The marketplace metadata is in `.claude-plugin/marketplace.json`. Each plugin keeps only `plugin.json` inside its `.claude-plugin/` directory and places its skills under `skills/<skill-name>/SKILL.md`.
+
+## AI Orchestration
+
+The `ai-orchestration` plugin contains multi-model decision and evaluation workflows. Its first skill is:
+
+- `ai-orchestration:llm-council` — ask diverse LiteLLM routes to assess the same bounded question independently, cross-critique anonymized answers, optionally run a proposer-reviewer-response loop, benchmark each call, and produce one evidence-weighted chairman recommendation.
+
+Invoke it as `ai-orchestration:llm-council` in Claude Code or `$llm-council` in Codex. It previews the roster, call count, data egress, persistence, and known or unknown cost before paid fan-out. It does not configure LiteLLM or give remote models tools or mutation authority.
+
+The AI Orchestration plugin adapts council and cross-critique methodology from Warp's `common-skills`, benchmark execution patterns from Garry Tan's `gstack`, and the multi-model review pattern from Addy Osmani's `agent-skills` under their MIT licenses. The required notices are in `plugins/ai-orchestration/LICENSES/`.
 
 ## Engineering
 

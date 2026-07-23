@@ -1,0 +1,6 @@
+interface:
+  display_name: "LLM Council"
+  short_description: "Cross-critique and synthesize multiple models"
+  default_prompt: "Use $llm-council to have diverse models independently assess this question, cross-critique their answers, and produce one evidence-weighted recommendation."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,92 @@
+{
+  "fixture_version": 1,
+  "name": "minority-security-finding",
+  "description": "The peer majority prefers speed, but one neutral candidate cites a concrete authorization flaw that the chairman must preserve.",
+  "evidence": [
+    {
+      "id": "E1",
+      "content": "The fast handler queries records by user-supplied record_id without a tenant_id predicate."
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_label": "Candidate A",
+      "recommendation": "Ship the fast handler.",
+      "evidence": [],
+      "confidence": 0.76
+    },
+    {
+      "candidate_label": "Candidate B",
+      "recommendation": "Ship the fast handler with monitoring.",
+      "evidence": [],
+      "confidence": 0.72
+    },
+    {
+      "candidate_label": "Candidate C",
+      "recommendation": "Block release until tenant authorization is enforced.",
+      "evidence": [
+        {
+          "evidence_id": "E1",
+          "claim": "A caller could retrieve another tenant's record."
+        }
+      ],
+      "confidence": 0.94
+    }
+  ],
+  "peer_rankings": [
+    [
+      "Candidate A",
+      "Candidate B",
+      "Candidate C"
+    ],
+    [
+      "Candidate B",
+      "Candidate A",
+      "Candidate C"
+    ],
+    [
+      "Candidate C",
+      "Candidate A",
+      "Candidate B"
+    ]
+  ],
+  "chairman": {
+    "recommendation": "Do not ship until the tenant predicate and cross-tenant denial tests are present.",
+    "why": [
+      "Candidate C ties a high-impact authorization flaw directly to E1; the majority preference is not evidence."
+    ],
+    "consensus": [
+      "The fast handler has lower implementation effort."
+    ],
+    "disagreements": [
+      {
+        "issue": "Whether speed justifies release before tenant enforcement.",
+        "positions": [
+          "Candidates A and B favor release.",
+          "Candidate C identifies a cross-tenant access path."
+        ],
+        "resolution": "Authorization correctness is a release gate."
+      }
+    ],
+    "minority_report": [
+      "Candidate C's authorization finding is credible despite its lower peer rank."
+    ],
+    "risks": [
+      {
+        "risk": "Cross-tenant record exposure.",
+        "mitigation": "Bind every lookup to the authenticated tenant and test denial.",
+        "owner": "service owner"
+      }
+    ],
+    "next_steps": [
+      "Add the tenant predicate and regression tests before reconsidering release."
+    ],
+    "confidence": 0.93,
+    "material_unknowns": []
+  },
+  "expected": {
+    "majority_rank_winner": "Candidate A",
+    "chairman_overrides_majority": true,
+    "minority_report_required": true
+  }
+}

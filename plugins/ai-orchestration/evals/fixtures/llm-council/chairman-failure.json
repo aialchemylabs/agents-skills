@@ -1,0 +1,40 @@
+{
+  "fixture_version": 1,
+  "name": "chairman-failure",
+  "description": "Independent and critique stages succeed, but the only approved chairman has an ambiguous timeout and no fallback is configured.",
+  "stages": {
+    "independent": {
+      "status": "complete",
+      "successful_members": 3
+    },
+    "cross_critique": {
+      "status": "complete",
+      "successful_critics": 3
+    },
+    "chairman": {
+      "status": "failed",
+      "model": "fixture-chair",
+      "failure": {
+        "category": "ambiguous_timeout",
+        "retryable": false,
+        "message": "The chairman response outcome is unknown."
+      }
+    }
+  },
+  "fallback_chairman": null,
+  "dossier": {
+    "candidates_ref": "architecture-consensus.json#/gateway/events/0",
+    "critiques_ref": "architecture-consensus.json#/gateway/events/3",
+    "ranking": {
+      "winner": "Candidate B",
+      "advisory": true
+    }
+  },
+  "expected": {
+    "status": "partial",
+    "chairman_status": "failed",
+    "host_synthesis_label": "Host synthesis; chairman unavailable",
+    "false_chairman_attribution": false,
+    "exit_code": 0
+  }
+}

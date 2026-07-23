@@ -1,0 +1,51 @@
+{
+  "fixture_version": 1,
+  "name": "malformed-model-output",
+  "description": "A semantically useful but invalid fenced response cannot be deterministically extracted; one scripted repair returns a valid member object.",
+  "events": [
+    {
+      "stage": "independent",
+      "model": "fixture-model-a",
+      "status": "success",
+      "raw_content": "```json\n{recommendation: 'use the hybrid', rationale: ['bounded'], confidence: .8, trailing: }\n```"
+    },
+    {
+      "stage": "repair",
+      "model": "fixture-model-a",
+      "status": "success",
+      "content": {
+        "recommendation": "Use the hybrid.",
+        "rationale": [
+          "It satisfies the bounded synchronous and asynchronous requirements."
+        ],
+        "evidence": [
+          {
+            "evidence_id": "E1",
+            "claim": "The command path needs an immediate result."
+          }
+        ],
+        "assumptions": [],
+        "risks": [
+          {
+            "risk": "Additional operational surface.",
+            "severity": "medium",
+            "mitigation": "Keep the event path narrow."
+          }
+        ],
+        "unknowns": [],
+        "confidence": 0.8
+      }
+    }
+  ],
+  "repair_request_must_include_only": [
+    "invalid_response",
+    "validation_errors",
+    "target_schema"
+  ],
+  "expected": {
+    "deterministic_extraction_succeeds": false,
+    "repair_calls": 1,
+    "additional_budget_requests": 1,
+    "repaired_member_status": "success"
+  }
+}
