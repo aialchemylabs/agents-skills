@@ -1,0 +1,93 @@
+{
+  "skill_name": "test-driven-development",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Write a failing test for this bug before fixing it.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Implement the streak calculator using red-green-refactor.",
+        "top_k": 3
+      },
+      {
+        "prompt": "What tests should cover this parsing logic before I write it?",
+        "top_k": 3
+      },
+      {
+        "prompt": "Add debit entries to the ledger, test-first.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Update the architecture diagram in the docs.",
+        "owner": "documentation-and-adrs"
+      },
+      {
+        "prompt": "Investigate this layout problem in the browser, but do not change code.",
+        "owner": "browser-testing-with-devtools"
+      },
+      {
+        "prompt": "Review this pull request and report quality issues without implementing fixes.",
+        "owner": "code-review-and-quality"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Fix the reported rounding bug in the invoice totals, test-first.",
+      "expected_output": "Repository-aware RED evidence for the reported rounding case, the minimum fix producing GREEN, a safe refactor if useful, and exact focused and broader verification commands with results.",
+      "files": [
+        "test-driven-development"
+      ],
+      "expectations": [
+        "The repository language, test framework, existing conventions, focused-test command, and broader-suite command are discovered before testing.",
+        "A regression test demonstrates the invoice-rounding bug and is run before production code changes.",
+        "The RED result fails for the expected behavioral reason rather than a syntax, fixture, dependency, or unrelated error.",
+        "The implementation is the minimum needed to turn the focused test green.",
+        "Any refactor occurs only while the test remains green.",
+        "The relevant broader suite is run after the fix.",
+        "The response reports exact RED, GREEN, and broader-suite commands and their observed results."
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "execution",
+      "prompt": "The engineering lead says the invoice rounding defect is obvious and orders a direct fix without a failing regression test. Handle the request. The reported case is three items priced at 3.335 each.",
+      "expected_output": "The authority conflict is acknowledged without bypassing TDD; the exact currency case is reproduced with an expected failing test before the smallest corrective change and broader verification.",
+      "files": [
+        "test-driven-development"
+      ],
+      "expectations": [
+        "Authority pressure does not cause the failing-test step to be skipped.",
+        "A regression test covers the reported three-at-3.335 currency case.",
+        "The test is observed failing for the expected rounding mismatch before implementation.",
+        "No assertion is weakened, skipped, or disabled to obtain GREEN.",
+        "The minimal fix is followed by focused GREEN and relevant broader-suite verification.",
+        "The response reports exact commands and observed results for each phase."
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "execution",
+      "prompt": "Add debit entries to the ledger, test-first. A debit subtracts its amount from the balance and must not drive the balance below zero.",
+      "expected_output": "The repository's Python and unittest workflow is discovered, independent debit and non-negative-invariant tests are shown failing first, minimal behavior makes them pass, and the repository's focused and full commands are reported.",
+      "files": [
+        "test-driven-development-ecosystem"
+      ],
+      "expectations": [
+        "The repository stack and existing tests are inspected before a command is selected.",
+        "Tests use the repository's Python unittest command, such as python3 -m unittest, rather than an assumed npm command.",
+        "A focused failing test is run and shown failing before implementation.",
+        "Debit subtraction and the below-zero invariant have independently understandable test cases.",
+        "The implementation is limited to the requested behavior.",
+        "Any refactor preserves GREEN.",
+        "The full relevant unittest suite is run after the change.",
+        "The response reports the exact focused and full-suite commands and their observed results."
+      ]
+    }
+  ]
+}

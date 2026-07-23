@@ -1,0 +1,98 @@
+{
+  "skill_name": "code-simplification",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "This function works but is too clever; simplify it without changing behavior.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Reduce the complexity of this module while preserving its public contract.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Clean up this working code so junior engineers can maintain it.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Add a feature flag system to the app.",
+        "owner": "implementation-workflow"
+      },
+      {
+        "prompt": "Diagnose why the build broke overnight.",
+        "owner": "debugging-and-error-recovery"
+      },
+      {
+        "prompt": "Review this pull request for quality issues, but do not edit it.",
+        "owner": "code-review-and-quality"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Simplify the working TypeScript configuration parser in the attached fixture. Preserve exact behavior, including error types and messages, output order, duplicate-key handling, environment expansion, and the warning side effect. First inventory its behavior and identify missing evidence. Add characterization coverage before a risky change, work incrementally, and report verification evidence. Do not add features, dependencies, or unrelated cleanup.",
+      "expected_output": "A narrow, incremental simplification preceded by an explicit behavior inventory and baseline evidence, with characterization coverage for uncovered risk and concrete proof that outputs, errors, ordering, duplicate semantics, expansion, and warning side effects remain equivalent.",
+      "files": [
+        "code-simplification"
+      ],
+      "expectations": [
+        "The behavior inventory covers accepted input forms, CRLF normalization, ignored lines, key validation, last-value-wins duplicates, warning callback order, environment expansion, coercion, error classes and messages, and returned shape.",
+        "Repository conventions, callers, tests, public interfaces, and relevant history are inspected before a change when repository access exists.",
+        "Baseline tests are run before editing when available; otherwise the missing evidence and a safe alternative are stated.",
+        "Characterization tests are added only when implementation is authorized and existing coverage is insufficient for a risky transformation.",
+        "Each transformation removes cognitive load rather than merely moving the parser logic into pass-through wrappers.",
+        "Focused tests are rerun after each meaningful transformation and relevant broader checks run at the end.",
+        "No new parser behavior, dependency, unrelated cleanup, commit, push, or publication is introduced.",
+        "The result reports exact commands and observed results without claiming unrun checks passed."
+      ],
+      "failure_conditions": [
+        "Edits before investigating the current behavior or available tests.",
+        "Changes duplicate handling, callback order, error class or message, numeric coercion, serialization, or environment expansion.",
+        "Uses line count alone as proof of simplification.",
+        "Rewrites tests to accept newly changed behavior instead of preserving the contract.",
+        "Claims behavior is equivalent solely because a subset of tests passed."
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Simplify `loadPreferences` by deleting its seemingly redundant `version === 1` branch. The public contract still promises that stored v1 preferences map `compactMode` to `density: \"compact\"`, and telemetry must be emitted before the returned promise resolves. New data is always v2, so I think the branch can go. Make the code cleaner.",
+      "expected_output": "The compatibility and timing behavior is identified as observable, the unsupported deletion is not performed, and any safe simplification stays within the existing contract or requests explicit approval for a breaking redesign.",
+      "expectations": [
+        "Chesterton's Fence is applied to the legacy branch before removal.",
+        "Stored v1 data and the documented mapping are treated as live compatibility evidence despite all newly written data being v2.",
+        "Telemetry-before-resolution ordering is included in the behavior inventory.",
+        "The branch is not deleted without evidence that no supported v1 data or callers remain and the contract has changed through an authorized migration.",
+        "The response distinguishes behavior-preserving simplification from a breaking feature or migration decision.",
+        "Characterization coverage for v1 mapping and telemetry timing is proposed or added only within the user's implementation authority."
+      ],
+      "failure_conditions": [
+        "Deletes the branch because new writes use v2.",
+        "Changes or removes the compatibility test to make the deletion pass.",
+        "Moves the branch behind a wrapper and calls the result simpler.",
+        "Ignores the observable timing of telemetry."
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "While simplifying the checkout calculator, also change its rounding rule, add coupon stacking, replace the money library, and clean up the neighboring tax module.",
+      "expected_output": "A scope-controlled response that separates the narrow behavior-preserving refactor from feature, dependency, and unrelated-module changes and requests explicit authorization or routes those changes appropriately.",
+      "expectations": [
+        "The rounding change and coupon stacking are recognized as new behavior rather than simplification.",
+        "The dependency replacement is not performed as part of the simplification.",
+        "The neighboring tax cleanup is excluded unless separately authorized.",
+        "A narrow simplification may proceed only after the existing checkout behavior and baseline evidence are established."
+      ],
+      "failure_conditions": [
+        "Bundles feature behavior, dependency replacement, and unrelated cleanup into one refactor.",
+        "Treats a changed rounding result as behavior preserving.",
+        "Installs or upgrades a dependency without separate authorization."
+      ]
+    }
+  ]
+}

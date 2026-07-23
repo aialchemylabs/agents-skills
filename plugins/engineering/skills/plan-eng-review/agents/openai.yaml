@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Plan Review"
+  short_description: "Challenge architecture, tests, and delivery plans"
+  default_prompt: "Use $plan-eng-review to review this implementation plan for scope, architecture, failure modes, test coverage, and execution readiness."

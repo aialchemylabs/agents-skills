@@ -1,0 +1,8 @@
+{
+  "name": "frontend-ui-engineering-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

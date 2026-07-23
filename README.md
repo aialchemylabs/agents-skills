@@ -7,6 +7,7 @@ Claude Code plugin marketplace for reusable AI Alchemy Labs workflows.
 ```text
 claude plugin marketplace add aialchemylabs/agents-skills
 claude plugin install ai-gateway@aialchemy-agent-skills
+claude plugin install engineering@aialchemy-agent-skills
 ```
 
 Run `/reload-plugins` in Claude Code after installing or updating the plugin.
@@ -18,3 +19,22 @@ The `ai-gateway` plugin contains LiteLLM operational skills. Its first skill is:
 - `ai-gateway:configuring-litellm-entra-sso` — configure and harden direct Microsoft Entra OIDC SSO for a LiteLLM Admin UI while keeping API clients on scoped virtual keys.
 
 The marketplace metadata is in `.claude-plugin/marketplace.json`. Each plugin keeps only `plugin.json` inside its `.claude-plugin/` directory and places its skills under `skills/<skill-name>/SKILL.md`.
+
+## Engineering
+
+The `engineering` plugin contains twelve complementary software-engineering skills:
+
+- `engineering:frontend-ui-engineering` — build accessible, responsive, design-system-aligned user interfaces.
+- `engineering:test-driven-development` — implement behavioral changes with RED, GREEN, and REFACTOR evidence.
+- `engineering:api-and-interface-design` — define stable contracts for APIs, modules, components, and events.
+- `engineering:browser-testing-with-devtools` — verify browser behavior with live runtime evidence.
+- `engineering:code-review-and-quality` — review correctness, tests, architecture, security, performance, and dependency risk.
+- `engineering:security-and-hardening` — threat-model and harden trust boundaries, auth, data, dependencies, and AI features.
+- `engineering:performance-optimization` — measure, isolate, improve, remeasure, and guard performance.
+- `engineering:code-simplification` — reduce cognitive load while preserving observable behavior.
+- `engineering:git-workflow-and-versioning` — organize safe branches, commits, worktrees, releases, and versions.
+- `engineering:documentation-and-adrs` — maintain accurate documentation and architectural decision records.
+- `engineering:plan-eng-review` — challenge engineering plans across scope, architecture, implementation, tests, and performance.
+- `engineering:plan-design-review` — review design plans across information architecture, interaction states, journeys, systems, responsiveness, and accessibility.
+
+The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Garry Tan's `gstack` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.

@@ -1,0 +1,83 @@
+{
+  "skill_name": "documentation-and-adrs",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Write an ADR for choosing PostgreSQL over MongoDB.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Document the architecture decision behind the queue design.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Update the setup docs and record why the flow changed.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Document this public API, including its errors and compatibility guarantees.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Find the root cause of the memory leak in the worker.",
+        "owner": "test-driven-development"
+      },
+      {
+        "prompt": "Harden the login endpoint against brute force attacks.",
+        "owner": "security-and-hardening"
+      },
+      {
+        "prompt": "Simplify this nested validation function without changing behavior.",
+        "owner": "code-simplification"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Our repository stores accepted decisions as `docs/adr/00NN-kebab-title.md` with sections Status, Date, Context, Decision, Alternatives, Consequences, and Follow-up. Draft the next ADR for the proposed decision to adopt event sourcing for the orders service. Current facts: orders require a complete audit trail and temporal queries; the team accepts extra storage and operational complexity; alternatives are a conventional mutable relational model with an audit table and change-data capture. No implementation or migration has started.",
+      "expected_output": "A proposed ADR that follows the supplied repository convention, records the decision's forces, alternatives, tradeoffs, status, and follow-up work, and does not imply that event sourcing has been implemented.",
+      "expectations": [
+        "Uses the supplied ADR location, naming, numbering, and section convention or requests the missing next number rather than inventing a competing format",
+        "Sets the decision status to Proposed and includes an unambiguous date",
+        "Explains the audit-trail and temporal-query forces separately from the chosen implementation",
+        "States the event-sourcing decision and its boundary clearly",
+        "Treats the mutable relational model with an audit table and change-data capture as credible alternatives with advantages, disadvantages, and reasons for rejection",
+        "Records positive consequences such as replayable history and negative consequences such as storage, operational, schema-evolution, and debugging complexity",
+        "Identifies follow-up work such as event schema design, migration, projections, observability, rollback, and implementation ownership",
+        "Does not claim that event sourcing, migration, projections, or production rollout already exists"
+      ],
+      "failure_conditions": [
+        "Marks the ADR Accepted without evidence of acceptance",
+        "Claims the orders service has already implemented or deployed event sourcing",
+        "Omits rejected alternatives or reduces them to implausible straw men",
+        "Invents a new ADR directory, numbering scheme, or section format despite the supplied convention",
+        "Treats creation of the ADR as proof of implementation"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Review our setup guide for accuracy and tell me what should change. This is analysis only: do not create or edit any files. The guide says to run `npm install` and `npm start`; package.json uses pnpm and exposes `dev`, `build`, and `test` scripts, with Node 22 required by `.nvmrc`. Report findings and how you would verify a corrected guide.",
+      "expected_output": "A read-only documentation review in chat that identifies the package-manager, command, and runtime-version drift, cites the supplied repository evidence, proposes bounded corrections and verification, and creates no artifact.",
+      "expectations": [
+        "Honors the analysis-only boundary and creates or edits no file",
+        "Identifies that npm install conflicts with the repository's pnpm convention",
+        "Identifies that npm start is unsupported by the listed package scripts",
+        "Calls for documenting Node 22 from .nvmrc rather than inventing another runtime version",
+        "Distinguishes suggested wording from an applied documentation change",
+        "Proposes safe verification of package manager, commands, links, paths, and expected output without claiming those checks already passed",
+        "Does not install dependencies, run live services, modify package.json, or update release metadata"
+      ],
+      "failure_conditions": [
+        "Creates a plan, report, README, or other file despite the analysis-only instruction",
+        "Claims npm start works when the script is absent",
+        "Runs an installer or starts a service solely to review the guide",
+        "Presents proposed commands as verified without running them"
+      ]
+    }
+  ]
+}

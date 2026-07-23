@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review and Quality"
+  short_description: "Review code for high-impact quality risks"
+  default_prompt: "Use $code-review-and-quality to review this change for correctness, architecture, security, performance, and test risk."

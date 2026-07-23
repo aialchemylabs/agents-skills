@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security and Hardening"
+  short_description: "Threat-model and harden software boundaries"
+  default_prompt: "Use $security-and-hardening to threat-model this change and produce prioritized, verifiable security findings."

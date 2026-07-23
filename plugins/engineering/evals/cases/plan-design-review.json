@@ -1,0 +1,119 @@
+{
+  "skill_name": "plan-design-review",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Review this dashboard UX plan before implementation and identify missing interaction states.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Rate the design completeness of this responsive page plan and surface accessibility gaps.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Check whether this proposed workflow reuses our design system and resolves the user journey.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Audit the live settings page in Chrome at mobile and desktop widths.",
+        "owner": "browser-testing-with-devtools"
+      },
+      {
+        "prompt": "Implement the responsive account dashboard from this approved design.",
+        "owner": "frontend-ui-engineering"
+      },
+      {
+        "prompt": "Review the service migration plan for architecture, rollout safety, and failure modes.",
+        "owner": "plan-eng-review"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Review this dashboard plan without editing it: A signed-in user sees KPI cards and a recent-orders table. The page fetches both datasets and lets the user filter by month. The plan describes the successful populated view but no other UI states.",
+      "expected_output": "A read-only seven-pass design review that identifies the absent state behavior, gives evidence-based ratings, and proposes an implementation-facing state matrix without pretending the plan was updated.",
+      "expectations": [
+        "Evaluates all seven passes and does not limit the review to loading behavior",
+        "Identifies applicable loading, empty, error, success, partial, disabled, permission, or offline states without manufacturing impossible states",
+        "Describes what users see, what actions remain available, and how recovery works",
+        "Distinguishes first-use empty data from a zero-result filtered state",
+        "Provides evidence for the initial score and defines what excellent completeness means for this dashboard",
+        "Keeps the review read-only and does not claim to have changed the source plan",
+        "Ends with a design-readiness verdict, unresolved decisions, not-in-scope items, and acceptance criteria"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Review this responsive page plan: Desktop has a persistent left sidebar, a six-column comparison table, breadcrumbs, and Save/Cancel actions. The only mobile requirement is 'stack on mobile.' Do not generate visuals.",
+      "expected_output": "A text-only design-plan review that turns the vague mobile statement into explicit unresolved viewport, navigation, data, action, zoom, and accessibility decisions.",
+      "expectations": [
+        "Identifies 'stack on mobile' as insufficient because the sidebar, table, breadcrumbs, and actions each require intentional behavior",
+        "Uses a breakpoint behavior table or comparably compact artifact",
+        "Covers content priority, mobile navigation, dense-table alternatives, action reachability, overflow, zoom, keyboard, focus, and screen-reader considerations",
+        "Presents a recommended decision with rationale, alternatives, and impact rather than silently choosing a pattern",
+        "Respects the text-only instruction and neither generates nor offers unsolicited mockups",
+        "Avoids claiming WCAG conformance without runtime evidence"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Review a plan that proposes custom buttons, modal dialogs, toast notifications, spacing values, and status colors. The repository already documents equivalent Button, Dialog, Toast, spacing-token, and semantic-color primitives in DESIGN.md. Findings only.",
+      "expected_output": "An evidence-led review that prioritizes existing-system reuse and treats new components or values as intentional exceptions requiring rationale.",
+      "expectations": [
+        "Inspects or references DESIGN.md and maps planned elements to the existing vocabulary",
+        "Recommends reuse based on semantic and state behavior, not visual similarity alone",
+        "Flags custom primitives and raw values as unjustified divergence unless a requirement cannot be met",
+        "Does not invent or redesign the design system",
+        "Labels recommendations as unapproved and makes no plan edits",
+        "Includes design-system alignment alongside the other six passes"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Review this landing-page plan: a purple gradient hero says 'Unlock the power of AI,' followed by three identical rounded feature cards, invented usage metrics, a testimonial carousel, and a final CTA. The plan gives no product-specific rationale.",
+      "expected_output": "A context-sensitive seven-pass critique that identifies unsupported claims and generic generated-design patterns, then recommends product-specific alternatives rather than swapping in another trend.",
+      "expectations": [
+        "Classifies the surface as marketing before applying relevant design criteria",
+        "Flags generic copy, arbitrary gradient use, symmetric cards, excessive rounding, fake metrics, and purposeless carousel behavior with concrete rationale",
+        "Treats unsupported metrics as a trust problem, not merely a style preference",
+        "Tests brand clarity, section purpose, hierarchy, and whether each pattern earns its place",
+        "Proposes specific directions grounded in product goal and audience while leaving unresolved brand decisions open",
+        "Does not prescribe one universal aesthetic or reject a pattern solely because it exists"
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "Review the design of this plan: migrate an internal event-processing service to a new queue, add retries and dead-letter handling, backfill events, and roll out by traffic percentage. There are no dashboards, CLIs, operator controls, or user-facing changes.",
+      "expected_output": "A concise not-applicable verdict that routes the backend-only plan to engineering plan review instead of forcing design findings.",
+      "expectations": [
+        "Recognizes that the plan has no user-facing or developer-facing interaction surface",
+        "Returns a Not applicable verdict",
+        "Routes the request to plan-eng-review for architecture, failure-mode, rollout, and test analysis",
+        "Does not invent screens, UI states, accessibility issues, or visual-design findings",
+        "Does not execute the seven design passes after the scope gate fails"
+      ]
+    },
+    {
+      "id": 6,
+      "kind": "dialogue",
+      "prompt": "Read the attached checkout UX plan and give me findings only. Do not edit files, create TODOs, generate mockups, open a browser, or implement anything.",
+      "expected_output": "A complete read-only design review that honors every mutation and tooling boundary while still surfacing decisions and acceptance criteria.",
+      "expectations": [
+        "States that the review is findings-only and performs no file mutation",
+        "Runs all seven passes when the checkout plan has design scope",
+        "Separates observed evidence, assumptions, recommendations, and unresolved decisions",
+        "Does not create TODO files, review logs, state files, mockups, browser sessions, or implementation code",
+        "Does not imply recommendations were accepted or incorporated",
+        "Includes approved visual references as none and reports evidence limitations"
+      ]
+    }
+  ]
+}

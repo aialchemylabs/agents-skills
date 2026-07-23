@@ -1,0 +1,134 @@
+{
+  "skill_name": "plan-eng-review",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Review this implementation plan for architecture and test gaps before we start coding.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Do an engineering plan review and lock down the data flow, failure modes, and rollback strategy.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Check whether this technical plan is execution-ready and identify parallel workstreams.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review the code changes in my current pull request.",
+        "owner": "code-review-and-quality"
+      },
+      {
+        "prompt": "Critique the visual hierarchy, responsive states, and interaction design in this UI plan.",
+        "owner": "plan-design-review"
+      },
+      {
+        "prompt": "Implement this already-approved service plan.",
+        "owner": "relevant execution skill"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Review only this service plan; do not rewrite it. Goal: expose customer notification preferences through the API. Plan: create a new preference-normalization service, a new preferences table, and a new validation schema; add GET and PUT routes that call the new service. Repository evidence supplied with the plan: `src/notifications/preferences.ts` already owns notification preferences, persists them in the `user_settings` JSON column, exports `normalizePreferences`, and is used by the worker and account settings UI. Existing API routes use that module for reads but not writes.",
+      "expected_output": "A read-only review that challenges the duplicate service, table, and schema; identifies the smallest complete extension of the existing owner; and does not silently change product intent or rewrite the plan.",
+      "expectations": [
+        "Runs the scope challenge before detailed architecture commentary",
+        "Lists the existing preferences module, storage, normalizer, and consumers under what already exists",
+        "Flags the proposed service, table, and schema as duplicate sources of truth unless evidence justifies them",
+        "Recommends extending the existing owning module and adding the missing write boundary as the minimum complete change",
+        "Checks authorization, validation, compatibility, failure behavior, regression tests, and verification",
+        "Treats a materially different storage model as a user decision rather than silently choosing it",
+        "Does not edit or claim to have rewritten the supplied plan"
+      ],
+      "failure_conditions": [
+        "Accepts the new service and table without inspecting or discussing existing ownership",
+        "Equates scope reduction with omitting authorization or failure handling",
+        "Implements code, creates files, or changes the plan"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Review this implementation plan for a billing-account rename: add `display_name` to the accounts table; update the write endpoint and UI; deploy backend and frontend. Existing accounts have no value for this field, three older workers read the account payload, and deployments can contain mixed application versions for 30 minutes. The plan contains no migration, compatibility, rollback, observability, or failure-handling sections. Findings only.",
+      "expected_output": "A not-ready engineering review identifying migration, mixed-version compatibility, rollback, detection, user-visible failure, recovery, and test gaps with a verification matrix.",
+      "expectations": [
+        "Marks the plan not ready because persistent schema and mixed-version behavior are undefined",
+        "Addresses backfill or nullable transition, deployment ordering, old-worker compatibility, and rollback after new writes",
+        "Names at least one realistic production failure for the API, migration, worker consumption, and UI path",
+        "For each path, covers detection, handling, user-visible behavior, recovery, and verification",
+        "Maps migration and compatibility to appropriate integration or rehearsal evidence",
+        "Includes accepted scope, not in scope, unresolved decisions, and residual risks",
+        "Remains read-only"
+      ],
+      "failure_conditions": [
+        "Returns a generic request for more tests without migration or rollback analysis",
+        "Assumes a nullable column alone makes mixed-version deployment safe",
+        "Edits the plan despite the findings-only instruction"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Review this plan and propose safe implementation lanes. We are adding saved searches. The backend will add storage and REST endpoints; the frontend will add a saved-search panel; a shared package will define request and response schemas; documentation will add API examples; an end-to-end test will cover create, list, apply, and delete. The frontend and backend teams can work independently, but the schema is not yet agreed. All three code areas are separate except both frontend and backend import the shared package.",
+      "expected_output": "An execution-lane analysis that recognizes the shared schema as a prerequisite, separates truly independent work, flags integration dependencies, and recommends merge and verification order.",
+      "expectations": [
+        "Does not claim frontend and backend are fully independent before the shared contract is agreed",
+        "Places contract and schema definition in an initial prerequisite lane or checkpoint",
+        "Allows backend and frontend implementation to proceed in parallel after the contract stabilizes",
+        "Places end-to-end integration after both implementations are available",
+        "Identifies documentation work that can start from the accepted contract and be verified against implementation",
+        "Flags the shared package as a coordination and merge-conflict surface",
+        "Includes a dependency table and recommended merge and verification order"
+      ],
+      "failure_conditions": [
+        "Invents exact filenames not supported by the prompt",
+        "Launches all work simultaneously without acknowledging the undecided schema",
+        "Creates worktrees or implementation branches"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Review only `docs/plans/payment-retries.md`. Do not edit the file, TODOs, tests, or code. The plan proposes retrying ambiguous payment timeouts with the same idempotency key, recording provider attempt IDs, and reconciling unknown outcomes in a worker. Tell me what must change before approval.",
+      "expected_output": "A findings-only review that inspects the plan and relevant repository evidence, analyzes payment retry and reconciliation risks, and never mutates the reviewed artifact.",
+      "expectations": [
+        "Explicitly preserves the review-only boundary",
+        "Inspects repository instructions, payment ownership, provider contract, existing tests, and verification commands when available",
+        "Checks idempotency-key scope and retention, duplicate-charge prevention, unknown outcome, reconciliation terminal states, authorization, observability, and recovery",
+        "Surfaces material choices one at a time with recommendation and consequences",
+        "Reports evidence gaps instead of inventing provider guarantees",
+        "Does not rewrite the plan, append TODOs, implement tests, commit, or publish"
+      ],
+      "failure_conditions": [
+        "Writes accepted findings into the plan without separate authorization",
+        "Claims exactly-once payment behavior without an end-to-end mechanism",
+        "Runs dependency installation or mutating commands"
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "Review this complete small plan. Goal: add `parsePort(value)` to the existing `src/config/ports.ts` owner. The function trims the string, accepts decimal integers from 1 through 65535, and returns the repository's existing `ConfigError` for empty, non-numeric, fractional, zero, negative, or out-of-range input. Add table-driven unit tests beside the existing config tests. Export it only from the internal config module; no public API, persistence, network call, dependency, deployment change, or migration is involved. Verify with the repository-documented `pnpm test -- ports` and `pnpm typecheck`. Findings only.",
+      "expected_output": "A concise ready verdict with no manufactured blockers, a proportionate verification matrix, and honest residual risk.",
+      "expectations": [
+        "Returns ready when repository inspection does not contradict the supplied plan",
+        "States what existing owner, error type, and test convention will be reused",
+        "Says no material issue found for review passes without inventing architecture, migration, distribution, or performance work",
+        "Maps valid boundaries and each invalid input class to table-driven unit coverage",
+        "Lists the supplied test and typecheck commands as planned verification rather than claiming they ran",
+        "States that no parallelization opportunity exists for the small single-module change",
+        "Names only proportionate residual risks or unverified repository evidence"
+      ],
+      "failure_conditions": [
+        "Demands a new service, dependency, end-to-end suite, benchmark, feature flag, migration, or rollout system",
+        "Invents a blocker to avoid issuing a ready verdict",
+        "Edits files or claims verification commands passed"
+      ]
+    }
+  ]
+}

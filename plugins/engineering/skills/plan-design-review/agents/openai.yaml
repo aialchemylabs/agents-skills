@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Design Review"
+  short_description: "Review design plans across seven UX passes"
+  default_prompt: "Use $plan-design-review to assess this UI or UX plan for design completeness and unresolved decisions."

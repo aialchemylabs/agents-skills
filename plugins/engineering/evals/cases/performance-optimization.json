@@ -1,0 +1,119 @@
+{
+  "skill_name": "performance-optimization",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Optimize this N+1 query and prove the endpoint's p95 improved.",
+        "top_k": 1
+      },
+      {
+        "prompt": "The dashboard takes eight seconds to load; profile the bottleneck and fix it.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Core Web Vitals regressed for mobile users. Compare field and lab evidence.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Profile this CPU-heavy worker and add a performance regression guard.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Compare the orders endpoint p95 before and after this query change.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Design the public interface for the billing module.",
+        "owner": "api-and-interface-design"
+      },
+      {
+        "prompt": "Perform a general security audit of our authentication code.",
+        "owner": "security-and-hardening"
+      },
+      {
+        "prompt": "Improve the form's visual hierarchy and keyboard accessibility; no performance problem has been reported.",
+        "owner": "frontend-ui-engineering"
+      },
+      {
+        "prompt": "Simplify this working parser without changing its measured performance.",
+        "owner": "code-simplification"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "The products page renders all 1,000 items at once and feels slow. A controlled mobile trace over five runs shows: API median 92 ms, transfer median 118 ms, and scripting plus style/layout median 4,260 ms. The trace attributes most main-thread work to mounting 1,000 product cards, including off-screen cards. Users must retain keyboard navigation, screen-reader access, filtering, stable scroll behavior, and deep links. Improve performance using only the project's existing tools and report the result.",
+      "expected_output": "An evidence-led frontend optimization that treats the measured render cost as dominant, establishes a reproducible baseline, applies one targeted list-work strategy, remeasures equivalently, preserves UX and accessibility, and adds a regression guard.",
+      "files": [
+        "performance-optimization"
+      ],
+      "expectations": [
+        "Defines the user symptom, mobile environment, 1,000-item workload, primary render metric, sample count, and a success budget before editing",
+        "Treats the supplied API, transfer, and rendering values as synthetic baseline evidence rather than real-user proof",
+        "Identifies mounting off-screen product cards as the dominant measured cost instead of guessing at backend, image, cache, or bundle changes",
+        "Chooses one evidence-based strategy such as accessible virtualization, pagination, or reduced rendered work and explains why it addresses the trace",
+        "Remeasures the same 1,000-item workflow with equivalent device, network, cache, navigation, and sample conditions",
+        "Reports raw before and after values, absolute and percentage change, variance, and whether the budget was met",
+        "Checks filtering, focus, keyboard navigation, screen-reader behavior, stable scroll behavior, deep links, and memory tradeoffs",
+        "Adds a representative rendering benchmark or budget that would detect the original 1,000-item regression",
+        "Does not install browser or performance tooling and does not claim real-user improvement from lab evidence alone"
+      ],
+      "failure_conditions": [
+        "Changes code before recording a baseline and success metric",
+        "Stacks unrelated caching, bundle, image, backend, and rendering changes into one comparison",
+        "Claims Core Web Vitals or real-user experience improved without field evidence",
+        "Uses virtualization without checking accessibility and interaction semantics",
+        "Claims a benchmark or trace passed without running it"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "execution",
+      "prompt": "The orders endpoint has a p95 budget of 300 ms at concurrency 20 with 500 orders. Existing traces show p95 1,480 ms and 501 database queries: one orders query followed by one customer query per order. A representative query plan is available. Diagnose and implement the smallest fix using existing project tooling, then verify it.",
+      "expected_output": "A measured database optimization that proves N+1 fan-out is the bottleneck, compares an equivalent workload after a targeted batching or join change, verifies behavior and database tradeoffs, and guards query count or latency.",
+      "files": [
+        "performance-optimization"
+      ],
+      "expectations": [
+        "Records the 500-order workload, concurrency 20, p95 budget, 1,480 ms baseline, and 501-query count",
+        "Uses traces, query count, and the representative plan to validate the bottleneck before changing the query path",
+        "Selects a targeted batching, join, or eager-loading change instead of adding a speculative index or cache",
+        "Remeasures p95 and query count under the same concurrency, data, cache state, environment, and sample protocol",
+        "Verifies result fields, ordering, authorization scope, null or missing customers, and error behavior remain correct",
+        "Reports database memory, duplicate-row, connection, lock, and payload tradeoffs where relevant",
+        "Adds a query-count assertion or representative endpoint performance guard",
+        "Does not run an executing query plan in production without explicit safety confirmation"
+      ],
+      "failure_conditions": [
+        "Proposes an index solely because the endpoint is slow without plan or selectivity evidence",
+        "Reports only average latency and omits p95 or query count",
+        "Compares a smaller dataset or different concurrency without labeling the result incomparable",
+        "Optimizes away authorization, ordering, or missing-related-record behavior",
+        "Runs unapproved production load or installs a profiler"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Memoize this pure formatter because it might be slow. A representative benchmark over 30 runs reports p95 0.04 ms against a 10 ms budget, and the formatter is called once per request. Add a cache and call the work complete.",
+      "expected_output": "Reject the requested cache as an unproven optimization, explain that the measured path already meets its budget, identify cache complexity and memory risks, and recommend measuring a different bottleneck if an end-to-end symptom exists.",
+      "expectations": [
+        "Uses the supplied p95, workload, sample count, and budget as evidence that the formatter is not a meaningful bottleneck",
+        "Does not add memoization or a cache merely because the user proposed it",
+        "Explains keying, memory, invalidation, and complexity costs in proportion to the proposed change",
+        "States that no performance gain can be claimed and asks for an end-to-end symptom or profile before further optimization",
+        "Leaves code and dependencies unchanged"
+      ],
+      "failure_conditions": [
+        "Implements caching despite evidence that the path already meets budget",
+        "Invents a before-and-after improvement",
+        "Installs a benchmarking or caching dependency",
+        "Treats the user's proposed mechanism as proof of a bottleneck"
+      ]
+    }
+  ]
+}

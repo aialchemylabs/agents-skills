@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "aialchemy-agent-skills",
-  "version": "1.0.0",
-  "description": "Reusable AI Alchemy Labs skills for AI gateways and related infrastructure.",
+  "version": "1.1.0",
+  "description": "Reusable AI Alchemy Labs skills for AI gateways, engineering, and related infrastructure.",
   "owner": {
     "name": "AI Alchemy Labs"
   },
@@ -30,6 +30,35 @@
         "security"
       ],
       "source": "./plugins/ai-gateway",
+      "strict": true
+    },
+    {
+      "name": "engineering",
+      "description": "Plan, build, test, review, secure, optimize, simplify, version, and document production software.",
+      "version": "0.1.0",
+      "author": {
+        "name": "AI Alchemy Labs"
+      },
+      "homepage": "https://github.com/aialchemylabs/agents-skills",
+      "repository": "https://github.com/aialchemylabs/agents-skills",
+      "keywords": [
+        "engineering",
+        "frontend",
+        "testing",
+        "api-design",
+        "code-review",
+        "security",
+        "performance",
+        "git",
+        "documentation"
+      ],
+      "category": "development",
+      "tags": [
+        "software-engineering",
+        "quality",
+        "planning"
+      ],
+      "source": "./plugins/engineering",
       "strict": true
     }
   ]

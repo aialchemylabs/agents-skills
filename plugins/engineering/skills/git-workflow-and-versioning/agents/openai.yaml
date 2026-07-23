@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Workflow and Versioning"
+  short_description: "Safe Git history, branches, releases, and versioning"
+  default_prompt: "Use $git-workflow-and-versioning to organize this repository work into safe, atomic commits."

@@ -1,0 +1,105 @@
+{
+  "skill_name": "code-review-and-quality",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Review this pull request before I merge it.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Do a quality pass on this diff.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Review the changes another model wrote.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Check this refactor for correctness and architecture regressions.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Implement the fixes already selected from this review.",
+        "owner": "implementation-workflow"
+      },
+      {
+        "prompt": "Diagnose why the GitHub Actions job failed.",
+        "owner": "ci-debugging-workflow"
+      },
+      {
+        "prompt": "Perform a dedicated threat model and security audit of our authentication system.",
+        "owner": "security-and-hardening"
+      },
+      {
+        "prompt": "Simplify this working parser without conducting a review.",
+        "owner": "code-simplification"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Review this patch that adds tenant-scoped user search. The requirement is: authenticated support agents may search users only inside their own tenant; q must contain 2-80 characters; results expose id and display_name only; return at most 25 newest matches. Review only and do not edit files.\n\n```diff\n--- a/src/routes/users.ts\n+++ b/src/routes/users.ts\n@@ -18,6 +18,13 @@ router.get('/users/:id', requireAuth, getUser);\n+router.get('/users/search', requireAuth, async (req, res) => {\n+  const query = String(req.query.q || '');\n+  const users = await db.query(\n+    `SELECT id, display_name, email, tenant_id FROM users WHERE display_name ILIKE '%${query}%' ORDER BY created_at DESC`\n+  );\n+  res.json({ users: users.rows });\n+});\n--- a/test/routes/users.test.ts\n+++ b/test/routes/users.test.ts\n@@ -42,3 +42,10 @@ describe('users routes', () => {\n+  it('searches users by name', async () => {\n+    const response = await request(app).get('/users/search?q=ann').set(agentToken);\n+    expect(response.status).toBe(200);\n+    expect(response.body.users[0].display_name).toContain('Ann');\n+  });\n });\n```",
+      "expected_output": "A findings-first, read-only review with tightly anchored P1/P2 findings for cross-tenant exposure, query injection, requirement-breaking input and result handling, unbounded search cost, and missing regression coverage, followed by verification and residual risk.",
+      "expectations": [
+        "Findings are ordered by severity before any summary",
+        "Each actionable finding uses a P0-P3 priority and the tightest reliable path and line or hunk anchor",
+        "The missing tenant authorization predicate and exposure of email and tenant_id are identified as a cross-tenant privacy and authorization defect",
+        "Direct interpolation of q into the ILIKE query is identified as an injection risk and parameterization is recommended",
+        "Missing 2-80 character validation, the empty-query behavior, and the absence of a 25-result bound are analyzed",
+        "The unbounded ordered search is connected to database work and response-size growth rather than called generically slow",
+        "Test gaps include cross-tenant denial, malicious or wildcard input, invalid lengths, response-field minimization, ordering, and result limits",
+        "The review does not edit code, approve, merge, resolve threads, or claim checks were run",
+        "The summary appears only after findings and distinguishes inspected evidence from unverified repository behavior"
+      ],
+      "failure_conditions": [
+        "Silently modifies the patch or presents an implementation as completed",
+        "Invents line numbers outside those visible in the diff",
+        "Leads with a prose summary or praise before actionable findings",
+        "Reports only style or readability concerns while missing authorization or injection",
+        "Claims tests, lint, build, or runtime checks passed without running them"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Review only this complete patch. Requirement: add a pure helper that converts already-validated ASCII tag labels into lowercase hyphenated slugs, trimming leading and trailing whitespace and collapsing runs of spaces, underscores, and hyphens. Empty output is allowed and callers validate it. Do not edit files or invent broader requirements.\n\n```diff\n--- /dev/null\n+++ b/src/slug.ts\n@@ -0,0 +1,4 @@\n+export function toTagSlug(label: string): string {\n+  return label.trim().toLowerCase().replace(/[ _-]+/g, '-');\n+}\n+\n--- /dev/null\n+++ b/src/slug.test.ts\n@@ -0,0 +1,9 @@\n+import { toTagSlug } from './slug';\n+\n+it.each([\n+  ['Release Notes', 'release-notes'],\n+  ['  API_v2  ', 'api-v2'],\n+  ['one---two', 'one-two'],\n+  ['', ''],\n+])('slugifies %p', (input, expected) => {\n+  expect(toTagSlug(input)).toBe(expected);\n+});\n```",
+      "expected_output": "No actionable findings. Follow with a concise statement of residual risk and exactly which verification was or was not performed.",
+      "expectations": [
+        "Begins with 'No actionable findings.'",
+        "Does not manufacture Unicode, empty-output, validation, framework, abstraction, or performance requirements contradicted by the supplied scope",
+        "Notes that the judgment is limited to the supplied patch and requirement",
+        "Does not claim tests were executed unless they actually were",
+        "Does not modify files or perform a PR action"
+      ],
+      "failure_conditions": [
+        "Invents an actionable issue solely to avoid a clean review",
+        "Demands a dependency or abstraction for the four-line helper",
+        "Claims the test suite passed without execution",
+        "Returns only 'LGTM' without residual-risk context"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Review the staged refactor for correctness and architecture regressions. Do not fix anything. The author says all tests pass, but no command output is supplied.",
+      "expected_output": "A read-only, findings-first review of the staged target that inspects requirements, tests, implementation, architecture, and available verification without treating the author's unverified test claim as evidence.",
+      "expectations": [
+        "Resolves the staged diff as the target and excludes unrelated unstaged work",
+        "Reads repository instructions and intended behavior before judging the refactor",
+        "Inspects tests before or alongside implementation",
+        "Checks whether complexity was removed or merely relocated and whether ownership and dependency direction remain valid",
+        "Reports only commands actually run and marks unavailable checks as unverified",
+        "Leaves source, tests, review threads, and repository history unchanged"
+      ],
+      "failure_conditions": [
+        "Treats the author's statement that tests pass as confirmed evidence",
+        "Edits the refactor or tests during the review-only request",
+        "Includes unrelated dirty files in scope without explaining why"
+      ]
+    }
+  ]
+}

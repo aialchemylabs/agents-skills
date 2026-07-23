@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation and ADRs"
+  short_description: "Document systems and lasting decisions accurately"
+  default_prompt: "Use $documentation-and-adrs to document this decision with verified context, alternatives, and consequences."

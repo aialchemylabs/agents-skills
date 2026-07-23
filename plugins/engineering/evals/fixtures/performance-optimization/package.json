@@ -1,0 +1,10 @@
+{
+  "name": "performance-optimization-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "benchmark:products": "node scripts/benchmark-products.js",
+    "benchmark:orders": "node scripts/benchmark-orders.js"
+  }
+}

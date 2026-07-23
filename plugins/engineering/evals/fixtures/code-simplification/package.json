@@ -1,0 +1,9 @@
+{
+  "name": "code-simplification-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "test:config": "node --test test/config.test.ts"
+  }
+}

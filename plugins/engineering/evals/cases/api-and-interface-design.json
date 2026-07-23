@@ -1,0 +1,71 @@
+{
+  "skill_name": "api-and-interface-design",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Design a REST endpoint for creating invoices, including error responses and versioning.",
+        "top_k": 3
+      },
+      {
+        "prompt": "What should the public interface of this payments module expose to other teams?",
+        "top_k": 3
+      },
+      {
+        "prompt": "Define the contract between the frontend and the orders service.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Design a versioned event schema for order completion, including retries and duplicate delivery.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "My unit test is failing with a null pointer exception.",
+        "owner": "test-driven-development"
+      },
+      {
+        "prompt": "Make this landing page responsive on mobile.",
+        "owner": "frontend-ui-engineering"
+      },
+      {
+        "prompt": "Audit our existing customer endpoint for authorization vulnerabilities.",
+        "owner": "security-and-hardening"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Design the public HTTP API for a URL-shortening service with create, resolve, and statistics operations. Produce the endpoint contracts, not implementation code.",
+      "expected_output": "An explicit, implementable contract covering operations, schemas, status and error behavior, authorization, idempotency, rate limits, ordering where relevant, and compatibility.",
+      "expectations": [
+        "Defines methods, paths, request fields, response fields, validation constraints, and representative examples for create, resolve, and statistics operations",
+        "Uses a consistent machine-readable error shape and maps invalid URLs, short-code collisions, missing links, unauthorized statistics access, conflicts, and rate limits to explicit status behavior",
+        "Addresses idempotent creation or explains the chosen duplicate-request semantics, including idempotency-key scope and replay behavior",
+        "Treats user-supplied URLs as untrusted input and covers canonicalization, supported schemes, length limits, and safe validation",
+        "Defines statistics pagination or bounded aggregation behavior, supported ordering, limits, and consistency expectations where collections are exposed",
+        "Defines abuse controls and rate-limit semantics without exposing sensitive implementation details",
+        "States stable naming and an additive compatibility strategy, plus migration and deprecation requirements for future breaking changes",
+        "States assumptions and open product decisions instead of silently inventing requirements",
+        "Does not present handler, persistence, or deployment code as a substitute for the contract"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Design the public TypeScript interface for a payments module used by checkout and refunds. The module must support authorization, capture, refund, and status lookup without exposing its storage model.",
+      "expected_output": "A protocol-appropriate module contract with typed operations, invariants, result and failure semantics, idempotency, concurrency, lifecycle, compatibility, and examples.",
+      "expectations": [
+        "Uses module and type-system semantics rather than REST paths or HTTP status codes",
+        "Separates caller inputs and public outputs from internal domain or persistence models",
+        "Defines authorization, capture, refund, and lookup state transitions and invariants",
+        "Defines a consistent error or result strategy with machine-actionable failure variants",
+        "Addresses duplicate calls, concurrency conflicts, timeouts, and unknown final state",
+        "Includes an additive evolution strategy and identifies open decisions",
+        "Produces a contract rather than implementation code"
+      ]
+    }
+  ]
+}

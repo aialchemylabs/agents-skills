@@ -1,0 +1,69 @@
+{
+  "skill_name": "frontend-ui-engineering",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Make this page responsive and WCAG compliant.",
+        "top_k": 1
+      },
+      {
+        "prompt": "Build an accessible modal component with keyboard support.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Refactor the dashboard into reusable components with sane state management.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Rework this profile page so it feels production-quality without abandoning our design system.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Optimize the slow database indexes.",
+        "owner": "performance-optimization"
+      },
+      {
+        "prompt": "Review this proposed checkout flow before engineering starts.",
+        "owner": "plan-design-review"
+      },
+      {
+        "prompt": "Use DevTools to diagnose why this already-built button ignores clicks.",
+        "owner": "browser-testing-with-devtools"
+      },
+      {
+        "prompt": "Tag and publish the release.",
+        "owner": "git-workflow-and-versioning"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Build a dropdown menu component for the existing design system. It contains user actions, must work on mobile, and should handle loading, no available actions, disabled actions, and an action failure. Use the repository's current frontend stack and prove the result works.",
+      "expected_output": "A design-system-aligned command menu with semantic controls, complete keyboard and focus behavior, responsive placement, realistic states, focused tests, and concrete runtime verification evidence.",
+      "files": [
+        "frontend-ui-engineering"
+      ],
+      "expectations": [
+        "The repository framework, component conventions, tokens, primitives, state patterns, tests, and runtime commands are inspected before implementation",
+        "A semantic button and an appropriate menu interaction pattern are used rather than a clickable generic element or mismatched select semantics",
+        "Keyboard navigation covers opening, moving among actions, activation, Escape dismissal, and focus restoration",
+        "Accessible names, roles, expanded and disabled states, focus visibility, and non-color state cues are implemented",
+        "Loading, empty, disabled, failure, and success behavior are meaningful and recoverable where applicable",
+        "Long labels, narrow mobile layout, tablet, desktop, and wide behavior are considered using project breakpoints or representative viewports",
+        "Existing design tokens, primitives, spacing, typography, icons, and interaction patterns are reused",
+        "Focused unit or component tests and live-browser checks are treated as complementary evidence",
+        "The final report names the commands, routes, viewports, states, and keyboard paths actually verified"
+      ],
+      "failure_conditions": [
+        "Adds a UI, state, icon, browser, or accessibility dependency without proving the current stack is insufficient and obtaining authorization",
+        "Claims the dropdown rendered correctly, passed accessibility tooling, or worked in a browser without runtime evidence",
+        "Forces React, Tailwind, or a specific browser tool onto a repository that uses another stack",
+        "Introduces arbitrary gradients, rounded cards, spacing values, or placeholder copy instead of following the existing product design"
+      ]
+    }
+  ]
+}
