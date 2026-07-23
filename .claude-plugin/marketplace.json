@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "aialchemy-agent-skills",
-  "version": "1.1.0",
-  "description": "Reusable AI Alchemy Labs skills for AI gateways, engineering, and related infrastructure.",
+  "version": "1.2.0",
+  "description": "Reusable AI Alchemy Labs skills for AI gateways, engineering, business, and related infrastructure.",
   "owner": {
     "name": "AI Alchemy Labs"
   },
@@ -59,6 +59,34 @@
         "planning"
       ],
       "source": "./plugins/engineering",
+      "strict": true
+    },
+    {
+      "name": "business",
+      "description": "Challenge, validate, and sharpen business, product, venture, and operating decisions.",
+      "version": "0.1.0",
+      "author": {
+        "name": "AI Alchemy Labs"
+      },
+      "homepage": "https://github.com/aialchemylabs/agents-skills",
+      "repository": "https://github.com/aialchemylabs/agents-skills",
+      "keywords": [
+        "business",
+        "strategy",
+        "founder",
+        "ceo",
+        "product",
+        "planning",
+        "decision-making",
+        "scope"
+      ],
+      "category": "business",
+      "tags": [
+        "business-strategy",
+        "product-strategy",
+        "decision-making"
+      ],
+      "source": "./plugins/business",
       "strict": true
     }
   ]

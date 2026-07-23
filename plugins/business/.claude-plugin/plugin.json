@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "business",
+  "version": "0.1.0",
+  "description": "Challenge, validate, and sharpen business, product, venture, and operating decisions.",
+  "author": {
+    "name": "AI Alchemy Labs"
+  },
+  "homepage": "https://github.com/aialchemylabs/agents-skills",
+  "repository": "https://github.com/aialchemylabs/agents-skills",
+  "keywords": [
+    "business",
+    "strategy",
+    "founder",
+    "ceo",
+    "product",
+    "planning",
+    "decision-making",
+    "scope"
+  ],
+  "skills": "./skills/"
+}

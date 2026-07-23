@@ -1,0 +1,4 @@
+interface:
+  display_name: "CEO Plan Review"
+  short_description: "Challenge business plans with founder-level rigor"
+  default_prompt: "Use $plan-ceo-review to challenge this business or product plan, test its assumptions, and recommend the right scope."

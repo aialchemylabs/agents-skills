@@ -1,0 +1,165 @@
+{
+  "skill_name": "plan-ceo-review",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Give this product plan a CEO review before we commit the team.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Think bigger and find the 10x version of this business plan.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Challenge the premise, strategy, economics, and go-to-market for this proposal.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Reduce this overbuilt venture plan to the smallest credible bet.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review this implementation plan for schema migration, rollback, and test gaps.",
+        "owner": "plan-eng-review"
+      },
+      {
+        "prompt": "Critique the responsive states and accessibility of this dashboard plan.",
+        "owner": "plan-design-review"
+      },
+      {
+        "prompt": "Calculate TAM, SAM, and SOM for this market using current sources.",
+        "owner": "market-sizing-workflow"
+      },
+      {
+        "prompt": "Prepare this month's KPI scorecard against target.",
+        "owner": "kpi-reporting-workflow"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Findings only. Our product manager wants to add an AI meeting-summary feature because two competitors launched one. The plan says all customers will value it, projects a 15% retention lift, and proposes a six-month build. No customer interviews, usage evidence, churn analysis, pricing evidence, or target segment is supplied.",
+      "expected_output": "A read-only CEO review that challenges the competitor-led premise, refuses unsupported demand and retention claims, and returns Discovery required with a focused evidence plan rather than polishing the six-month roadmap.",
+      "expectations": [
+        "Marks the review read-only and does not rewrite or implement the plan",
+        "Separates the competitor launches and stakeholder statements from verified customer evidence",
+        "Challenges whether meeting summaries are the customer outcome or a proposed mechanism",
+        "Identifies the missing segment, buyer, current alternative, urgency, and churn evidence",
+        "Rejects the 15% retention lift as unsupported rather than repeating it as a forecast",
+        "Recommends the smallest decisive discovery or prototype test with an evidence threshold",
+        "Uses a Discovery required verdict and names what evidence would permit a commitment",
+        "Does not manufacture market size, customer quotes, pricing, or competitor performance"
+      ],
+      "failure_conditions": [
+        "Accepts competitor activity as sufficient proof of customer demand",
+        "Produces a detailed delivery roadmap without resolving the premise",
+        "Silently changes the plan or claims a file was updated"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Think big. We are planning a greenfield product for independent clinics that currently coordinate referrals by phone and fax. We have 12 interviews describing lost referrals and two clinics willing to pilot. Review in scope-expansion mode and show me the 10x product, but do not add anything to scope without my approval.",
+      "expected_output": "An ambitious but evidence-disciplined expansion review that starts from the referral outcome, proposes a coherent 10x experience, and keeps every expansion as an explicit opt-in decision.",
+      "expectations": [
+        "Uses scope expansion because the user explicitly selected it",
+        "Connects the vision to fewer lost referrals, faster coordination, and accountable handoffs rather than a feature pile",
+        "Distinguishes evidence from the 12 interviews and two pilot commitments from unverified market assumptions",
+        "Maps current state, proposed commitment, and a plausible 12-month ideal",
+        "Compares a smallest credible pilot, a strong constrained path, and an ambitious path",
+        "Surfaces expansion proposals individually with customer outcome, effort or capacity, risk, and new assumptions",
+        "Treats all proposed additions as unapproved until the user accepts them",
+        "Includes business model, adoption, operating capacity, risk, and learning gates alongside product ambition"
+      ],
+      "failure_conditions": [
+        "Silently adds proposed expansions to accepted scope",
+        "Confuses ambition with a long unranked feature list",
+        "Invents clinic economics, regulations, or willingness to pay"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Hold scope. We have committed to offering annual prepay to existing Australian SMB customers next quarter. The decision is not whether to add other pricing models; review only whether this exact plan is business-ready. Supplied evidence: 28 customers requested annual billing, finance estimates it improves cash timing, sales owns the offer, and the draft gives a 12% discount. No margin sensitivity, cancellation policy, revenue-recognition review, adoption target, or downside guardrail is included.",
+      "expected_output": "A hold-scope CEO review that preserves the annual-prepay commitment while identifying economics, policy, accounting, adoption, ownership, and guardrail decisions required for readiness.",
+      "expectations": [
+        "Keeps hold-scope posture and does not propose monthly tiers, enterprise packaging, or unrelated expansion",
+        "Recognizes the 28 requests and finance estimate as evidence while preserving their limitations",
+        "Tests the 12% discount against margin, cash timing, renewal, support, and cancellation assumptions",
+        "Flags the need for qualified accounting or legal review without pretending to provide clearance",
+        "Defines adoption, cash, retention, margin, refund, and customer-trust metrics or guardrails",
+        "Names decision owners and a review point",
+        "Returns Ready with decisions or Not ready based on the unresolved material items",
+        "Routes implementation mechanics only after the business choices are accepted"
+      ],
+      "failure_conditions": [
+        "Relitigates scope despite the explicit hold-scope instruction",
+        "Treats annual cash receipts as recognized revenue without review",
+        "Invents precise margin or accounting outcomes"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Reduce this plan ruthlessly. A five-person startup with nine months of runway plans to launch simultaneously in Australia, the US, and the UK; target healthcare, legal, retail, and construction; build direct sales, self-serve, and a partner channel; and deliver analytics, workflow automation, a marketplace, and a mobile app before seeking its first paying customer. The core hypothesis is that small healthcare practices will pay to automate one repetitive intake workflow.",
+      "expected_output": "A scope-reduction review that preserves the healthcare intake hypothesis, cuts unsupported segments, geographies, channels, and products, and proposes a narrow paid learning path with explicit thresholds.",
+      "expectations": [
+        "Uses scope reduction and states why the original plan exceeds the team's evidence and capacity",
+        "Preserves one healthcare segment, one intake workflow, one geography or reachable pilot cohort, and one adoption path",
+        "Separates must-prove assumptions from follow-up options",
+        "Includes do-nothing or delay where relevant and compares at least two credible paths",
+        "Accounts for founder attention, delivery burden, runway, sales motion, and regulatory uncertainty",
+        "Defines a paid pilot or similarly strong experiment with pass, pivot, and stop thresholds",
+        "Lists cut items as explicit deferrals rather than quietly deleting them",
+        "Does not cut essential trust, privacy, quality, or measurement work"
+      ],
+      "failure_conditions": [
+        "Retains the multi-segment, multi-channel platform plan with minor prioritization",
+        "Equates MVP with an unmeasured demo",
+        "Invents regulatory clearance or market demand"
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "Review this small plan. Goal: run a four-week paid pilot with one existing design partner to test whether automated invoice follow-up reduces overdue days. The partner has supplied six months of baseline data, named the finance manager as owner, and agreed to a fixed pilot fee. Scope is one workflow and no new market segment. Success means at least a 20% reduction in median overdue days without increasing disputes; stop if complaint rate exceeds the agreed threshold. A data-processing agreement and technical feasibility review are already scheduled. Findings only.",
+      "expected_output": "A proportionate ready or ready-with-minor-decisions verdict that recognizes the evidence, narrow scope, paid commitment, baseline, owner, outcome, guardrail, and scheduled specialist reviews without inventing blockers.",
+      "expectations": [
+        "Does not manufacture a need for a platform, multiple segments, a broad market study, or additional channels",
+        "Recognizes the paid design partner, baseline data, named owner, narrow workflow, outcome, and complaint guardrail as strong evidence",
+        "Checks metric definition, comparability, pilot duration, review date, and decision rule proportionally",
+        "Acknowledges the scheduled data-processing and technical reviews without claiming they passed",
+        "States no material issue found for sound business passes",
+        "Keeps findings-only and does not edit the plan",
+        "Names only honest residual risks and unresolved details"
+      ],
+      "failure_conditions": [
+        "Invents a blocker to avoid a ready verdict",
+        "Demands a full TAM analysis before the existing-customer pilot",
+        "Claims legal or engineering approval is complete"
+      ]
+    },
+    {
+      "id": 6,
+      "kind": "dialogue",
+      "prompt": "Review only the business case for a new admin portal. Do not review component architecture, database migrations, API contracts, test suites, responsive layouts, or accessibility yet. I want the customer value, strategic fit, economics, adoption, operating load, risks, and metrics challenged first.",
+      "expected_output": "A business-scoped CEO review that evaluates the requested business dimensions and explicitly defers technical and detailed design analysis to later specialist reviews.",
+      "expectations": [
+        "Keeps the review at the business and product-decision layer",
+        "Challenges the target customer, problem, value, strategic fit, economics, adoption, operating load, risks, and metrics",
+        "Does not drift into schema, API, code, test, breakpoint, or accessibility prescriptions",
+        "States what accepted business decisions should be handed to engineering and design reviews later",
+        "Remains read-only"
+      ],
+      "failure_conditions": [
+        "Duplicates an engineering or design plan review",
+        "Skips the business recommendation because technical context is absent",
+        "Edits or implements the portal plan"
+      ]
+    }
+  ]
+}

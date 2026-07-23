@@ -8,6 +8,7 @@ Claude Code plugin marketplace for reusable AI Alchemy Labs workflows.
 claude plugin marketplace add aialchemylabs/agents-skills
 claude plugin install ai-gateway@aialchemy-agent-skills
 claude plugin install engineering@aialchemy-agent-skills
+claude plugin install business@aialchemy-agent-skills
 ```
 
 Run `/reload-plugins` in Claude Code after installing or updating the plugin.
@@ -38,3 +39,13 @@ The `engineering` plugin contains twelve complementary software-engineering skil
 - `engineering:plan-design-review` — review design plans across information architecture, interaction states, journeys, systems, responsiveness, and accessibility.
 
 The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Garry Tan's `gstack` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.
+
+## Business
+
+The `business` plugin contains focused skills for founder, product, strategy, and operating decisions. Its first skill is:
+
+- `business:plan-ceo-review` — challenge a business or product plan's premise, customer value, scope, strategy, economics, go-to-market, execution capacity, risks, and learning plan before commitment.
+
+`plan-ceo-review` supports four explicit review postures: scope expansion, selective expansion, hold scope, and scope reduction. Scope changes remain proposals until the user accepts them, and review is read-only unless a rewrite is explicitly authorized.
+
+The Business plugin adapts the CEO plan-review methodology from Garry Tan's `gstack` under the MIT license. The required notice is in `plugins/business/LICENSES/`.
