@@ -1,4 +1,0 @@
-interface:
-  display_name: "B2B Proposal Strategist"
-  short_description: "Build evidence-backed B2B proposals and offers"
-  default_prompt: "Use $b2b-proposal-strategist to qualify this opportunity and build an evidence-backed B2B proposal."
