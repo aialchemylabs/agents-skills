@@ -53,10 +53,13 @@ The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Gar
 
 ## Business
 
-The `business` plugin contains focused skills for founder, product, strategy, and operating decisions. Its first skill is:
+The `business` plugin contains focused skills for founder, product, strategy, commercial, and operating decisions:
 
 - `business:plan-ceo-review` — challenge a business or product plan's premise, customer value, scope, strategy, economics, go-to-market, execution capacity, risks, and learning plan before commitment.
+- `business:b2b-proposal-strategist` — qualify, price, plan, draft, or review customer-facing B2B proposals, RFP and RFQ responses, statements of work, and commercial offers with evidence, buyer-value, seller-economics, delivery, and readiness controls.
 
 `plan-ceo-review` supports four explicit review postures: scope expansion, selective expansion, hold scope, and scope reduction. Scope changes remain proposals until the user accepts them, and review is read-only unless a rewrite is explicitly authorized.
+
+`b2b-proposal-strategist` separates qualification from drafting, routes out-of-scope venture and regulated materials, and never permits unsupported claims, hidden noncompliance, or external submission without accountable approval.
 
 The Business plugin adapts the CEO plan-review methodology from Garry Tan's `gstack` under the MIT license. The required notice is in `plugins/business/LICENSES/`.

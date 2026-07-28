@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "business",
-  "version": "0.1.0",
-  "description": "Challenge, validate, and sharpen business, product, venture, and operating decisions.",
+  "version": "0.2.0",
+  "description": "Challenge business decisions and build evidence-backed B2B proposals, commercial offers, and pursuit strategies.",
   "author": {
     "name": "AI Alchemy Labs"
   },
@@ -16,7 +16,10 @@
     "product",
     "planning",
     "decision-making",
-    "scope"
+    "scope",
+    "proposals",
+    "commercial",
+    "sales"
   ],
   "skills": "./skills/"
 }
