@@ -1,4 +1,4 @@
 interface:
   display_name: "CEO Plan Review"
-  short_description: "Challenge business plans with founder-level rigor"
-  default_prompt: "Use $plan-ceo-review to challenge this business or product plan, test its assumptions, and recommend the right scope."
+  short_description: "Challenge plans, tradeoffs, and commitment readiness"
+  default_prompt: "Use $plan-ceo-review to challenge this business or product plan, its tradeoffs, and whether it is ready for commitment."

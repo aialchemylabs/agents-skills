@@ -35,6 +35,10 @@
       {
         "prompt": "Prepare this month's KPI scorecard against target.",
         "owner": "kpi-reporting-workflow"
+      },
+      {
+        "prompt": "Audit our finance pack, reconcile burn and runway, and design controls over payments and board metrics.",
+        "owner": "startup-finance-and-controls"
       }
     ]
   },
@@ -159,6 +163,50 @@
         "Duplicates an engineering or design plan review",
         "Skips the business recommendation because technical context is absent",
         "Edits or implements the portal plan"
+      ]
+    },
+    {
+      "id": 7,
+      "kind": "dialogue",
+      "prompt": "CEO review only. Our profitable services business funds the company and is missing response-time targets. The plan moves 70% of engineering capacity into a speculative AI platform for the next nine months because it could become the future of the company. No current customer has committed, the core and platform share critical engineers, no legacy work is being stopped explicitly, and the platform has no release, hold, or kill gates. Review the resource allocation and present-versus-future portfolio tension without performing a finance-system audit.",
+      "expected_output": "A decision-level CEO review that protects the viable present, challenges inherited work, bounds the future bet with evidence gates, names displaced capacity and ownership, and hands detailed cash or finance-control analysis to startup-finance-and-controls.",
+      "expectations": [
+        "Keeps the review at business-plan and resource-allocation level rather than auditing statements or controls",
+        "Distinguishes the present core, legacy work or assumptions to challenge, and the future platform bet",
+        "Treats the profitable core's service failure and shared critical engineers as material constraints",
+        "Names what the 70% allocation displaces and refuses to treat the percentage as justified without evidence",
+        "Compares a bounded future experiment, the proposed allocation, and a credible delay or alternative",
+        "Defines customer, technical, operating, and economic evidence gates before further capacity is released",
+        "Uses different measures for core execution and future learning",
+        "Names an accountable release, hold, and stop owner and states what would change the recommendation",
+        "Routes detailed burn, runway, financial reporting, or control questions to startup-finance-and-controls"
+      ],
+      "failure_conditions": [
+        "Protects the core by rejecting all future investment without analysis",
+        "Treats the future bet as ordinary delivery with only output milestones",
+        "Invents an optimal allocation percentage or silently reallocates the team"
+      ]
+    },
+    {
+      "id": 8,
+      "kind": "dialogue",
+      "prompt": "Review this operating plan before commitment. A claims platform will auto-deny low-value cases because average handling cost falls by 35%. The plan has no analysis of error rates by claimant group, appeal access, employee incentives, vulnerable users, or who can override the model. Legal says automation is generally permitted, and the sponsor wants the ethics section framed as reputation management. Findings only.",
+      "expected_output": "A stakeholder- and ethics-aware CEO review that separates economic benefit, legal permission, and ethical responsibility; exposes concentrated harm and incentive risks; and recommends a reversible, governed decision path without turning the review into generic coaching.",
+      "expectations": [
+        "Treats the 35% handling-cost reduction as a supplied claim and asks for its basis",
+        "Separates legal permissibility from ethical acceptability and stakeholder obligations",
+        "Maps claimants, vulnerable groups, employees, customers, investors, regulators, and operators who bear consequences",
+        "Tests whether average benefit conceals concentrated error or harm",
+        "Addresses appeal, explanation, human override, monitoring, remedy, and speaking-up paths",
+        "Identifies sponsor pressure, incentives, moral myopia, and reputation-only framing as decision risks",
+        "Recommends a bounded and reversible experiment only if minimum safeguards and evidence thresholds are met",
+        "States the qualified legal, domain, fairness, or risk questions that still require specialist review",
+        "Remains findings-only and does not rewrite or implement the plan"
+      ],
+      "failure_conditions": [
+        "Treats legal permission as complete ethical clearance",
+        "Reduces ethics to public relations or generic values language",
+        "Invents fairness results, claimant outcomes, or regulatory approval"
       ]
     }
   ]

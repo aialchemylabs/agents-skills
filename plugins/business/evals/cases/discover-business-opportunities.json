@@ -1,0 +1,177 @@
+{
+  "skill_name": "discover-business-opportunities",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Scan Australian construction administration workflows and rank the best customer problems for a new business.",
+        "top_k": 3
+      },
+      {
+        "prompt": "I know payroll operations and can reach 30 HR leaders. Find several business opportunities where that access matters.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Build an opportunity landscape around new reporting regulation and tell me which problem spaces deserve discovery.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Compare possible beachhead problems in aged-care scheduling before we choose a startup idea.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Give me an evidence-backed shortlist of adjacent markets our field-service capability could enter.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Write a neutral interview guide and recruitment screener for five procurement managers.",
+        "owner": "run-customer-discovery"
+      },
+      {
+        "prompt": "We selected a clinic-referral idea. Evaluate its business model, MVP, and whether to build or kill it.",
+        "owner": "evaluate-and-shape-venture"
+      },
+      {
+        "prompt": "Critique this completed operating plan before the board approves it.",
+        "owner": "plan-ceo-review"
+      },
+      {
+        "prompt": "Calculate a defensible TAM, SAM, and SOM for Australian payroll software.",
+        "owner": "market-sizing-workflow"
+      },
+      {
+        "prompt": "Prepare our response to this government request for proposal.",
+        "owner": "business-proposal-builder"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Give me ten huge AI startup ideas right now. Do not slow down for research; assume every business wants AI agents and tell me which one to build.",
+      "expected_output": "A clearly labeled hypothesis scan that rejects the unsupported universal-demand premise, frames distinct customer problems, and recommends discovery rather than a build commitment.",
+      "expectations": [
+        "States that the result is an unresearched hypothesis set rather than a validated opportunity scan",
+        "Does not accept that every business wants AI agents as a fact",
+        "Frames candidates around specific customers, workflows, current alternatives, and outcomes instead of AI features",
+        "Produces genuinely distinct candidates rather than ten variants of the same product",
+        "Identifies buyer, reachability, value-capture logic, and decisive unknown for leading candidates",
+        "Ranks cautiously using explicit criteria and evidence weakness",
+        "Recommends a small customer-discovery portfolio rather than telling the user to build",
+        "Does not invent market sizes, customer quotes, willingness to pay, or competitor performance"
+      ],
+      "failure_conditions": [
+        "Treats AI category growth as proof of demand for every candidate",
+        "Recommends a full build based only on the idea list",
+        "Presents fabricated numbers or sources"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Research opportunities created by current Australian privacy and AI obligations for small healthcare providers. Rank the problems we should explore, but do not give legal advice or contact anyone.",
+      "expected_output": "A current, source-backed regulatory opportunity scan that separates legal facts from business inferences, identifies affected workflows and actors, and routes legal interpretation and customer discovery appropriately.",
+      "expectations": [
+        "Uses current authoritative regulator or government sources for material legal and policy claims",
+        "Records source date, jurisdiction, affected actor, fact, inference, and uncertainty",
+        "Avoids claiming that an obligation automatically creates budget or willingness to pay",
+        "Distinguishes providers, clinicians, administrators, patients, buyers, and blockers where relevant",
+        "Considers manual workarounds, advisers, existing software, internal processes, and doing nothing as alternatives",
+        "Applies responsibility and reachability gates before ranking",
+        "Defines the next discovery participant and decisive unknown for explored candidates",
+        "Routes legal interpretation to qualified review and does not contact participants"
+      ],
+      "failure_conditions": [
+        "Provides legal clearance or definitive compliance advice",
+        "Equates regulation with proven customer demand",
+        "Claims interviews or outreach occurred"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "I spent 12 years running food-manufacturing operations, know plant managers at 20 factories, and can invest six months. Compare opportunities in quality documentation, shift handover, maintenance coordination, and supplier traceability. I want one primary and one backup discovery target.",
+      "expected_output": "An access-aware comparison that tests four customer-problem theses, uses founder experience as an advantage rather than demand proof, and selects a primary and genuinely distinct backup for discovery.",
+      "expectations": [
+        "Establishes the six-month constraint, decision, search field, and founder access",
+        "Frames each candidate by actor, trigger, workflow, friction, alternative, buyer, and blocker",
+        "Treats the founder's experience and contacts as reachability evidence but not market validation",
+        "Checks substitutes, regulation, integration, safety, and operational risk where material",
+        "Uses hard gates before a transparent weighted comparison",
+        "Explains the rank drivers and evidence confidence rather than relying on bare scores",
+        "Selects a primary and a non-redundant backup",
+        "Produces bounded discovery briefs with thresholds and stop conditions"
+      ],
+      "failure_conditions": [
+        "Declares founder-market fit sufficient to build",
+        "Chooses solely by theoretical market size",
+        "Returns four unranked descriptions"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Our favorite candidate is a global consumer app for everyone who feels stressed. Online reports call wellness a trillion-dollar market. We have no channel, no defined payer, and no observed behavior beyond social-media likes. Make sure it wins the scorecard.",
+      "expected_output": "A disciplined gate decision that refuses to rig the ranking, parks or rejects the candidate, and states the specific evidence needed to make it comparable.",
+      "expectations": [
+        "Rejects the instruction to predetermine the winner",
+        "Identifies the undefined customer, outcome, payer, channel, and behavior evidence",
+        "Treats the broad wellness statistic as context rather than reachable market evidence",
+        "Does not infer willingness to pay from social-media likes",
+        "Applies customer, problem, reach, and value-capture gates before scoring",
+        "Parks or rejects the candidate with a clear reason",
+        "Defines a narrower thesis and discovery question only as an unapproved option",
+        "Does not fabricate a beachhead or numerical score to rescue the idea"
+      ],
+      "failure_conditions": [
+        "Manipulates weights so the favored idea wins",
+        "Uses population times imagined price as a market case",
+        "Calls social engagement validation"
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "Scan three opportunity spaces for independent veterinary clinics. Include enough order-of-magnitude context to compare them, but I will commission a full market-sizing study only after we select one.",
+      "expected_output": "A comparative opportunity scan that uses transparent ranges only where decision-useful and preserves standalone market sizing as a later handoff.",
+      "expectations": [
+        "Builds three distinct customer-problem theses rather than three product concepts",
+        "Uses a reachable unit and bottom-up variables for any order-of-magnitude context",
+        "Separates theoretical population, serviceable segment, and founder-reachable customers",
+        "Shows ranges, assumptions, date, and geography without false precision",
+        "Weights problem evidence, payment signals, access, alternatives, economics, and risk alongside scale",
+        "Does not expand into a full generic TAM, SAM, and SOM report",
+        "Selects discovery priorities and names the later market-sizing handoff",
+        "Does not claim that secondary research establishes clinic urgency"
+      ],
+      "failure_conditions": [
+        "Produces only market-size tables with no customer workflow",
+        "Invents clinic counts or pricing",
+        "Treats the largest theoretical market as the winner"
+      ]
+    },
+    {
+      "id": 6,
+      "kind": "dialogue",
+      "prompt": "We can either explore missed-referral coordination for allied-health practices, invoice follow-up for trades, or onboarding compliance for small charities. Our unfair access is to allied-health owners, but desk research on that problem is mixed. Build a decision-ready shortlist, including reasons to watch or park.",
+      "expected_output": "A portfolio decision that preserves contradictions, distinguishes access from demand, and allocates candidates across explore, watch, park, or reject with explicit next evidence.",
+      "expectations": [
+        "Records the mixed allied-health evidence as a contradiction rather than averaging it away",
+        "Uses founder access as one criterion rather than a trump card",
+        "Makes the three unlike opportunities comparable through an explicit mandate and weights",
+        "Names evidence quality and decisive uncertainty for every candidate",
+        "Includes current alternatives, likely buyers, reachability, and value-capture hypotheses",
+        "Uses watch or park when timing or evidence is insufficient",
+        "Selects no more exploration than can be justified by the stated constraints",
+        "Provides a discovery handoff without implying build authorization"
+      ],
+      "failure_conditions": [
+        "Suppresses evidence that conflicts with the preferred opportunity",
+        "Returns an unranked menu",
+        "Treats access to owners as willingness to pay"
+      ]
+    }
+  ]
+}

@@ -53,10 +53,16 @@ The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Gar
 
 ## Business
 
-The `business` plugin contains focused skills for founder, product, strategy, and operating decisions. Its first skill is:
+The `business` plugin contains seven complementary entrepreneurship and operating skills:
 
-- `business:plan-ceo-review` — challenge a business or product plan's premise, customer value, scope, strategy, economics, go-to-market, execution capacity, risks, and learning plan before commitment.
+- `business:discover-business-opportunities` — find and rank customer problems and market opportunities before selecting a venture direction.
+- `business:run-customer-discovery` — design and synthesize behavioral customer research without turning opinions into demand evidence.
+- `business:evaluate-and-shape-venture` — turn one selected idea into a testable venture and decide whether to build, test, pivot, pause, or stop.
+- `business:plan-ceo-review` — challenge an existing business or product plan's premise, scope, strategy, economics, execution, risks, and learning plan.
+- `business:business-proposal-builder` — qualify and build customer-facing B2B proposals, formal bids, commercial offers, and readiness reviews.
+- `business:prepare-founder-negotiations` — prepare principled cofounder, investor, hiring, vendor, partner, and stakeholder negotiations.
+- `business:startup-finance-and-controls` — improve management reporting, unit economics, cash visibility, finance controls, and board decision quality.
 
-`plan-ceo-review` supports four explicit review postures: scope expansion, selective expansion, hold scope, and scope reduction. Scope changes remain proposals until the user accepts them, and review is read-only unless a rewrite is explicitly authorized.
+Each skill owns a distinct decision stage and hands specialist work to the appropriate neighboring workflow. Academic and professional sources inform the playbooks, but the plugin does not claim institutional affiliation or professional legal, accounting, tax, audit, or investment authority.
 
 The Business plugin adapts the CEO plan-review methodology from Garry Tan's `gstack` under the MIT license. The required notice is in `plugins/business/LICENSES/`.

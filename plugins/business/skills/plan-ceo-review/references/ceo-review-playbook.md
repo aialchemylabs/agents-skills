@@ -9,6 +9,7 @@
 5. Compact artifacts
 6. Final report template
 7. Specialist handoffs
+8. Source anchors
 
 ## 1. Evidence Standards
 
@@ -128,10 +129,12 @@ Test:
 - whether the advantage is durable, compounding, or quickly copied;
 - what the company will not do as a consequence of this choice;
 - whether the plan builds a capability or distracts from the core.
+- whether present-business incentives or legacy assumptions suppress a justified future bet;
+- whether a future bet consumes the capacity, trust, or cash that keeps the present business viable.
 
 Do not accept “AI-powered,” “better UX,” “first mover,” or “all-in-one” as differentiation without evidence.
 
-### Pass 4: Business model and economics
+### Pass 4: Business model, preliminary economics, and resource allocation
 
 Test:
 
@@ -142,8 +145,13 @@ Test:
 - pricing logic and willingness-to-pay evidence;
 - sensitivity to the two or three assumptions that most affect viability;
 - capital, partner, hiring, or contractual commitments.
+- the explicit money, people, leadership attention, data, distribution, and trust allocated;
+- what existing work is stopped, slowed, delegated, or left unfunded as a consequence;
+- whether future capacity is protected by evidence gates rather than permanent entitlement.
 
 When numbers are missing, define the variables and break-even relationship. Do not invent values.
+
+Keep this pass at plan viability. Hand detailed management reporting, financial-statement interpretation, burn and runway, unit-economics integrity, cash conversion, control design, and fraud-risk analysis to `startup-finance-and-controls`.
 
 ### Pass 5: Go-to-market, adoption, and retention
 
@@ -186,6 +194,10 @@ Test:
 - concentration, platform, vendor, and key-person dependence;
 - downside containment, stop conditions, and recovery;
 - whether success creates a new risk the plan ignores.
+- whether economic benefit is separated from legal permission and ethical responsibility;
+- whether average benefit conceals concentrated harm or removes voice, recourse, dignity, or fair treatment;
+- whether incentives, authority pressure, conflicts of interest, or ethical fading make the downside easier to ignore;
+- who can challenge the decision and how affected stakeholders can obtain remedy.
 
 Recommend qualified professional review where required. Do not imply professional clearance.
 
@@ -206,6 +218,8 @@ Test:
 - pass, pivot, pause, and stop thresholds;
 - owner and review date;
 - whether measurement can distinguish adoption failure from product-value failure.
+- the evidence required before releasing the next tranche of money, people, market exposure, or irreversible commitment;
+- whether pass, pivot, pause, and stop rules are controlled by an accountable owner rather than the initiative advocate alone.
 
 Avoid vanity metrics and unsupported causal stories.
 
@@ -225,6 +239,10 @@ Test:
 - what becomes easier or harder next;
 - whether the plan remains coherent if it succeeds at 10x expected demand;
 - whether a reversible experiment preserves more option value than a full commitment.
+- whether present-core work, obsolete assumptions, and future bets are distinguished explicitly;
+- whether the present and future use appropriate measures: operating results for the core and learning or validation evidence for uncertain bets;
+- whether future bets can borrow useful assets from the core without inheriting assumptions that make the new model fail;
+- whether leadership has named and governed the tension between current execution and future creation.
 
 ## 4. Decision and Finding Formats
 
@@ -283,6 +301,11 @@ Use an artifact only when it clarifies relationships.
 | Risk | Likelihood | Impact | Detection signal | Response | Owner |
 |---|---|---|---|---|---|
 
+### Resource and portfolio ledger
+
+| Commitment | Present core, challenged legacy, or future bet | Resource envelope | Work displaced | Evidence gate | Release, hold, or stop owner |
+|---|---|---|---|---|---|
+
 ## 6. Final Report Template
 
 ```markdown
@@ -309,8 +332,11 @@ Use an artifact only when it clarifies relationships.
 ## Findings by business pass
 <prioritized evidence-backed findings; no material issue where appropriate>
 
+## Resource and portfolio choices
+<present core, challenged legacy assumptions, bounded future bets, displaced work, and release gates>
+
 ## One-way doors and material risks
-<risk register or concise list>
+<stakeholder exposure, risk register, or concise list>
 
 ## Metrics and learning plan
 <assumptions, experiments, metrics, guardrails, thresholds, review date>
@@ -329,12 +355,24 @@ Use an artifact only when it clarifies relationships.
 
 Recommend a handoff only when it is material:
 
-- customer discovery for weak problem or demand evidence;
+- `run-customer-discovery` for weak problem or demand evidence that requires primary research;
 - market research or sizing for a decision that depends on current external facts;
-- finance or accounting for formal reporting, tax, controls, or material economic commitments;
+- `startup-finance-and-controls` for management reporting, statement interpretation, burn and runway, unit-economics integrity, cash conversion, board finance narratives, financial controls, or fraud and error risk;
+- qualified finance, accounting, tax, audit, legal, insurance, or regulatory professionals for formal conclusions, filings, opinions, or material regulated commitments;
 - legal or compliance for contracts, employment, privacy, safety, financing, securities, or regulation;
 - engineering plan review after business scope and outcomes are accepted;
 - design-plan review for material user journeys and interaction decisions;
 - KPI reporting when the decision moves from planning into an operating cadence.
 
 State what question the specialist must answer. Do not use a handoff to avoid making the CEO-level recommendation.
+
+## 8. Source Anchors
+
+Use these sources as decision principles, not institutional affiliation or a substitute for company evidence:
+
+- [Harvard Business School, The Case Method](https://www.hbs.edu/mba/academic-experience/the-case-method) — identify the decision, take a position under incomplete information, test it through other perspectives, and reflect.
+- [Harvard Business School, Entrepreneurial Management curriculum](https://www.hbs.edu/faculty/units/em/Pages/curriculum.aspx) — integrate strategic direction, internal resources, stakeholder obligations, organizational design, resource allocation, and hard tradeoffs.
+- [Tuck School of Business, The Three Box Solution](https://exec.tuck.dartmouth.edu/news-insights/the-three-box-solution-vijay-govindarajan) — balance strengthening the present, challenging inherited practices, and creating the future.
+- [The University of Texas at Austin, Ethics Unwrapped: Organizational Ethics](https://ethicsunwrapped.utexas.edu/subject-area/organizational-ethics) — recognize authority pressure, role morality, moral myopia, and organizational conditions that can impair ethical judgment.
+
+Do not claim endorsement by, certification from, or affiliation with any source organization.

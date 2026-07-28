@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Customer Discovery"
+  short_description: "Design and synthesize rigorous customer discovery"
+  default_prompt: "Use $run-customer-discovery to design and synthesize customer research that tests our most important assumptions."

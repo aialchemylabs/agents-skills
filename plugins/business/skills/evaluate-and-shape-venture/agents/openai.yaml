@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evaluate and Shape Venture"
+  short_description: "Turn one venture idea into an evidence-gated decision"
+  default_prompt: "Use $evaluate-and-shape-venture to evaluate this venture, shape its smallest credible model, and recommend the next commitment."

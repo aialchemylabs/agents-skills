@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prepare Founder Negotiations"
+  short_description: "Prepare principled founder negotiations"
+  default_prompt: "Use $prepare-founder-negotiations to prepare this founder negotiation with clear interests, boundaries, and next moves."

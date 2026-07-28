@@ -1,0 +1,4 @@
+interface:
+  display_name: "Business Proposal Builder"
+  short_description: "Build decision-ready B2B proposals and bids"
+  default_prompt: "Use $business-proposal-builder to qualify this B2B opportunity and build a grounded customer proposal."

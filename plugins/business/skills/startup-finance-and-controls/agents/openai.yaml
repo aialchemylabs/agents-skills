@@ -1,0 +1,4 @@
+interface:
+  display_name: "Startup Finance & Controls"
+  short_description: "Turn startup financials into controlled decisions"
+  default_prompt: "Use $startup-finance-and-controls to audit these startup financials, cash risks, unit economics, and controls."

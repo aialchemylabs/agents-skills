@@ -1,0 +1,4 @@
+interface:
+  display_name: "Discover Business Opportunities"
+  short_description: "Find and rank evidence-backed business opportunities"
+  default_prompt: "Use $discover-business-opportunities to find and rank plausible customer problems and business opportunities in this search field."

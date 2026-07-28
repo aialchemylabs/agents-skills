@@ -1,0 +1,177 @@
+{
+  "skill_name": "evaluate-and-shape-venture",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "We selected one startup idea. Evaluate the founder fit, customer opportunity, business model, MVP, and whether to build, test, pivot, pause, or kill.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Turn this vague venture concept into a coherent beachhead, riskiest assumptions, and evidence-gated experiment.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Assess whether our paid pilot evidence is strong enough to commit more time and capital.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Stress-test the people, timing, economics, and deal dependencies for this early-stage company.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Define the smallest responsible MVP and explicit build, pivot, and kill thresholds for this venture.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Scan five industries and generate a ranked shortlist of startup opportunities.",
+        "owner": "discover-business-opportunities"
+      },
+      {
+        "prompt": "Recruit customers and conduct neutral discovery interviews about their current workflow.",
+        "owner": "run-customer-discovery"
+      },
+      {
+        "prompt": "Review this completed board plan and challenge its strategy, scope, and go-to-market.",
+        "owner": "plan-ceo-review"
+      },
+      {
+        "prompt": "Build our monthly cash forecast, close checklist, and financial control framework.",
+        "owner": "startup-finance-and-controls"
+      },
+      {
+        "prompt": "Design the technical architecture and implementation plan for the MVP.",
+        "owner": "engineering-planning-workflow"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Evaluate our selected idea: an AI assistant for every independent clinic. We have a demo and founder enthusiasm but no defined clinic type, workflow, interviews, buyer, price, channel, privacy review, or delivery-cost estimate. The founders want approval for a six-month build.",
+      "expected_output": "A Test decision that refuses the six-month commitment, shapes a provisional narrow thesis, and defines discovery and feasibility evidence before any bounded MVP.",
+      "expectations": [
+        "Calibrates the venture as concept stage and identifies the six-month build as the commitment at risk",
+        "Does not treat the demo or founder enthusiasm as customer evidence",
+        "Separates clinic type, user, beneficiary, buyer, payer, and blocker as unknowns",
+        "Builds an evidence ledger rather than filling gaps with plausible claims",
+        "Returns exactly one current decision of Test",
+        "Provides a narrow provisional thesis only as an assumption to investigate",
+        "Defines customer-discovery, privacy, feasibility, and economic evidence thresholds",
+        "Does not fabricate market size, price, savings, compliance, or delivery cost"
+      ],
+      "failure_conditions": [
+        "Approves the six-month build",
+        "Produces a detailed product roadmap despite missing problem evidence",
+        "Claims the idea is validated by the demo"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Our founders know property management deeply and can reach buyers. Three customers paid $2,000 pilots for maintenance coordination, but each pilot required 90 hours of founder work and custom integrations. None has renewed yet. Evaluate whether to scale sales.",
+      "expected_output": "An evidence-calibrated decision that recognizes payment and access while refusing scale, testing or pivoting the delivery model and renewal economics first.",
+      "expectations": [
+        "Treats paid pilots as stronger evidence than interviews but not proof of repeatability",
+        "Records founder access and domain experience as advantages without treating them as guarantees",
+        "Calculates contribution with supplied values or explicit variables and includes founder delivery cost",
+        "Flags custom integration, capacity, key-person dependence, renewal, support, and cash timing",
+        "Does not infer positive unit economics from revenue",
+        "Returns one current decision, plausibly Test or Pivot, with a decisive reason",
+        "Defines a standardized-delivery or renewal experiment with thresholds, owner, timebox, and cost ceiling",
+        "States what evidence would later justify scaling sales"
+      ],
+      "failure_conditions": [
+        "Recommends scaling because three customers paid",
+        "Excludes founder labor from delivery economics",
+        "Calls pilots recurring revenue"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Shape a venture that uses patient messages to predict urgent mental-health risk. One founder wants to move fast with scraped messages; the clinical cofounder says consent, false negatives, escalation responsibility, and medical regulation are unresolved. Roles, equity, and decision rights are also unsigned.",
+      "expected_output": "A Pause decision that treats safety, consent, clinical responsibility, regulation, and founder governance as gating issues and defines specialist and team-resolution conditions before experiments.",
+      "expectations": [
+        "Returns exactly one current decision of Pause unless supplied evidence supports a stronger stop",
+        "Preserves the founders' disagreement as a contradiction rather than choosing the optimistic view",
+        "Rejects scraped patient data and unapproved experimentation",
+        "Identifies false negatives, false positives, escalation, duty, consent, privacy, and vulnerable-user risks",
+        "Routes clinical, privacy, legal, safety, and regulatory questions to qualified review",
+        "Treats roles, equity, incentives, and decision rights as venture-fit conditions",
+        "Defines explicit resume or kill conditions and a review owner",
+        "Does not claim medical, legal, privacy, or ethical clearance"
+      ],
+      "failure_conditions": [
+        "Recommends a live MVP using scraped messages",
+        "Treats safety work as post-launch polish",
+        "Ignores cofounder governance"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "We tested a restaurant inventory marketplace for nine months. Forty restaurants used a free trial; two paid once, none renewed, suppliers require guaranteed volume, and each transaction loses money before support. Three repositioning experiments produced the same result. The founders want another six months because the market is large.",
+      "expected_output": "A Kill decision grounded in repeated contradiction, structurally weak economics, supplier dependency, and low expected value of more testing.",
+      "expectations": [
+        "Returns exactly one current decision of Kill",
+        "Uses the repeated non-renewal, low payment, negative contribution, and supplier volume requirement as decisive evidence",
+        "Does not let theoretical market size override customer and economic evidence",
+        "Distinguishes free trial activity from retained paid demand",
+        "Recognizes that three repositioning tests reduce the expected value of another similar round",
+        "States which core assumptions were contradicted",
+        "Identifies any reusable learning or assets without turning them into an automatic pivot",
+        "Specifies an orderly stop and any customer, supplier, data, or financial obligations to close"
+      ],
+      "failure_conditions": [
+        "Uses Pause to avoid an evidence-backed Kill",
+        "Recommends another identical six-month test",
+        "Calls free trials traction"
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "We have one selected workflow: invoice follow-up for existing design partners. Six months of baseline data exists; two partners signed paid four-week pilots; the finance manager is the owner; success is a 20% reduction in median overdue days without higher disputes; a data-processing review and technical spike are scheduled. Define the smallest responsible MVP and commitment.",
+      "expected_output": "A bounded Build decision for the specified pilot, with baseline, outcome, dispute guardrail, specialist dependencies, economics, scope exclusions, and next review gate explicit.",
+      "expectations": [
+        "Calibrates the decision to a paid pilot rather than a general product launch",
+        "Recognizes baseline data, paid commitments, owner, outcome metric, and guardrail as meaningful evidence",
+        "Returns exactly one current decision of Build for the bounded MVP if no supplied blocker contradicts it",
+        "Defines one workflow, target partners, end-to-end outcome, delivery method, and not-doing list",
+        "Preserves the data-processing review and technical spike as pending dependencies rather than completed approvals",
+        "Defines metric comparability, cost ceiling, owner, timebox, stop threshold, and review date",
+        "Checks direct manual delivery and support cost without inventing values",
+        "Does not expand to new segments, a platform, or a full launch"
+      ],
+      "failure_conditions": [
+        "Claims legal or technical approval is complete",
+        "Turns the pilot into an unbounded product roadmap",
+        "Invents pilot economics or results"
+      ]
+    },
+    {
+      "id": 6,
+      "kind": "dialogue",
+      "prompt": "I have a completed 45-page expansion plan with a board decision next week. It covers three geographies, hiring, pricing, annual budgets, operating cadence, and a signed delivery roadmap. Please use venture shaping to review the existing plan and rewrite it.",
+      "expected_output": "A boundary-preserving handoff to plan-ceo-review that does not duplicate mature-plan critique or rewrite without a proper review and explicit authorization.",
+      "expectations": [
+        "Recognizes that the object is an already-developed business and operating plan rather than an early selected idea",
+        "Routes the substantive critique to plan-ceo-review",
+        "Does not run a parallel venture-shaping framework over the entire plan",
+        "Preserves the board deadline, source of truth, decision owner, and rewrite request in the handoff",
+        "Notes that review should precede any rewrite and keeps proposed changes unapproved",
+        "Identifies only the venture-evaluation evidence that may be useful context for the plan review",
+        "Does not edit the plan in a review-only step",
+        "Avoids inventing facts from the unseen 45-page document"
+      ],
+      "failure_conditions": [
+        "Duplicates the complete CEO plan review",
+        "Silently rewrites the plan",
+        "Treats mature annual operating details as a concept-stage MVP"
+      ]
+    }
+  ]
+}

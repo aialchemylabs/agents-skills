@@ -1,6 +1,6 @@
 ---
 name: plan-ceo-review
-description: Review business, product, venture, and operating plans before commitment to challenge the premise, customer outcome, scope and ambition, strategic fit, differentiation, economics, go-to-market, execution, risks, and learning metrics. Use when asked for a CEO or founder review, product-strategy critique, business-plan challenge, decision-readiness check, 10x rethink, scope expansion, selective expansion, scope hold, or scope reduction. Keep reviews read-only unless the user explicitly authorizes a rewrite; route detailed technical architecture and UI implementation reviews to the relevant engineering or design workflow.
+description: Review business, product, venture, and operating plans before commitment to challenge the premise, customer outcome, scope and ambition, strategic fit, differentiation, economics, go-to-market, resource allocation, stakeholder consequences, execution, risks, and learning gates. Use when asked for a CEO or founder review, product-strategy critique, business-plan challenge, decision-readiness check, 10x rethink, scope expansion, selective expansion, scope hold, or scope reduction. Keep reviews read-only unless the user explicitly authorizes a rewrite; route finance-system and control audits, detailed technical architecture, and UI implementation reviews to their specialist workflows.
 ---
 
 # Review Plans Like a CEO
@@ -28,7 +28,7 @@ Read [references/ceo-review-playbook.md](references/ceo-review-playbook.md) befo
    - findings only;
    - an interactive scope review; or
    - an explicitly authorized rewrite after decisions are accepted.
-4. Inspect available business context: prior decisions, customer evidence, product or operating data, current capabilities, commitments, capacity, and relevant market evidence.
+4. Inspect available business context: prior decisions, customer evidence, product or operating data, current capabilities, commitments, capacity, present-business obligations, future bets, and relevant market evidence.
 5. Create a compact evidence ledger of facts, assumptions, unknowns, and contradictions.
 
 Ask one concise blocking question only when the answer would materially change the review. Otherwise continue with labeled assumptions.
@@ -65,7 +65,7 @@ For a non-trivial decision, compare two or three genuinely different paths:
 2. the strongest path within the stated constraints;
 3. an ambitious path when expansion is relevant.
 
-For each path, state the customer outcome, strategic logic, evidence required, effort or capacity demand, reversibility, principal risk, and what it reuses. Include `do nothing`, `delay`, or a learning experiment when it is a credible alternative. Recommend one path rather than presenting an unranked menu.
+For each path, state the customer outcome, strategic logic, evidence required, effort or capacity demand, allocation displaced, stakeholder consequences, reversibility, principal risk, and what it reuses. Include `do nothing`, `delay`, or a learning experiment when it is a credible alternative. Recommend one path rather than presenting an unranked menu.
 
 ## Run Every Business Review Pass
 
@@ -74,14 +74,16 @@ Evaluate each applicable pass from the playbook:
 1. customer and problem evidence;
 2. product value and experience;
 3. strategy, timing, and differentiation;
-4. business model and economics;
+4. business model, preliminary economics, and resource allocation;
 5. go-to-market, adoption, and retention;
 6. execution capacity and operating model;
-7. risks, stakeholders, ethics, and reversibility;
-8. metrics, experiments, and decision gates;
-9. long-term trajectory and option value.
+7. risks, stakeholder obligations, ethics, and reversibility;
+8. operating metrics, experiments, and decision gates;
+9. present-versus-future portfolio tension, long-term trajectory, and option value.
 
 State `No material issue found` when a pass is sound. Mark a pass `Not applicable` only with a reason. Do not manufacture a weakness to make the review look thorough.
+
+Keep finance work at preliminary plan viability: identify the economic question, capital or cash consequence, and decision threshold. Route management reporting, statement interpretation, burn or runway, unit-economics integrity, cash conversion, finance controls, and fraud-risk work to `startup-finance-and-controls`.
 
 Route technical architecture, migrations, failure paths, test strategy, and rollout mechanics to an engineering plan review after the business direction is accepted. Route detailed interaction states, responsiveness, and accessibility to a design-plan review when applicable.
 
@@ -94,7 +96,8 @@ When a material choice must be resolved:
 3. recommend one option and give the decisive reason;
 4. provide two or three viable options with tradeoffs;
 5. distinguish one-way doors from reversible choices;
-6. pause before incorporating the choice into an authorized rewrite.
+6. state the strongest evidence against the recommendation and what would change it;
+7. pause before incorporating the choice into an authorized rewrite.
 
 For findings-only work, complete the review without implying that recommendations were accepted. List unresolved decisions in priority order.
 
@@ -109,9 +112,10 @@ Use this order:
 5. **Review posture and scope** — accepted baseline plus proposed additions, deferrals, and cuts.
 6. **Alternatives considered** — comparison and recommendation.
 7. **Findings by business pass** — evidence, consequence, recommendation, and confidence.
-8. **One-way doors and material risks** — owners, mitigations, and signals.
-9. **Metrics and learning plan** — leading signals, outcome metrics, guardrails, evidence thresholds, and review date.
-10. **Next actions** — the smallest actions that improve the decision, with owners where known.
-11. **Unresolved decisions and handoffs** — business choices first, then any engineering, design, research, finance, legal, or operational review needed.
+8. **Resource and portfolio choices** — what funds the present, what is stopped or challenged, what future bets receive bounded capacity, and the release gates.
+9. **One-way doors and material risks** — stakeholder exposure, owners, mitigations, and signals.
+10. **Metrics and learning plan** — leading signals, outcome metrics, guardrails, evidence thresholds, and review date.
+11. **Next actions** — the smallest actions that improve the decision, with owners where known.
+12. **Unresolved decisions and handoffs** — business choices first, then any engineering, design, research, finance, legal, or operational review needed.
 
 Keep the answer proportional. A small, evidence-backed plan can be ready. An ambitious plan can be right when its leverage and assumptions are explicit. A detailed plan is not ready merely because it is detailed.
