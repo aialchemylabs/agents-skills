@@ -69,7 +69,7 @@ These inform design and oversight quality. None of them is a compliance instrume
 
 Trigger EU research when the customer places an AI system on the EU market, has EU users or affected people, processes EU personal data, supplies an EU deployer, or is contractually bound to EU requirements — regardless of where it is headquartered.
 
-**Verified 2026-08-03 against the European Commission AI Act page (page last updated 2026-07-31) and corroborating reporting:**
+**Verified 2026-08-03 against the European Commission AI Act policy page (page last updated 2026-07-31):**
 
 | Milestone | Date |
 |---|---|
@@ -80,7 +80,9 @@ Trigger EU research when the customer places an AI system on the EU market, has 
 | High-risk, stand-alone Annex III systems | **2027-12-02** |
 | High-risk AI embedded in regulated products (Annex I) | **2028-08-02** |
 
-The Annex III and Annex I dates were deferred by the **Digital Omnibus on AI, Regulation (EU) 2026/1744**, published in the Official Journal on 2026-07-24 and in force from 2026-07-27. It also added prohibitions on non-consensual intimate imagery and strengthened AI Office enforcement powers.
+The Annex III and Annex I dates were deferred by the **Digital Omnibus on AI**, which the Commission page records as entering into force on 2026-07-27 following political agreement on 2026-05-07. The Commission page also records a further prohibition taking effect in December 2026 as part of that package.
+
+The instrument number **Regulation (EU) 2026/1744** and the Official Journal publication date **2026-07-24** rest on secondary reporting: EUR-Lex returned an automated-request challenge (HTTP 202, empty body) from this environment on 2026-08-03, so the OJ citation itself was **not** read. Confirm the citation on EUR-Lex before using it in a customer document.
 
 **This is a fast-volatility area that changed twice within twelve months.** Any answer given from memory rather than from the current Commission and EUR-Lex pages is likely to be wrong. Re-verify dates, scope, and the Article 6 classification position for every engagement.
 
@@ -140,16 +142,18 @@ Never state or imply that:
 
 ## 8. Verification Log and Changelog
 
-**Verified live 2026-08-03** (HTTP reachable and content inspected): NIST AI RMF and AI 600-1 pages; NIST CSF and Privacy Framework pages; OWASP Top 10 for LLM Applications 2025 (full list confirmed); MITRE ATLAS (reachable; no version indicator exposed); EUR-Lex Regulation (EU) 2024/1689 and Regulation (EU) 2016/679; European Commission AI Act policy page (page last updated 2026-07-31); OECD-LEGAL-0449 (reachable).
+**Verified live 2026-08-03** (reached and content inspected): NIST AI RMF and AI 600-1 pages; NIST CSF and Privacy Framework pages; OWASP Top 10 for LLM Applications 2025 (full list confirmed); MITRE ATLAS (reachable; no version indicator exposed); European Commission AI Act policy page (page last updated 2026-07-31, staged dates and Omnibus entry-into-force read from the page); OECD-LEGAL-0449 (reachable).
 
 **Could not be verified from the working environment on 2026-08-03:**
 
 - `iso.org` standard pages returned HTTP 403 to automated requests. ISO edition years above are drawn from secondary reporting and **must be confirmed on the official ISO catalogue entry** before use.
 - `unesdoc.unesco.org` returned HTTP 403 to automated requests; the UNESCO Recommendation's metadata was not directly confirmed.
 - OECD-LEGAL-0449 page content did not render for extraction; adoption and amendment dates were **not** confirmed and are therefore not asserted here.
+- `eur-lex.europa.eu` returned an automated-request challenge (HTTP 202 with an empty body) for Regulation (EU) 2024/1689 and Regulation (EU) 2016/679. The AI Act staged dates above were therefore taken from the Commission policy page, and the OJ citation for the Digital Omnibus was **not** confirmed at source.
 
 **Changelog**
 
 | Date | Change |
 |---|---|
-| 2026-08-03 | Initial registry. Recorded EU high-risk deferral under Regulation (EU) 2026/1744. Corrected ISO/IEC 27090 from "published 2025" to draft/FDIS. Recorded ISO/IEC 27701:2025 as stand-alone. Noted NIST AI RMF 1.0 under revision. Logged ISO/UNESCO access failures. |
+| 2026-08-03 | Initial registry. Recorded EU high-risk deferral under the Digital Omnibus. Corrected ISO/IEC 27090 from "published 2025" to draft/FDIS. Recorded ISO/IEC 27701:2025 as stand-alone. Noted NIST AI RMF 1.0 under revision. Logged ISO/UNESCO access failures. |
+| 2026-08-03 | Re-verified the EU staged dates against the Commission page and **downgraded the Regulation (EU) 2026/1744 citation to unconfirmed** after EUR-Lex blocked automated requests; the previous entry implied EUR-Lex had been read. |
