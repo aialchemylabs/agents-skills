@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "aialchemy-agent-skills",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Reusable AI Alchemy Labs skills for AI gateways, engineering, business, and related infrastructure.",
   "owner": {
     "name": "AI Alchemy Labs"
@@ -63,8 +63,8 @@
     },
     {
       "name": "business",
-      "description": "Discover opportunities, validate ventures, review plans, build proposals, prepare negotiations, and strengthen startup finance and controls.",
-      "version": "0.2.0",
+      "description": "Discover opportunities, validate ventures, review plans, advise and enable responsible AI adoption, build proposals, prepare negotiations, and strengthen startup finance and controls.",
+      "version": "0.3.0",
       "author": {
         "name": "AI Alchemy Labs"
       },
@@ -83,13 +83,18 @@
         "finance",
         "controls",
         "decision-making",
-        "operations"
+        "operations",
+        "ai-advisory",
+        "ai-adoption",
+        "ai-governance",
+        "workforce-enablement"
       ],
       "category": "business",
       "tags": [
         "entrepreneurship",
         "commercial-decisions",
-        "operating-discipline"
+        "operating-discipline",
+        "responsible-ai-adoption"
       ],
       "source": "./plugins/business",
       "strict": true

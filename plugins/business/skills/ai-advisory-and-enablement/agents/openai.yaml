@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Advisory & Enablement"
+  short_description: "Turn AI ambition into evidence-gated adoption"
+  default_prompt: "Use $ai-advisory-and-enablement to research this organization, assess its AI opportunities and responsibilities, educate the relevant stakeholders, and recommend the smallest evidence-backed next decision."
