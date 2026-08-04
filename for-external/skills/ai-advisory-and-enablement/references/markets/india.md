@@ -6,7 +6,7 @@
 
 ## 1. Scope and Applicability Triggers
 
-Load this pack when the customer operates in India; affected people, customers, employees, or data subjects are in India; personal data is collected, stored, or processed in India, or processed outside India in connection with offering goods or services to people in India; the customer supplies an Indian entity or government body; or an Indian contract or procurement condition applies.
+Load this pack when the organization operates in India; its customers, employees, other affected people, or data subjects are in India; personal data is collected, stored, or processed in India, or processed outside India in connection with offering goods or services to people in India; the organization supplies an Indian entity or government body; or an Indian contract or procurement condition applies.
 
 Indian IT and BPM service providers frequently carry **overseas obligations through their customers** — EU, UK, US, and Australian requirements can bind the delivery workflow regardless of where the work is performed. Route those jurisdictions independently.
 
@@ -35,9 +35,9 @@ Every entry below inherits these values unless the entry overrides them. This ke
 |---|---|
 | Jurisdiction | India (Union) |
 | Sector | All sectors |
-| Verification owner | The AI Alchemy engagement lead named in the engagement record, who re-verifies before the source supports any recommendation |
+| Verification owner | The organizational owner named in the assessment record, who re-verifies before the source supports any recommendation |
 | Verification method | Direct fetch of the official URL on the stated date with page or document content inspected — not an HTTP status check |
-| Next review trigger | At the start of every engagement that relies on the entry, and on any amendment, notification, or replacement |
+| Next review trigger | At the start of every assessment that relies on the entry, and on any amendment, notification, or replacement |
 
 Each entry then states, in this order: **Issuer · type and legal force** / **Jurisdiction · sector** (only when it differs from the default) / **Applies to** (entity, AI-chain role, data class, use case, lifecycle) / **Published** / **Status · effective or commencement** / **Supersession** / **Official URL** / **Verified** / **Next review trigger** (only when it differs from the default) / **Informs** / **Cautions**.
 
@@ -51,7 +51,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URLs:** Release https://www.pib.gov.in/PressReleasePage.aspx?PRID=2186639 · Guidelines PDF https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc2025115685601.pdf · Backgrounder https://www.pib.gov.in/PressReleasePage.aspx?PRID=2228315
 - **Verified:** 2026-08-03 — the PIB release was read in full (dated 05 NOV 2025, Ministry of Electronics & IT), confirming the launch date, the four-component structure, and the drafting committee chaired by Prof. Balaraman Ravindran. The backgrounder (dated 15 FEB 2026) was read for the AIGG/TPEC/AISI architecture. The guidelines PDF was **downloaded successfully** (2.74 MB; embedded creation date 2025-11-04) but its text could not be extracted with the tooling available here — treat the PDF as reachable, not as content-verified.
 - **Next review trigger:** Default, plus any move from guidance toward a statutory or sectoral instrument
-- **Informs:** The vocabulary and institutional direction an Indian customer or regulator is likely to reference, and the fact that India's current AI-specific position is guidance rather than a compliance regime
+- **Informs:** The vocabulary and institutional direction an Indian organization or regulator is likely to reference, and the fact that India's current AI-specific position is guidance rather than a compliance regime
 - **Cautions:** **Never** describe these guidelines as binding, and never treat adherence as legal compliance. The earlier version of this pack claimed the requirement's seed PRID was wrong; that was itself wrong — **PRID=2186639 is the correct MeitY release**, and PRID=2228315 is a later PIB backgrounder. Specific characterisations sometimes attached to the guidelines in commentary — graded liability, voluntary compliance regimes, derivation from the RBI FREE-AI framework — are **not verified here** and must be read from the guidelines document before being repeated.
 
 ### IN-002 Digital Personal Data Protection Act, 2023
@@ -64,7 +64,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URLs:** Act record https://www.indiacode.nic.in/handle/123456789/22037 · Commencement notification https://www.meity.gov.in/static/uploads/2025/11/c56ceae6c383460ca69577428d36828b.pdf
 - **Verified:** 2026-08-03 — India Code record read directly: title "Digital Personal Data Protection Act, 2023.", Act ID 2023-22, Act Number 22, Enactment Date 2023-08-11. G.S.R. 843(E) was downloaded from the official MeitY publication record and read provision-by-provision for the commencement schedule above.
 - **Informs:** Lawful basis, notice, consent, data-principal rights, data-fiduciary duties, breach notification, and cross-border transfer for anything the AI system touches
-- **Cautions:** **The requirement's seed URL `https://www.indiacode.nic.in/handle/123456789/19698` is wrong** — that handle resolves to the *Provincial Small Cause Courts (Suits Validation) Act, 1955*. Verified 2026-08-03; use handle **22037**. Do not state that a given obligation binds the customer today without checking which provisions and rules have commenced — see IN-003.
+- **Cautions:** **The requirement's seed URL `https://www.indiacode.nic.in/handle/123456789/19698` is wrong** — that handle resolves to the *Provincial Small Cause Courts (Suits Validation) Act, 1955*. Verified 2026-08-03; use handle **22037**. Do not state that a given obligation binds the organization today without checking which provisions and rules have commenced—see IN-003.
 
 ### IN-003 Digital Personal Data Protection Rules, 2025
 
@@ -76,8 +76,8 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URLs:** MeitY document page https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa · Rules PDF https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf · Corrigendum https://www.meity.gov.in/static/uploads/2025/12/3c7ebbae0e5456f493f486e6845df86b.pdf · Act commencement notification https://www.meity.gov.in/static/uploads/2025/11/c56ceae6c383460ca69577428d36828b.pdf · Official PIB backgrounder https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf
 - **Verified:** 2026-08-03 — the official Rules PDF, corrigendum, and Act commencement notification were downloaded from the MeitY publication record and read. Rule 1 confirms the three Rules phases above; G.S.R. 843(E) confirms the corresponding provision-level Act phases in IN-002; G.S.R. 892(E) corrects the Rules notification. The official PIB backgrounder was also read for explanatory context. The dates **2026-11-13** and **2027-05-13** are anniversary calculations from the Gazette date, not separately stated dates in the notification.
 - **Next review trigger:** Default, plus each phase boundary inside the eighteen-month window
-- **Informs:** Whether a specific DPDP obligation is operative at the customer's decision date, and what a consent notice and breach process must contain
-- **Cautions:** Commencement is now verified, but applicability still depends on the customer's role and the specific provision. Do not collapse the three phases into "fully in force" or "not in force". The commencement dates above are based on the Gazette text and must be re-verified if a later amendment, notification, or corrigendum appears. Record the applicable section and rule—not merely "DPDP applies"—in the evidence ledger.
+- **Informs:** Whether a specific DPDP obligation is operative at the organization's decision date, and what a consent notice and breach process must contain
+- **Cautions:** Commencement is now verified, but applicability still depends on the organization's role and the specific provision. Do not collapse the three phases into "fully in force" or "not in force". The commencement dates above are based on the Gazette text and must be re-verified if a later amendment, notification, or corrigendum appears. Record the applicable section and rule—not merely "DPDP applies"—in the evidence ledger.
 
 ### IN-004 Information Technology Act, 2000, rules, and CERT-In directions
 
@@ -102,8 +102,8 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URL:** https://www.rbi.org.in/Scripts/PublicationReportDetails.aspx?UrlPage=&ID=1306
 - **Verified:** 2026-08-03 — page reached and read: date 13 Aug 2025, full title, constitution history, and the report's self-description as the committee's proposed framework
 - **Next review trigger:** Default, plus any RBI Master Direction or circular addressing AI
-- **Informs:** What an RBI-regulated customer's board and risk function will expect to see, and the direction of likely future RBI expectations
-- **Cautions:** A recommendation in this report is **not** an RBI direction. For any regulated-entity customer, check the current Master Directions before describing an obligation.
+- **Informs:** What an RBI-regulated organization's board and risk function will expect to see, and the direction of likely future RBI expectations
+- **Cautions:** A recommendation in this report is **not** an RBI direction. For any regulated entity, check the current Master Directions before describing an obligation.
 
 ### IN-006 NITI Aayog strategy and Responsible AI approach documents
 
@@ -114,7 +114,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** Not formally superseded, but overtaken in currency by IN-001 for present-day direction
 - **URLs:** https://www.niti.gov.in/sites/default/files/2023-03/National-Strategy-for-Artificial-Intelligence.pdf · https://www.niti.gov.in/sites/default/files/2021-02/Responsible-AI-22022021.pdf · https://www.niti.gov.in/sites/default/files/2021-08/Part2-Responsible-AI-12082021.pdf
 - **Verified:** 2026-08-03 — all three PDFs retrieved successfully from the official host (4.6 MB, 3.5 MB, 3.2 MB respectively). Document contents were **not** read in this cycle; publication dates above are taken from the official file paths and names, not from the document text.
-- **Informs:** Background to India's stated AI direction where a customer or a tender references it
+- **Informs:** Background to India's stated AI direction where the organization, one of its customers, or a tender references it
 - **Cautions:** Older strategy material. Check whether it has been overtaken by IN-001 before relying on it for current direction, and do not treat a strategy principle as a control.
 
 ### IN-007 ICMR ethical guidelines for AI in biomedical research and healthcare
@@ -140,12 +140,12 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** Per individual standard
 - **URL:** https://www.bis.gov.in/
 - **Verified:** 2026-08-03 — host reachable and the site rendered. **No individual standard's adoption status was verified**; do so per standard before citing one.
-- **Informs:** Whether a tender or contract that cites an Indian standard creates a real obligation for this customer
+- **Informs:** Whether a tender or contract that cites an Indian standard creates a real obligation for the organization
 - **Cautions:** BIS adoption of an ISO/IEC AI standard does **not** by itself create a legal obligation. Establish whether a contract, tender condition, or sector regulator requires it. Copyright and paywall rules in [../standards-and-frameworks.md](../standards-and-frameworks.md) apply to BIS-adopted texts as well.
 
 ### IN-009 Sector instruments
 
-- **Issuer · force:** SEBI, IRDAI, TRAI/TEC, and other sector regulators · **Binding** where a circular, direction, or master regulation applies to the customer's regulated activity
+- **Issuer · force:** SEBI, IRDAI, TRAI/TEC, and other sector regulators · **Binding** where a circular, direction, or master regulation applies to the organization's regulated activity
 - **Jurisdiction · sector:** India · Securities, insurance, telecom, health, education, employment, public procurement
 - **Applies to:** Entity — regulated entities in the relevant sector · Role — deployer within the regulated activity · Data — sector-specific · Use case — the regulated activity · Lifecycle — as specified per instrument
 - **Published:** Varies by instrument
@@ -164,18 +164,18 @@ Each is a **research requirement plus specialist handoff**. None has a register 
 
 ## 5. Operating Context — Establish, Never Assume
 
-This pack **must not** encode stereotypes. Do not assume Indian customers are price sensitive. Do not assume low labour cost makes automation uneconomic. Do not assume English-language operation.
+This pack **must not** encode stereotypes. Do not assume Indian organizations are price sensitive. Do not assume low labour cost makes automation uneconomic. Do not assume English-language operation.
 
-Establish from customer evidence:
+Establish from organization-specific evidence:
 
-- **Actual economics** — real fully-loaded cost per unit of the workflow, the customer's own hurdle rate, and how benefit would be realised in INR;
+- **Actual economics** — real fully-loaded cost per unit of the workflow, the organization's own hurdle rate, and how benefit would be realised in INR;
 - **Workforce effects** — headcount structure, attrition, redeployment reality, shift patterns, and what "released capacity" would actually mean here;
-- **Language and script** — which Indian languages appear in real inputs and outputs, code-mixed and transliterated text, and whether evaluation sets cover them. Model performance in English is not evidence of performance in the customer's actual language mix;
+- **Language and script** — which Indian languages appear in real inputs and outputs, code-mixed and transliterated text, and whether evaluation sets cover them. Model performance in English is not evidence of performance in the organization's actual language mix;
 - **Accessibility** — obligations and real user needs for public-facing services;
 - **Infrastructure** — connectivity, device constraints, cloud region availability, and latency for the real user population;
 - **Digital public infrastructure** — India Stack, Aadhaar-linked flows, UPI, DigiLocker, or Bhashini **only where they materially affect the decision**, and never as a default recommendation;
 - **Vendor and cloud options** — local providers, residency options, and support models;
-- **Service expectations and procurement realities** for the customer's own buyers.
+- **Service expectations and procurement realities** for the organization's own customers or buyers.
 
 Evaluation for a multilingual workflow that has only been tested in English is an unmet Gate 2 evidence requirement, not a minor caveat.
 
@@ -185,13 +185,13 @@ Employment screening and worker monitoring · credit, lending, insurance, and cl
 
 ## 7. Specialist Handoff Questions
 
-- Which DPDP Act provisions and which DPDP Rules have commenced as at the decision date, and which bind this customer's role? What does rule 1(2) of the notified Rules say?
-- Is the customer a data fiduciary, and is there any basis to expect significant-data-fiduciary designation?
+- Which DPDP Act provisions and which DPDP Rules have commenced as at the decision date, and which bind the organization's role? What does rule 1(2) of the notified Rules say?
+- Is the organization a data fiduciary, and is there any basis to expect significant-data-fiduciary designation?
 - What lawful basis and notice support this training, fine-tuning, or retrieval use?
 - Which CERT-In direction obligations attach to this system, with what reporting timeline and log retention?
 - For a regulated entity: which current RBI, SEBI, or IRDAI instrument governs this use — as distinct from the FREE-AI recommendations?
 - Do any cross-border transfer restrictions apply to the intended cloud region or vendor subprocessing chain?
-- Does the customer's overseas client contract import obligations stricter than Indian law?
+- Does the organization's overseas client contract import obligations stricter than Indian law?
 - Where biomedical or clinical data is involved, is ethics committee approval required before any pilot?
 
 ## 8. Changelog

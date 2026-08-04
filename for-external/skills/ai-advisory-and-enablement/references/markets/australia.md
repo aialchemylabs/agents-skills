@@ -4,7 +4,7 @@
 
 ## 1. Scope and Applicability Triggers
 
-Load this pack when the customer operates in Australia; affected people, customers, employees, or data subjects are in Australia; data is collected, stored, processed, or transferred in or from Australia; the customer supplies an Australian entity or government body; or an Australian contract or procurement condition applies.
+Load this pack when the organization operates in Australia; its customers, employees, other affected people, or data subjects are in Australia; data is collected, stored, processed, or transferred in or from Australia; the organization supplies an Australian entity or government body; or an Australian contract or procurement condition applies.
 
 Add a state or territory route when the activity involves a state/territory public sector body, workplace surveillance, health records, or state-based privacy and surveillance devices legislation. Commonwealth coverage does not displace state law.
 
@@ -33,9 +33,9 @@ Every entry below inherits these values unless the entry overrides them. This ke
 |---|---|
 | Jurisdiction | Australia (Commonwealth) |
 | Sector | All sectors |
-| Verification owner | The AI Alchemy engagement lead named in the engagement record, who re-verifies before the source supports any recommendation |
+| Verification owner | The organizational owner named in the assessment record, who re-verifies before the source supports any recommendation |
 | Verification method | Direct fetch of the official URL on the stated date with page or document content inspected — not an HTTP status check |
-| Next review trigger | At the start of every engagement that relies on the entry, and on any amendment, new compilation, or replacement notice |
+| Next review trigger | At the start of every assessment that relies on the entry, and on any amendment, new compilation, or replacement notice |
 
 Each entry then states, in this order: **Issuer · type and legal force** / **Jurisdiction · sector** (only when it differs from the default) / **Applies to** (entity, AI-chain role, data class, use case, lifecycle) / **Published** / **Status · effective or commencement** / **Supersession** / **Official URL** / **Verified** / **Next review trigger** (only when it differs from the default) / **Informs** / **Cautions**.
 
@@ -50,7 +50,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** Not superseded. A **further version commences 2026-12-10**, inserting the automated-decision privacy-policy provisions made by AU-002 (Schedule 1, items 87 and 88)
 - **URL:** https://www.legislation.gov.au/C2004A03712/latest/text
 - **Verified:** 2026-08-03 — compilation number, compilation date, register ID, and the pending 2026-12-10 version confirmed through the Federal Register of Legislation API (`api.prod.legislation.gov.au/v1/Versions`)
-- **Next review trigger:** Default, plus any new compilation registered before the engagement decision date
+- **Next review trigger:** Default, plus any new compilation registered before the assessment decision date
 - **Informs:** Whether the Australian Privacy Principles apply to the personal information entering and leaving the AI system, and which APPs bind the specific handling
 - **Cautions:** Applicability depends on entity type and turnover thresholds. Confirm APP-entity status before assuming coverage. The compilation in force at the decision date, not the latest news article, governs.
 
@@ -69,8 +69,8 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URL:** https://www.legislation.gov.au/C2024A00128/latest/text
 - **Verified:** 2026-08-03 — section 2 commencement table read from the authorised C2024A00128 text obtained through the Federal Register of Legislation. The table states **2025-06-10** for Schedule 2 and **2026-12-10** for Schedule 1 Part 15; neither date is inferred from reporting.
 - **Next review trigger:** Default, plus publication of OAIC guidance on the Part 15 obligations
-- **Informs:** What a privacy policy must disclose about automated decisions before 2026-12-10, and whether the statutory tort exposes the customer's AI-assisted activity
-- **Cautions:** Schedule 2 is already operative. Part 15 is close enough to bind live projects — treat it as decision-critical, not background. Re-check the authorised commencement table and any later amendments at the engagement decision date.
+- **Informs:** What a privacy policy must disclose about automated decisions before 2026-12-10, and whether the statutory tort exposes the organization's AI-assisted activity
+- **Cautions:** Schedule 2 is already operative. Part 15 is close enough to bind live projects—treat it as decision-critical, not background. Re-check the authorised commencement table and any later amendments at the assessment decision date.
 
 ### AU-003 Guidance on privacy and the use of commercially available AI products
 
@@ -105,7 +105,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** The department states this guidance **evolves** the ten guardrails of AU-006 and the eight principles of AU-007. Use AI6 as the current baseline; neither predecessor is withdrawn.
 - **URL:** https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices · practice text at https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations
 - **Verified:** 2026-08-03 — the six practice headings were read from the official foundations page; the 2025-10-21 publication date and the "evolves" relationship were confirmed on the AU-006 and AU-007 pages
-- **Informs:** A proportionate governance baseline to propose to an Australian customer, and the vocabulary an Australian customer is most likely to have already encountered
+- **Informs:** A proportionate governance baseline for an Australian organization, and the vocabulary its stakeholders are most likely to have encountered
 - **Cautions:** Voluntary. It is not law, it produces no compliance status, and adopting it does not discharge any Privacy Act, Consumer Law, or sector duty.
 
 ### AU-006 Voluntary AI Safety Standard (legacy)
@@ -117,8 +117,8 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** Superseded in practice by AU-005; retained as a more detailed control catalogue
 - **URL:** https://www.industry.gov.au/publications/voluntary-ai-safety-standard
 - **Verified:** 2026-08-03 — "Date published: 5 September 2024", "Date updated: 2 December 2025", and the supersession notice read from the page
-- **Informs:** A historical crosswalk when a customer, contract, or prior assessment references the ten guardrails
-- **Cautions:** Do not present it as the current guidance. Use only when a customer, contract, or prior assessment requires it.
+- **Informs:** A historical crosswalk when the organization, one of its customers, a contract, or a prior assessment references the ten guardrails
+- **Cautions:** Do not present it as the current guidance. Use only when the organization, a contract, or a prior assessment requires it.
 
 ### AU-007 Australia's AI Ethics Principles
 
@@ -129,7 +129,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** Evolved by AU-005. The seed address `/publications/australias-artificial-intelligence-ethics-framework` **redirects** to `/publications/australias-ai-ethics-principles` — cite the current address.
 - **URL:** https://www.industry.gov.au/publications/australias-ai-ethics-principles
 - **Verified:** 2026-08-03 — published and updated dates read from the page; the redirect was observed directly
-- **Informs:** The principles vocabulary used by the DTA impact assessment tool (AU-011) and by many Australian customers' internal policies
+- **Informs:** The principles vocabulary used by the DTA impact assessment tool (AU-011) and by many Australian organizations' internal policies
 - **Cautions:** Principles-level only. Never map a principle onto a precise legal obligation.
 
 ### AU-008 National AI Plan
@@ -154,8 +154,8 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URL:** https://www.digital.gov.au/ai/ai-in-government-policy
 - **Verified:** 2026-08-03 — version, effective date, covered entities, and the mandatory-requirement list read from the page
 - **Next review trigger:** Default, plus any new policy version or DTA implementation notice
-- **Informs:** What a Commonwealth entity customer must already have in place, and what flows down to a supplier through procurement
-- **Cautions:** Applies only to the defined class of government entities — **not** to private-sector customers, though it flows down through contract. Any staged timing for individual requirements was **not verified** in this cycle; check the current DTA implementation material before advising an agency on deadlines.
+- **Informs:** What a Commonwealth entity must already have in place, and what flows down to a supplier through procurement
+- **Cautions:** Applies only to the defined class of government entities—**not** to private-sector organizations, though it can flow down through contract. Any staged timing for individual requirements was **not verified** in this cycle; check the current DTA implementation material before advising an agency on deadlines.
 
 ### AU-010 Technical standard for government's use of AI, and Agentic AI addendum
 
@@ -167,7 +167,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URLs:** https://www.digital.gov.au/policy/ai/AI-technical-standard · https://www.digital.gov.au/policy/ai/agentic-ai-addendum
 - **Verified:** 2026-08-03 — both pages reached and their last-updated dates read
 - **Informs:** Public-sector implementation expectations, and a defensible reference practice for agentic controls in a private-sector design conversation
-- **Cautions:** Not binding on private customers. Detailed design work routes to `plan-eng-review` and `security-and-hardening`, not to this pack.
+- **Cautions:** Not binding on private organizations. Obtain qualified technical architecture and security-engineering review for detailed design; this pack does not perform it.
 
 ### AU-011 AI impact assessment tool
 
@@ -178,8 +178,8 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** None recorded
 - **URL:** https://www.digital.gov.au/ai/impact-assessment-tool
 - **Verified:** 2026-08-03 — page reached, purpose and last-updated date read
-- **Informs:** A structured impact assessment format that a non-government customer can adopt without implying an obligation
-- **Cautions:** Using a government tool does not make a private customer subject to, or compliant with, government policy.
+- **Informs:** A structured impact assessment format that a non-government organization can adopt without implying an obligation
+- **Cautions:** Using a government tool does not make a private organization subject to, or compliant with, government policy.
 
 ### AU-012 ASD/ACSC secure AI guidance
 
@@ -191,7 +191,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **URLs:** https://www.cyber.gov.au/business-government/secure-design/artificial-intelligence/guidelines-for-secure-ai-system-development · https://www.cyber.gov.au/business-government/secure-design/artificial-intelligence/engaging-with-artificial-intelligence
 - **Verified:** 2026-08-03 — first-published and last-updated dates read from both pages
 - **Informs:** Secure design, development, deployment, and operation expectations that a security specialist will recognise
-- **Cautions:** Both documents predate widespread agentic deployment; treat agentic controls as a gap to close through AU-010 and `security-and-hardening`, not as covered here.
+- **Cautions:** Both documents predate widespread agentic deployment; treat agentic controls as a gap to close through AU-010 and qualified security-engineering review, not as covered here.
 
 ### AU-013 Competition and Consumer Act 2010 (Australian Consumer Law)
 
@@ -202,7 +202,7 @@ Each entry then states, in this order: **Issuer · type and legal force** / **Ju
 - **Supersession:** Not superseded
 - **URL:** https://www.legislation.gov.au/C2004A00109/latest/text
 - **Verified:** 2026-08-03 — name history, current compilation, and the pending 2027-07-01 version confirmed through the Federal Register of Legislation API
-- **Informs:** Misleading or deceptive conduct, false representations, and consumer guarantees — **directly relevant to AI claims**, both the vendor's claims to the customer and the customer's claims to its own market
+- **Informs:** Misleading or deceptive conduct, false representations, and consumer guarantees—**directly relevant to AI claims**, both a vendor's claims to the organization and the organization's claims to its customers or market
 - **Cautions:** The Australian Consumer Law is Schedule 2 to the Act; cite the ACL provision, not just the Act. An unsupported accuracy, safety, or "AI-powered" claim is a consumer-law exposure, not only a reputational one — but whether a specific claim breaches the ACL is a question for counsel.
 
 ### AU-014 Children's Online Privacy Code
@@ -226,7 +226,7 @@ Each is a **research requirement plus specialist handoff**, not a conclusion thi
 
 ## 5. Operating Context Where Decision-Relevant
 
-Consider only when it changes the decision: cloud region availability and data residency options; the practical cost and latency of keeping inference onshore; availability of AI, data, and assurance skills in the customer's location; accessibility obligations for public-facing services; First Nations data governance expectations where Indigenous data is involved; and the distance between a customer's Australian operations and offshore support or delivery centres.
+Consider only when it changes the decision: cloud region availability and data residency options; the practical cost and latency of keeping inference onshore; availability of AI, data, and assurance skills in the organization's location; accessibility obligations for public-facing services; First Nations data governance expectations where Indigenous data is involved; and the distance between the organization's Australian operations and offshore support or delivery centres.
 
 ## 6. High-Consequence Use-Case Triggers
 
@@ -234,11 +234,11 @@ Employment decisions and worker surveillance · credit, insurance, and claims ·
 
 ## 7. Specialist Handoff Questions
 
-- Is the customer an APP entity for this activity, and does any exemption apply?
+- Is the organization an APP entity for this activity, and does any exemption apply?
 - Which specific POLA 2024 provisions bind this use case, and what must the privacy policy disclose about automated decisions from 2026-12-10?
 - On what date did Schedule 2 of POLA 2024 commence, and does the statutory tort reach this activity?
 - Does the intended training, fine-tuning, or retrieval use of this data have a lawful basis?
-- Do the customer's AI-related public claims withstand Australian Consumer Law scrutiny?
+- Do the organization's AI-related public claims withstand Australian Consumer Law scrutiny?
 - Which state or territory surveillance, privacy, or health-records law applies to this workflow?
 - Do any procurement or contractual flow-down obligations import Commonwealth AI policy requirements?
 - Is any element of this system regulated as a therapeutic good or safety component?

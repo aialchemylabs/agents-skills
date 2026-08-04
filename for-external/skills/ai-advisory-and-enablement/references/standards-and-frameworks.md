@@ -1,6 +1,6 @@
 # Standards and Frameworks
 
-A router, not a compliance library. Select the smallest set of sources that answers the customer's current question. Never produce framework soup, and never imply every framework applies to every customer.
+A router, not a compliance library. Select the smallest set of sources that answers the organization's current question. Never produce framework soup, and never imply every framework applies to every organization.
 
 **Last reviewed: 2026-08-03.** Every dated entry below must be re-verified against its official page before it supports a material recommendation. See the verification limitations in section 8.
 
@@ -32,7 +32,7 @@ Record for each: title, issuer, category, jurisdiction, applicability, publicati
 | ISO/IEC 38507:2022 | Voluntary standard | What must the governing body understand about AI use? | Published 2022. |
 | ISO/IEC 23894:2023 | Voluntary standard | How do we do AI risk management? | Published 2023. |
 | ISO/IEC 42005:2025 | Voluntary standard | How do we run an AI system impact assessment? | Published 2025. |
-| ISO/IEC 42006:2025 | Voluntary standard | Requirements for **certification bodies** auditing AIMS | Published 2025. Not a customer self-certification route. |
+| ISO/IEC 42006:2025 | Voluntary standard | Requirements for **certification bodies** auditing AIMS | Published 2025. Not an organizational self-certification route. |
 | ISO 31000 | Voluntary standard | How does AI risk integrate with enterprise risk? | Verify current edition. |
 
 ### 2.2 Lifecycle, terminology, data, and quality
@@ -57,7 +57,7 @@ Use these to make terms, lifecycle stages, and quality measures precise in an ev
 | MITRE ATLAS | Living knowledge base | Adversary tactics and techniques against AI systems; changes continuously. |
 | Google Secure AI Framework | Vendor-authored guidance | Implementation ideas, not a standard. |
 
-Detailed threat modelling and control implementation route to `security-and-hardening`.
+Obtain qualified security-engineering support for detailed threat modelling and control implementation.
 
 ### 2.4 Human-centred and ethical design
 
@@ -67,7 +67,7 @@ These inform design and oversight quality. None of them is a compliance instrume
 
 ## 3. EU Exposure Route
 
-Trigger EU research when the customer places an AI system on the EU market, has EU users or affected people, processes EU personal data, supplies an EU deployer, or is contractually bound to EU requirements — regardless of where it is headquartered.
+Trigger EU research when the organization places an AI system on the EU market, has EU users or affected people, processes EU personal data, supplies an EU deployer, or is contractually bound to EU requirements—regardless of where it is headquartered.
 
 **Verified 2026-08-03 against the European Commission AI Act policy page (page last updated 2026-07-31):**
 
@@ -82,9 +82,9 @@ Trigger EU research when the customer places an AI system on the EU market, has 
 
 The Annex III and Annex I dates were deferred by the **Digital Omnibus on AI**, which the Commission page records as entering into force on 2026-07-27 following political agreement on 2026-05-07. The Commission page also records a further prohibition taking effect in December 2026 as part of that package.
 
-The instrument number **Regulation (EU) 2026/1744** and the Official Journal publication date **2026-07-24** rest on secondary reporting: EUR-Lex returned an automated-request challenge (HTTP 202, empty body) from this environment on 2026-08-03, so the OJ citation itself was **not** read. Confirm the citation on EUR-Lex before using it in a customer document.
+The instrument number **Regulation (EU) 2026/1744** and the Official Journal publication date **2026-07-24** rest on secondary reporting: EUR-Lex returned an automated-request challenge (HTTP 202, empty body) from this environment on 2026-08-03, so the OJ citation itself was **not** read. Confirm the citation on EUR-Lex before using it in an organizational decision document.
 
-**This is a fast-volatility area that changed twice within twelve months.** Any answer given from memory rather than from the current Commission and EUR-Lex pages is likely to be wrong. Re-verify dates, scope, and the Article 6 classification position for every engagement.
+**This is a fast-volatility area that changed twice within twelve months.** Any answer given from memory rather than from the current Commission and EUR-Lex pages is likely to be wrong. Re-verify dates, scope, and the Article 6 classification position for every assessment.
 
 Also research where triggered: GDPR; the General-Purpose AI Code of Practice and current AI Office guidance; NIS2; the Cyber Resilience Act; the Data Act; product liability, consumer, employment, equality, product-safety, and medical-device routes; and national implementation. Determine role, risk classification, applicable staged dates, conformity assessment, and harmonised standards status.
 
@@ -115,18 +115,18 @@ Each artifact needs jurisdiction-specific fields. **Never apply a universal `com
 
 1. What decision is blocked right now? If none, no framework is needed yet.
 2. Is the requirement legal, contractual, or discretionary? Only the first two are obligations.
-3. Does the customer already hold a management system this can extend rather than duplicate?
-4. Is certification actually required by a customer, contract, or regulator — or is it aspiration?
+3. Does the organization already hold a management system this can extend rather than duplicate?
+4. Is certification actually required by one of the organization's customers, a contract, or a regulator—or is it aspiration?
 5. Which single domain in the crosswalk is weakest, and what is the cheapest credible evidence for it?
 6. Is the organization's size and risk level proportionate to the framework's overhead?
 
-Recommend the fewest sources that answer the live question. A customer needing a hiring-tool impact assessment does not need an enterprise AI management system first.
+Recommend the fewest sources that answer the live question. An organization needing a hiring-tool impact assessment does not need an enterprise AI management system first.
 
 ## 6. Copyright, Paywall, and Attribution Rules
 
 - ISO, IEC, and IEEE texts are copyrighted and generally paywalled. Store only public metadata, official links, scope summaries, and original thematic crosswalks.
 - Never reproduce standard text or imply access to a full standard from public metadata alone.
-- Work from a customer-supplied licensed copy only inside the authorized context, and never redistribute it.
+- Work from an organization-supplied licensed copy only inside the authorized context, and never redistribute it.
 - Attribute every third-party framework to its issuer. Never claim affiliation with, endorsement by, or certification from ISO, IEC, IEEE, NIST, OWASP, MITRE, OECD, UNESCO, or any regulator.
 
 ## 7. Prohibited Claims
@@ -137,7 +137,7 @@ Never state or imply that:
 - an internal checklist, self-assessment, or advisor review constitutes certification, conformity assessment, accreditation, or audit;
 - ISO/IEC 42001 certification satisfies the EU AI Act, or any framework satisfies another jurisdiction's law;
 - two instruments are equivalent because their domains overlap;
-- a framework applies to a customer without establishing the applicability trigger;
+- a framework applies to an organization without establishing the applicability trigger;
 - a draft, committee report, or proposed instrument is binding.
 
 ## 8. Verification Log and Changelog

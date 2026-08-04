@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "business",
-  "version": "0.3.0",
-  "description": "Discover opportunities, validate ventures, review plans, advise and enable responsible AI adoption, build proposals, prepare negotiations, and strengthen startup finance and controls.",
+  "version": "0.3.1",
+  "description": "Discover opportunities, validate ventures, review plans, build proposals, prepare negotiations, and strengthen startup finance and controls.",
   "author": {
     "name": "AI Alchemy Labs"
   },
@@ -21,11 +21,7 @@
     "finance",
     "controls",
     "decision-making",
-    "operations",
-    "ai-advisory",
-    "ai-adoption",
-    "ai-governance",
-    "workforce-enablement"
+    "operations"
   ],
   "skills": "./skills/"
 }

@@ -33,7 +33,7 @@ A route fires when the AI system informs, influences, or executes any of these â
 - **Specialist:** employment lawyer, privacy counsel, discrimination specialist, and the accountable HR owner.
 
 ### T2 Money, credit, insurance, and payments
-- **Ask:** Does the system decide, price, rank, or execute? What is the value and reversibility of each action? Which regulated activity does this touch? What explanation is owed to the customer?
+- **Ask:** Does the system decide, price, rank, or execute? What is the value and reversibility of each action? Which regulated activity does this touch? What explanation is owed to an affected customer, account holder, or policyholder?
 - **Research:** financial-sector regulator instruments, consumer credit and insurance rules, anti-fraud and AML duties, complaints and dispute-resolution requirements, distinguishing binding directions from committee reports and guidance.
 - **Minimum evidence:** error and adverse-outcome rates by segment; explanation adequacy; a reconciliation and correction path; incident and complaint handling.
 - **Pilot restrictions:** no autonomous outbound payment or binding customer commitment; transaction and cumulative value limits; human release for material actions.
@@ -93,7 +93,7 @@ A route fires when the AI system informs, influences, or executes any of these â
 - **Research:** delegation and authority rules, financial controls, records duties, contract-formation risk from autonomous communications.
 - **Minimum evidence:** deterministic authorization at each action, least privilege, sandboxing, transaction limits, confirmation for material actions, idempotency, replay protection, kill switch, complete action audit trail.
 - **Pilot restrictions:** no production write access, no outbound external communication, no financial execution, and no credential access until each control is demonstrated.
-- **Specialist:** route design to `plan-eng-review` and controls to `security-and-hardening`; add internal audit and the accountable system owner.
+- **Specialist:** obtain qualified technical architecture and security-engineering review; add internal audit and the accountable system owner.
 
 ## 3. Return Format Per Triggered Route
 

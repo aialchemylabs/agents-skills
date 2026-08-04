@@ -13,7 +13,7 @@ Evaluate in this order. Each step can add routes; none replaces an earlier one.
 5. **Data classes and affected people** — personal, sensitive, health, biometric, financial, children's, employee, Indigenous, confidential, privileged, or regulated data; and who bears the downside.
 6. **System class** — conventional ML, generative or general-purpose, high-impact or high-risk, safety component, frontier or systemic-risk model, agentic system.
 7. **Lifecycle stage** — design, development, procurement, deployment, operation, change, retirement. Obligations differ by stage.
-8. **Contract, procurement, certification, and customer obligations** — often the binding constraint in practice even where no AI-specific statute applies.
+8. **Contract, procurement, certification, and customer-contract obligations** — often the binding constraint in practice even where no AI-specific statute applies.
 
 ## 2. Decision Tree
 
@@ -96,7 +96,7 @@ A pack is a routing aid, never a legal summary or a compliance badge.
 
 | Situation | Required behavior |
 |---|---|
-| Pack `Last reviewed` date is older than the engagement's tolerance | Treat every fast-volatility entry as unverified; re-verify before use |
+| Pack `Last reviewed` date is older than the assessment's tolerance | Treat every fast-volatility entry as unverified; re-verify before use |
 | Source unreachable from the working environment | Record the attempt and failure mode; try another official route; report as an evidence gap |
 | Source superseded or redirected to a renamed document | Record both identities and the supersession direction; use the current one; update the changelog |
 | Pack contradicts a live primary source | The live primary source wins; record the contradiction and flag the pack for correction |

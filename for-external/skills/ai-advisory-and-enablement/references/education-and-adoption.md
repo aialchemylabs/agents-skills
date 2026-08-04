@@ -1,6 +1,6 @@
 # Education and Adoption
 
-Education is a mode inside this capability, not a training product. Every session must be customer-specific, role-specific, and attached to a live decision or operating behavior. The rule that attendance is not evidence is stated in `SKILL.md`; this file gives the method.
+Education is a mode inside this capability, not generic training. Every session must be organization-specific, role-specific, and attached to a live decision or operating behavior. The rule that attendance is not evidence is stated in `SKILL.md`; this file gives the method.
 
 ## 1. Stakeholder Learning Outcomes
 
@@ -11,19 +11,19 @@ Each row states what the person must be able to **do** afterwards. Design backwa
 | Board or governing body | State the value thesis, the strength of evidence behind it, the credible downside, who is accountable, what residual risk they are accepting, and the gates at which they can stop |
 | Executive sponsor | Own the outcome, judge portfolio trade-offs, commit resources, hold the conditions, and use stop authority without it reading as failure |
 | Business or process owner | Reconstruct and redesign the workflow, establish a defensible baseline, define acceptance, manage exceptions, and realize the value |
-| Frontline users | Judge appropriate use, recognise limitations, discharge verification duties, escalate, fall back, give feedback, and support a customer's recourse |
+| Frontline users | Judge appropriate use, recognise limitations, discharge verification duties, escalate, fall back, give feedback, and support recourse for the organization's customers or other affected people |
 | Risk, legal, privacy, security | Inspect system and data flows, impacts, controls, residual risk, incidents, and supplier terms — and know which questions remain theirs to answer |
 | Technology, data, operations | Operate evaluation, access, observability, change, fallback, support, and lifecycle controls |
 | Finance and procurement | Test total cost of ownership, benefit categories, usage variability, lock-in, service levels, IP and data terms, cash timing, and exit |
 | People, change, learning | Assess task and job effects, plan participation, manage workload, build skills, align incentives, ensure fair treatment and redeployment |
 | Affected customers or public | Understand what is happening in proportionate terms, get an accessible explanation, reach support, contest a decision, and obtain recourse |
 
-## 2. Customer-Specific Decision Briefing Structure
+## 2. Organization-Specific Decision Briefing Structure
 
 Never open with "what is AI". Open with the decision in front of this audience.
 
 1. **The decision** — what is being decided, by whom, by when, and what it commits.
-2. **The outcome and baseline** — the customer's own numbers, with their source and limitations.
+2. **The outcome and baseline** — the organization's own numbers, with their source and limitations.
 3. **The workflow** — the real one, with its exceptions, shown back to the people who work in it.
 4. **The alternatives** — including no action and the non-AI options, with why each is or is not viable here.
 5. **What AI would and would not do here** — the specific task, the specific failure modes, in this workflow.
@@ -32,7 +32,7 @@ Never open with "what is AI". Open with the decision in front of this audience.
 8. **The gate** — what would have to be true to proceed, and what would stop it.
 9. **The ask** — the smallest next commitment.
 
-Use authorized customer examples or clearly-labelled synthetic ones. Never use another customer's confidential material. Never present a generic industry deck as customer-specific work.
+Use authorized organizational examples or clearly labelled synthetic ones. Never use confidential material belonging to a customer, employee, supplier, or another organization without authorization. Never present a generic industry deck as organization-specific evidence.
 
 ## 3. Required Content — Select Only What Changes the Decision
 
@@ -113,7 +113,7 @@ Report adoption by cohort, not as one average. An overall figure hides the team 
 
 ## 8. What Enablement Is Not
 
-- **Generic prompt training is not an enablement programme.** It teaches tool syntax while leaving workflow, incentives, oversight, support, and measurement untouched. When a customer reports low adoption after prompt training, treat the training as one of the least likely root causes and diagnose the rest.
-- Education is never advocacy for AI Alchemy's implementation services. If a session's content only makes sense if the customer proceeds, it is a pitch — rebuild it.
+- **Generic prompt training is not an enablement programme.** It teaches tool syntax while leaving workflow, incentives, oversight, support, and measurement untouched. When the organization reports low adoption after prompt training, treat the training as one of the least likely root causes and diagnose the rest.
+- Education is never disguised advocacy for a vendor, implementation provider, or preferred platform. If a session's content only makes sense if the organization proceeds, it is a pitch—rebuild it.
 - A training deck is not an adoption plan; an adoption plan is not evidence of adoption.
 - Education that cannot name the decision it improves should not be delivered.

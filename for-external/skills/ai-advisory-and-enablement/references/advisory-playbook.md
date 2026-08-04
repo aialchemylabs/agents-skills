@@ -53,7 +53,7 @@ When the user asks for several at once, deliver the earliest unsatisfied stage f
 
 **Root cause.** Distinguish demand, capacity, process design, policy, incentive, skill, information, system, and data causes. Record previous attempts and why they failed. An AI intervention aimed at a policy or incentive cause will fail regardless of model quality.
 
-**Affected people.** Customers, employees, suppliers, the public, and vulnerable groups. Record who benefits, who bears the downside, whether the downside is concentrated, and what recourse exists today.
+**Affected people.** Distinguish the organization using the skill from its customers, employees, suppliers, partners, data subjects, the public, and vulnerable groups. Record who benefits, who bears the downside, whether the downside is concentrated, and what recourse exists today.
 
 ## 4. Intervention Comparison
 
@@ -79,7 +79,7 @@ Score each surviving class on: outcome effectiveness, time to evidence, total co
 
 ## 5. Opportunity Cards and Portfolio Method
 
-Each candidate carries: customer or stakeholder and context; outcome, baseline, current alternative, cost of inaction; actual workflow and decision point; proposed AI role, intervention class, and simpler alternatives; required data, source, rights, quality, availability; affected people, benefits, harms, recourse; value mechanism and benefit category; implementation, integration, evaluation, human-review, and operating burden; risk tier and triggered market/sector routes; accountable owner and adoption owner; decisive unknown and smallest evidence test; gate status, disposition, and confidence.
+Each candidate carries: beneficiary or stakeholder and context; outcome, baseline, current alternative, cost of inaction; actual workflow and decision point; proposed AI role, intervention class, and simpler alternatives; required data, source, rights, quality, availability; affected people, benefits, harms, recourse; value mechanism and benefit category; implementation, integration, evaluation, human-review, and operating burden; risk tier and triggered market/sector routes; accountable owner and adoption owner; decisive unknown and smallest evidence test; gate status, disposition, and confidence.
 
 Portfolio sequence:
 
@@ -91,13 +91,13 @@ Portfolio sequence:
 
 ## 6. Sourcing Decision Method
 
-Compare `Use existing capability`, `Buy`, `Configure`, `Integrate`, `Partner`, `Build`, `Defer`, `Stop` on: outcome fit and differentiation; time to evidence and time to value; total cost over the decision horizon; customer data, IP, privacy, security, residency; performance evidence and access to evaluation; integration and operating burden; explainability, auditability, observability, change control; model and provider dependency and version change; customization, maintainability, skills, support, service levels; portability, lock-in, termination, data deletion, exit; procurement, contractual, and specialist review requirements.
+Compare `Use existing capability`, `Buy`, `Configure`, `Integrate`, `Partner`, `Build`, `Defer`, `Stop` on: outcome fit and differentiation; time to evidence and time to value; total cost over the decision horizon; organizational and third-party data, IP, privacy, security, residency; performance evidence and access to evaluation; integration and operating burden; explainability, auditability, observability, change control; model and provider dependency and version change; customization, maintainability, skills, support, service levels; portability, lock-in, termination, data deletion, exit; procurement, contractual, and specialist review requirements.
 
 Rules:
 
 - Vendor marketing is an attributed claim until supported by a contract, documented test, or primary documentation.
 - Never invent prices, benchmark results, customer references, certifications, roadmap commitments, or contract terms.
-- `Build` is never the default because AI Alchemy can build it. Record the differentiation argument or drop it.
+- `Build` is never the default because the organization or a preferred provider can build it. Record the differentiation argument or drop it.
 - Where evaluation access is refused, treat performance as unevidenced and say so.
 
 ## 7. Economics and Value Realization
@@ -113,7 +113,7 @@ Classify benefits separately; never collapse them into one ROI number:
 | Quality, speed, experience, accessibility, resilience | A measure that existed before the intervention |
 | Strategic option value | The option has an expiry, a cost, and a decision it preserves |
 
-Total customer cost:
+Total cost of ownership:
 
 ```text
 discovery and process redesign
@@ -131,11 +131,11 @@ discovery and process redesign
 
 Use downside, base, and upside scenarios whenever uncertainty could change the decision. Show sources, units, formulas, period, realization assumptions, and sensitivity.
 
-Never: convert gross labour hours to cash without a realization mechanism; count a benefit twice; treat revenue opportunity as guaranteed revenue; hide customer implementation effort; omit inference, review, evaluation, support, or exit cost; or guarantee a return.
+Never: convert gross labour hours to cash without a realization mechanism; count a benefit twice; treat revenue opportunity as guaranteed revenue; hide organizational implementation effort; omit inference, review, evaluation, support, or exit cost; or guarantee a return.
 
 ## 8. Pilot and Scale Logic
 
-**Pilot design principles.** One decisive assumption. One decision. Narrow, reversible scope. Representative participants, workflow, environment, volume, data, and edge cases. A baseline and a credible comparator or counterfactual. Preregistered guardrails covering outcome, adoption, quality, cost, latency, and harm. Thresholds for `pass`, `adjust`, `expand`, `pause`, and `stop` fixed before results. Explicit permitted data, systems, model version, tool permissions, and prohibited actions. Human oversight and recourse. Owner, budget ceiling, timebox, review date, incident path, rollback, deletion, and exit. Named customer and advisor responsibilities. Evidence ownership and independent review.
+**Pilot design principles.** One decisive assumption. One decision. Narrow, reversible scope. Representative participants, workflow, environment, volume, data, and edge cases. A baseline and a credible comparator or counterfactual. Preregistered guardrails covering outcome, adoption, quality, cost, latency, and harm. Thresholds for `pass`, `adjust`, `expand`, `pause`, and `stop` fixed before results. Explicit permitted data, systems, model version, tool permissions, and prohibited actions. Human oversight and recourse. Owner, budget ceiling, timebox, review date, incident path, rollback, deletion, and exit. Named organizational and third-party responsibilities. Evidence ownership and independent review.
 
 **Evidence hierarchy for a claim of effect:** representative operational pilot with comparator > operational pilot without comparator > spike or bounded feasibility test > vendor demo or benchmark > simulation or synthetic test > assertion. Never present a lower tier as a higher one.
 
@@ -145,21 +145,7 @@ Never: convert gross labour hours to cash without a realization mechanism; count
 
 **Scale tranches.** Expand along one axis at a time — cohort, volume, geography, data class, use case, or action authority. Each tranche re-tests thresholds and can be reversed. Reassess on any material change to model, provider, prompt, retrieval, data, workflow, population, system access, regulation, or integration.
 
-## 9. Commercial Engagement Boundaries
-
-Support this sequence without pricing or contracting it:
-
-1. `Orientation and mandate` — education and decision framing; no tailored recommendation.
-2. `Outcome and evidence diagnostic` — fixed or capped discovery.
-3. `AI Opportunity and Assurance Sprint` — qualified and rejected candidates, research, comparison, initial assurance, recommended pilot, 90-day decision roadmap.
-4. `Decision workshop` — customer-specific education using the findings.
-5. `Paid bounded pilot` — phase-gated, cost-ceilinged, with evidence ownership and independent review.
-6. `Adoption and staged scale` — tranche-based authorization; no automatic continuation from pilot.
-7. `Ongoing assurance` — time-limited cadence with events, evidence, and exit.
-
-Safeguards: no fee contingent on recommending AI, selecting a vendor, or declaring a pilot successful; disclose referral, reseller, implementation, or platform incentives; separate the advisory recommendation from implementation approval; give the customer usable evidence and exit rights at each gate; no free bespoke pilots and no unpaid pre-sales solution design. Route all pricing, terms, SOW, and submission work to `business-proposal-builder`.
-
-## 10. Recommendation and Handoff Contracts
+## 9. Recommendation and Handoff Contracts
 
 **Recommendation.** State the four separate decisions (disposition, intervention class, delivery strategy, lifecycle recommendation), then confidence and why; decisive evidence and contradictions; remaining assumptions and residual risk; the authorization envelope for money, people, data, users, systems, action authority, and duration; conditions, owner, next review date, and what would change the decision.
 

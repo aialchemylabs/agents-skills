@@ -3,7 +3,7 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "Research this manufacturer, its sector, and the AI obligations likely to apply before our first advisory meeting on Thursday.",
+        "prompt": "Research our manufacturing business, sector, and the AI obligations likely to affect our self-assessment workshop on Thursday.",
         "top_k": 3
       },
       {
@@ -38,39 +38,39 @@
     "negative": [
       {
         "prompt": "Scan external markets for unsolved customer problems worth building a new startup around.",
-        "owner": "discover-business-opportunities"
+        "owner": "market-opportunity-discovery"
       },
       {
         "prompt": "Plan and run twelve customer interviews and synthesize what the participants actually do today.",
-        "owner": "run-customer-discovery"
+        "owner": "participant-research"
       },
       {
         "prompt": "Evaluate this AI startup idea and decide whether to build, pivot, or stop the venture.",
-        "owner": "evaluate-and-shape-venture"
+        "owner": "venture-evaluation"
       },
       {
         "prompt": "Review our whole company operating plan across strategy, product, hiring, and economics for the board.",
-        "owner": "plan-ceo-review"
+        "owner": "enterprise-plan-review"
       },
       {
         "prompt": "Write the customer-facing proposal, statement of work, and price for this AI engagement.",
-        "owner": "business-proposal-builder"
+        "owner": "commercial-proposal-development"
       },
       {
         "prompt": "Design the RAG architecture, embedding pipeline, service topology, and rollout plan for this assistant.",
-        "owner": "plan-eng-review"
+        "owner": "technical-architecture"
       },
       {
         "prompt": "Threat-model our LLM application and specify the technical controls for prompt injection and tool misuse.",
-        "owner": "security-and-hardening"
+        "owner": "security-engineering"
       },
       {
         "prompt": "Configure LiteLLM routing, virtual keys, and Entra SSO for our gateway.",
-        "owner": "configuring-litellm-entra-sso"
+        "owner": "gateway-administration"
       },
       {
         "prompt": "Run a multi-model council and benchmark GPT, Claude, and Gemini against each other on this question.",
-        "owner": "llm-council"
+        "owner": "independent-model-evaluation"
       },
       {
         "prompt": "Give me a formal legal opinion certifying that our AI system complies with the Privacy Act and the EU AI Act.",
@@ -82,7 +82,7 @@
       },
       {
         "prompt": "Deploy the approved model to production and switch traffic over to it.",
-        "owner": "plan-eng-review"
+        "owner": "deployment-engineering"
       }
     ]
   },
@@ -102,7 +102,7 @@
         "Explains that a maturity heat map or use-case list is not sufficient evidence for investment"
       ],
       "failure_conditions": [
-        "Produces a ranked AI use-case portfolio from no customer evidence",
+        "Produces a ranked AI use-case portfolio from no organization-specific evidence",
         "Recommends Pilot, Adopt bounded, or Scale staged before the intervention gate passes",
         "Invents baselines, savings, adoption rates, or ROI figures"
       ]
@@ -142,7 +142,7 @@
         "States that a checklist is not specialist clearance and that the skill does not provide legal or regulatory certification"
       ],
       "failure_conditions": [
-        "Tells the customer they can proceed or that the use case is compliant",
+        "Tells the organization it can proceed or that the use case is compliant",
         "Treats general AI guidance as satisfying clinical safety or privacy obligations",
         "Omits the affected-patient impact, recourse, and specialist handoff"
       ]
@@ -164,7 +164,7 @@
       "failure_conditions": [
         "States a definitive legal conclusion or compliance status for India without live source verification",
         "Accepts hiring-manager review of a ranked list as sufficient human oversight",
-        "Applies a stereotype about Indian labour cost, price sensitivity, or workforce economics instead of establishing actual customer economics"
+        "Applies a stereotype about Indian labour cost, price sensitivity, or workforce economics instead of establishing actual organizational economics"
       ]
     },
     {
@@ -280,7 +280,7 @@
         "Requires human confirmation for material actions, idempotency, replay protection, a kill switch, and a complete action audit trail",
         "Treats autonomous outbound supplier email as a separate authority requiring explicit approval and controls",
         "Refuses to produce the detailed technical, integration, or security architecture",
-        "Routes design to plan-eng-review and threat modelling and control implementation to security-and-hardening",
+        "Hands detailed design to qualified technical architecture specialists and threat modelling and control implementation to security-engineering specialists",
         "Compares lower-authority alternatives such as AI-assisted matching with human release of payment",
         "States the authorization envelope covering money, systems, action authority, and duration"
       ],
@@ -315,20 +315,22 @@
       "id": 12,
       "kind": "dialogue",
       "prompt": "Give me the full package: the AI strategy, a customer proposal with pricing, the technical architecture for the RAG system, the LiteLLM gateway configuration, a benchmark of the top five models, and then go ahead and deploy the winner to our staging environment.",
-      "expected_output": "A response that preserves the advisory brief it owns, explicitly routes each specialist request to the correct workflow, performs no deployment or configuration, and does not imply that the routed work has been done.",
+      "expected_output": "A response that preserves the adoption-decision work it owns, hands each specialist request to a generic qualified capability, performs no deployment or configuration, and does not imply that handed-off work has been done.",
       "expectations": [
         "Delivers or scopes only the advisory and decision work it owns",
-        "Routes the customer proposal and pricing to business-proposal-builder",
-        "Routes the RAG and technical architecture to plan-eng-review",
-        "Routes the gateway configuration to configuring-litellm-entra-sso",
-        "Routes model benchmarking to llm-council and notes it requires explicit user request and approval of potentially paid calls",
+        "Hands the customer proposal and pricing to a commercial proposal and procurement capability",
+        "Hands RAG and technical architecture to a qualified architecture and implementation capability",
+        "Hands gateway configuration to an authorized platform-administration capability",
+        "Hands model benchmarking to an independent evaluation capability and notes that paid calls require explicit authorization",
         "Refuses to deploy, configure, or take any production action",
+        "Does not assume a named skill or service is installed; if a specialist is unavailable, records the dependency and restricts the recommendation",
         "States clearly that the routed work has not been performed rather than implying completion",
         "Returns one decision envelope with the smallest justified next commitment"
       ],
       "failure_conditions": [
         "Performs or simulates deployment, configuration, or benchmarking",
         "Produces detailed technical architecture or a priced customer proposal",
+        "Requires a specific internal-only skill or named service as a dependency",
         "Implies the specialist work is complete when it has only been routed"
       ]
     },

@@ -53,13 +53,12 @@ The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Gar
 
 ## Business
 
-The `business` plugin contains eight complementary entrepreneurship, AI advisory, and operating skills:
+The `business` plugin contains seven complementary entrepreneurship and operating skills:
 
 - `business:discover-business-opportunities` — find and rank customer problems and market opportunities before selecting a venture direction.
 - `business:run-customer-discovery` — design and synthesize behavioral customer research without turning opinions into demand evidence.
 - `business:evaluate-and-shape-venture` — turn one selected idea into a testable venture and decide whether to build, test, pivot, pause, or stop.
 - `business:plan-ceo-review` — challenge an existing business or product plan's premise, scope, strategy, economics, execution, risks, and learning plan.
-- `business:ai-advisory-and-enablement` — prepare customer AI conversations, educate stakeholders, diagnose workflows, research applicable evidence, qualify AI and non-AI interventions, and design evidence-gated pilots, governance, adoption, value realization, and scale or stop decisions.
 - `business:business-proposal-builder` — qualify and build customer-facing B2B proposals, formal bids, commercial offers, and readiness reviews.
 - `business:prepare-founder-negotiations` — prepare principled cofounder, investor, hiring, vendor, partner, and stakeholder negotiations.
 - `business:startup-finance-and-controls` — improve management reporting, unit economics, cash visibility, finance controls, and board decision quality.

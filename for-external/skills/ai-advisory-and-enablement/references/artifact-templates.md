@@ -5,8 +5,8 @@ Load only when producing a named artifact. Produce an artifact **only when it ch
 ## Common Header — Required on Every Artifact
 
 ```text
-Artifact | Customer | Engagement
-Owner (customer accountable owner) | Prepared by | Version | Date
+Artifact | Organization | Assessment
+Owner (organization accountable owner) | Prepared by | Version | Date
 Mode and lifecycle stage | Decision this informs | Decision owner and date
 Evidence IDs relied on | Assumptions | Limitations
 Current gate status | Next gate | Next review date
@@ -14,10 +14,10 @@ Current gate status | Next gate | Next review date
 
 Never issue an artifact without an owner, a date, source anchors, assumptions, limitations, and the next gate.
 
-## 1. Pre-Meeting Customer and Sector Brief
+## 1. Organization and Sector Context Brief
 
 ```text
-Company: model, products, customers, footprint, leadership, public strategy
+Organization: model, products or services, customers or beneficiaries, footprint, leadership, public strategy
 Likely workflows and operational pressures
 Technology footprint and public AI statements (with dates and sources)
 Sector economics, competitors, substitutes, relevant incidents, adoption patterns
@@ -35,7 +35,7 @@ What cannot be concluded from public information
 ```text
 Audience and role | Decision or behaviour this must change
 Their accountability in this decision
-The customer's own outcome, baseline, and workflow
+The organization's own outcome, baseline, and workflow
 Alternatives including no action and non-AI
 What AI would and would not do in this workflow
 Known limitations and failure modes
@@ -64,7 +64,7 @@ Affected people and current recourse
 Per stakeholder: role | benefits | uses | pays | decides | operates | can veto | bears harm
 Accountable decision owner (named)
 Required specialist authorities and what each must clear
-Conflicts of interest, including AI Alchemy's implementation interest
+Conflicts of interest, including vendor, reseller, referral, implementation, or platform incentives
 Who must be consulted before a pilot touches their work
 ```
 
@@ -98,7 +98,7 @@ Explicit statement: this is routing, not legal advice or clearance
 
 ```text
 Card ID | Candidate name | Sponsor | Business unit
-Customer or stakeholder and context
+Beneficiary or stakeholder and context
 Outcome, baseline, current alternative, cost of inaction
 Actual workflow and decision point
 Proposed AI role | intervention class | simpler alternatives considered
@@ -160,7 +160,7 @@ Argument (why the evidence supports the claim)
 Evidence (IDs)
 Exceptions and where the claim does not hold
 Residual risk
-Accountable accepter (named customer owner) and acceptance date
+Accountable accepter (named organizational owner) and acceptance date
 ```
 
 Plus assurance passes for: affected stakeholders and recourse; data lineage and rights; task-specific evaluation against human and non-AI baselines; representative slices, difficult cases, uncertainty, repeatability, contamination; human factors, automation bias, workload transfer, accessibility, override, fallback; prompt and output injection, exfiltration, tool misuse, supply chain, model change, cost denial-of-service; monitoring, logs, incidents, rollback, auditability, retirement; vendor terms, data use, training rights, IP, subcontractors, portability, service change, termination.
@@ -177,7 +177,7 @@ Measures: outcome | adoption | quality | cost | latency | safety | fairness | pr
 Precommitted thresholds: pass | adjust | expand | pause | stop
 Evaluation set, ground truth, sampling, subgroups, review method
 Human oversight, escalation, support, incident path, rollback, recourse
-Timebox | cost ceiling | customer responsibilities | advisor responsibilities | data handling
+Timebox | cost ceiling | organizational responsibilities | third-party responsibilities | data handling
 Known limitations | transferability test | evidence owner | final review method
 Deletion, access revocation, transition, and exit
 ```
@@ -237,8 +237,8 @@ Recommendation with authorization envelope and next review
 For retirement: revocation, disposal, retained records, migration, post-retirement accountability
 ```
 
-## 19. Handoff Brief for Proposal or Specialist Work
+## 19. Specialist Handoff Brief
 
-Use the specialist handoff format in [jurisdiction-routing.md](jurisdiction-routing.md). For a commercial handoff to `business-proposal-builder`, add: the accepted findings and their evidence IDs; the recommended engagement shape; scope boundaries and exclusions; customer responsibilities; and what must **not** be claimed in a proposal because it is not evidenced.
+Use the specialist handoff format in [jurisdiction-routing.md](jurisdiction-routing.md). Add scope boundaries, organizational responsibilities, accepted findings and evidence IDs, unresolved questions, the authority the specialist must hold, and claims that remain unsupported.
 
-Always state the work has been routed, never that it has been performed.
+Always state that the work has been handed off, never that it has been performed. If no suitable specialist is available, record the dependency and restrict the recommendation.
