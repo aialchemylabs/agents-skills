@@ -61,11 +61,16 @@ func runDoctor(ctx context.Context, args []string, getenv func(string) string, s
 	if stErr != nil {
 		add("state", "fail", stErr.Error(), ExitState)
 		st = state.New()
-	} else if layoutErr := validateStateLayout(cfg, st); layoutErr != nil {
-		add("state", "fail", layoutErr.Error(), ExitState)
-		st = state.New()
 	} else {
-		add("state", "ok", fmt.Sprintf("%d skills, %d managed links, agents %v", len(st.Skills), len(st.ManagedPaths), st.Agents), 0)
+		normalizeStateAgents(st)
+	}
+	if stErr == nil {
+		if layoutErr := validateStateLayout(cfg, st); layoutErr != nil {
+			add("state", "fail", layoutErr.Error(), ExitState)
+			st = state.New()
+		} else {
+			add("state", "ok", fmt.Sprintf("%d skills, %d managed links, agents %v", len(st.Skills), len(st.ManagedPaths), st.Agents), 0)
+		}
 	}
 	cfg.CatalogURL = effectiveCatalog(cfg, st)
 

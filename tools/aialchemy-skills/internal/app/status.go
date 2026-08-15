@@ -60,6 +60,7 @@ func runStatus(ctx context.Context, args []string, getenv func(string) string, s
 	if err != nil {
 		return exitErr(ExitState, err)
 	}
+	normalizeStateAgents(st)
 	if err := validateStateLayout(cfg, st); err != nil {
 		return exitErr(ExitState, err)
 	}

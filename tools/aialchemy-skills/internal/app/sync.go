@@ -82,6 +82,7 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 	if err != nil {
 		return exitErr(ExitState, err)
 	}
+	normalizeStateAgents(st)
 	if err := validateStateLayout(cfg, st); err != nil {
 		return exitErr(ExitState, err)
 	}
@@ -139,12 +140,20 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 		finalSkills = append(finalSkills, carried...)
 	}
 	sort.Strings(finalSkills)
+	linkSkills := finalSkills
+	if !all {
+		linkSkills = make([]string, 0, len(selected))
+		for _, e := range selected {
+			linkSkills = append(linkSkills, e.Name)
+		}
+		sort.Strings(linkSkills)
+	}
 
 	plan, err := adapters.Plan(adapters.PlanInput{
 		Home:    cfg.UserHome,
 		DataDir: cfg.DataDir,
 		Agents:  agentsSel,
-		Skills:  finalSkills,
+		Skills:  linkSkills,
 		State:   st,
 		Prune:   prune,
 	})
@@ -299,7 +308,7 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 	st.CatalogURL = cfg.CatalogURL
 	st.PreviousRelease = prevActive
 	st.ActiveRelease = releaseID
-	st.Agents = agentNames(agentsSel)
+	st.Agents = syncedAgentNames(st.Agents, agentsSel, prune)
 	st.Skills = newSkills
 	st.ManagedPaths = linkTx.Managed
 	if err := hooks.SaveState(store, st); err != nil {

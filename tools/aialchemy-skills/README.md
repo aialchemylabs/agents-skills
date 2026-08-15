@@ -80,6 +80,12 @@ Common flags accepted by every command: `--catalog URL`, `--json`,
    restored if adapter reconciliation or the following atomic state write
    fails.
 
+For a selective sync, only the explicitly selected skills are newly linked to
+the agents named by `--agents`. Other skills already present in the immutable
+release and all existing managed links are carried forward unchanged unless
+`--prune` is explicit. This permits installing one catalog skill into a new
+agent without exposing every skill previously installed for another agent.
+
 State lives in `~/.local/state/aialchemy-skills/state.json` (written
 atomically; an exclusive lock serializes mutating commands). It records the
 exact Git commit and content digest of every installed skill and every

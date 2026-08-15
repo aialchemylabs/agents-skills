@@ -51,7 +51,7 @@ func Fetch(ctx context.Context, rawURL string, opts FetchOptions) ([]byte, error
 		return nil, fmt.Errorf("invalid catalog request: %v", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", "aialchemy-skills/0.1.0")
+	req.Header.Set("User-Agent", "aialchemy-skills/0.2.0")
 
 	client := opts.Client
 	if client == nil {

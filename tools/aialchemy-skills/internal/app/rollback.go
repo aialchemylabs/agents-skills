@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"path/filepath"
 	"sort"
 
 	"github.com/aialchemylabs/agents-skills/tools/aialchemy-skills/internal/adapters"
@@ -41,6 +42,7 @@ func runRollback(ctx context.Context, args []string, getenv func(string) string,
 	if err != nil {
 		return exitErr(ExitState, err)
 	}
+	normalizeStateAgents(st)
 	if err := validateStateLayout(cfg, st); err != nil {
 		return exitErr(ExitState, err)
 	}
@@ -78,17 +80,31 @@ func runRollback(ctx context.Context, args []string, getenv func(string) string,
 			agentsSel = append(agentsSel, ad)
 		}
 	}
+	targetSkills := make(map[string]bool, len(manifest.Skills))
+	for name := range manifest.Skills {
+		targetSkills[name] = true
+	}
+	skillsByAgent := make(map[string][]string, len(agentsSel))
+	for _, managed := range st.ManagedPaths {
+		name := filepath.Base(managed.Target)
+		if targetSkills[name] {
+			skillsByAgent[managed.Agent] = append(skillsByAgent[managed.Agent], name)
+		}
+	}
+	for agent := range skillsByAgent {
+		sort.Strings(skillsByAgent[agent])
+	}
 
 	// Prune=true reconciles managed links against the restored release:
 	// links for skills absent from it are removed, links for its skills are
 	// created or kept.
 	plan, err := adapters.Plan(adapters.PlanInput{
-		Home:    cfg.UserHome,
-		DataDir: cfg.DataDir,
-		Agents:  agentsSel,
-		Skills:  skillNames,
-		State:   st,
-		Prune:   true,
+		Home:          cfg.UserHome,
+		DataDir:       cfg.DataDir,
+		Agents:        agentsSel,
+		SkillsByAgent: skillsByAgent,
+		State:         st,
+		Prune:         true,
 	})
 	if err != nil {
 		return exitErr(ExitFS, err)

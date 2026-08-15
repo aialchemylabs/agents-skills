@@ -110,12 +110,13 @@ type Issue struct {
 
 // PlanInput carries everything the planner inspects.
 type PlanInput struct {
-	Home    string
-	DataDir string
-	Agents  []Adapter
-	Skills  []string
-	State   *state.State
-	Prune   bool
+	Home          string
+	DataDir       string
+	Agents        []Adapter
+	Skills        []string
+	SkillsByAgent map[string][]string
+	State         *state.State
+	Prune         bool
 }
 
 // PlanResult is the preflight outcome: operations to apply, blocking issues,
@@ -139,18 +140,22 @@ func Plan(in PlanInput) (*PlanResult, error) {
 	handled := make(map[string]bool)
 
 	for _, ad := range in.Agents {
+		skills := in.Skills
+		if in.SkillsByAgent != nil {
+			skills = in.SkillsByAgent[ad.Name]
+		}
 		if err := safety.CheckNoSymlinkAncestors(in.Home, filepath.Join(ad.SkillsRoot(in.Home), ".aialchemy-probe")); err != nil {
 			return nil, fmt.Errorf("%s: %w", ad.Name, err)
 		}
 		if ad.Name == Claude.Name {
 			root := ad.SkillsRoot(in.Home)
-			if _, err := os.Lstat(root); os.IsNotExist(err) && len(in.Skills) > 0 {
+			if _, err := os.Lstat(root); os.IsNotExist(err) && len(skills) > 0 {
 				res.Warnings = append(res.Warnings, fmt.Sprintf(
 					"claude: %s will be created for the first time; restart Claude Code if it is running so it discovers the new skills directory", root))
 			}
-			res.Warnings = append(res.Warnings, claudePluginWarnings(in.Home, in.Skills)...)
+			res.Warnings = append(res.Warnings, claudePluginWarnings(in.Home, skills)...)
 		}
-		for _, s := range in.Skills {
+		for _, s := range skills {
 			path := ad.LinkPath(in.Home, s)
 			if err := safety.CheckNoSymlinkAncestors(in.Home, path); err != nil {
 				return nil, fmt.Errorf("%s: %w", ad.Name, err)

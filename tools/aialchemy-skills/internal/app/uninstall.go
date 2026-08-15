@@ -49,6 +49,7 @@ func runUninstall(ctx context.Context, args []string, getenv func(string) string
 	if err != nil {
 		return exitErr(ExitState, err)
 	}
+	normalizeStateAgents(st)
 	if err := validateStateLayout(cfg, st); err != nil {
 		return exitErr(ExitState, err)
 	}

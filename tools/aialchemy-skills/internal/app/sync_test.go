@@ -411,6 +411,59 @@ func TestSyncSelectiveCarryAndPrune(t *testing.T) {
 	}
 }
 
+func TestSelectiveSyncLinksOnlySelectedSkillsToNewAgent(t *testing.T) {
+	env := newLifecycleEnv(t, "alpha", "beta")
+	code, _, errOut := env.run(t, "sync", "--all", "--agents", "codex")
+	if code != ExitOK {
+		t.Fatalf("initial Codex sync: %d, %s", code, errOut)
+	}
+
+	code, _, errOut = env.run(t, "sync", "--skill", "alpha", "--agents", "hermes")
+	if code != ExitOK {
+		t.Fatalf("targeted Hermes sync: %d, %s", code, errOut)
+	}
+	if got := env.readThroughLink(t, "hermes", "alpha"); !strings.Contains(got, "alpha") {
+		t.Fatalf("Hermes alpha content = %q", got)
+	}
+	if _, err := os.Lstat(env.linkPath("hermes", "beta")); !os.IsNotExist(err) {
+		t.Fatalf("targeted sync linked carried skill beta to Hermes: %v", err)
+	}
+	for _, skillName := range []string{"alpha", "beta"} {
+		if _, err := os.Stat(env.linkPath("codex", skillName)); err != nil {
+			t.Fatalf("existing Codex link %s was not preserved: %v", skillName, err)
+		}
+	}
+
+	st := env.statusJSON(t)
+	if len(st.Skills) != 2 || len(st.Links) != 3 {
+		t.Fatalf("targeted state: %d skills, %d links; want 2 skills and 3 links", len(st.Skills), len(st.Links))
+	}
+
+	// Simulate state written by the pre-selective-sync installer, where
+	// ManagedPaths was authoritative but Agents could omit an older target.
+	store := state.NewStore(filepath.Join(env.home, ".local", "state", "aialchemy-skills"))
+	legacy, err := store.Load()
+	if err != nil {
+		t.Fatalf("load state for legacy migration: %v", err)
+	}
+	legacy.Agents = []string{"hermes"}
+	if err := store.Save(legacy); err != nil {
+		t.Fatalf("save legacy state: %v", err)
+	}
+	st = env.statusJSON(t)
+	if strings.Join(st.Agents, ",") != "codex,hermes" {
+		t.Fatalf("legacy state agents = %v, want managed-path union", st.Agents)
+	}
+
+	code, _, errOut = env.run(t, "rollback")
+	if code != ExitOK {
+		t.Fatalf("rollback after targeted sync: %d, %s", code, errOut)
+	}
+	if _, err := os.Lstat(env.linkPath("hermes", "beta")); !os.IsNotExist(err) {
+		t.Fatalf("rollback broadened Hermes topology with beta: %v", err)
+	}
+}
+
 func TestSyncUsageErrors(t *testing.T) {
 	home := t.TempDir()
 	code, _, _ := runMain(t, home, "sync")

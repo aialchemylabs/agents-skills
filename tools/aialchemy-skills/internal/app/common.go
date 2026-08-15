@@ -106,6 +106,48 @@ func agentNames(ads []adapters.Adapter) []string {
 	return names
 }
 
+func syncedAgentNames(previous []string, selected []adapters.Adapter, prune bool) []string {
+	names := agentNames(selected)
+	if prune {
+		return names
+	}
+	seen := make(map[string]bool, len(previous)+len(names))
+	for _, name := range previous {
+		seen[name] = true
+	}
+	for _, name := range names {
+		seen[name] = true
+	}
+	names = names[:0]
+	for name := range seen {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
+}
+
+// normalizeStateAgents migrates pre-selective-sync state in memory. Older
+// state could record a managed link for an agent without also carrying that
+// agent in State.Agents. The managed path is the stronger ownership record, so
+// recover its supported agent before validating or planning any operation.
+// Unsupported names are deliberately retained for validateStateLayout to
+// reject instead of being hidden by migration.
+func normalizeStateAgents(st *state.State) {
+	seen := make(map[string]bool, len(st.Agents)+len(st.ManagedPaths))
+	for _, name := range st.Agents {
+		seen[name] = true
+	}
+	names := append([]string(nil), st.Agents...)
+	for _, managed := range st.ManagedPaths {
+		if !seen[managed.Agent] {
+			names = append(names, managed.Agent)
+			seen[managed.Agent] = true
+		}
+	}
+	sort.Strings(names)
+	st.Agents = names
+}
+
 func sortedSkillNames(m map[string]state.Skill) []string {
 	names := make([]string, 0, len(m))
 	for n := range m {
