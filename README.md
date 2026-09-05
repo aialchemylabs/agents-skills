@@ -34,7 +34,7 @@ The AI Orchestration plugin adapts council and cross-critique methodology from W
 
 ## Engineering
 
-The `engineering` plugin contains twelve complementary software-engineering skills:
+The `engineering` plugin contains seventeen complementary software-engineering skills:
 
 - `engineering:frontend-ui-engineering` — build accessible, responsive, design-system-aligned user interfaces.
 - `engineering:test-driven-development` — implement behavioral changes with RED, GREEN, and REFACTOR evidence.
@@ -49,11 +49,17 @@ The `engineering` plugin contains twelve complementary software-engineering skil
 - `engineering:plan-eng-review` — challenge engineering plans across scope, architecture, implementation, tests, and performance.
 - `engineering:plan-design-review` — review design plans across information architecture, interaction states, journeys, systems, responsiveness, and accessibility.
 
+- `engineering:solution-architecture` — turn requirements into implementable architecture and explicit tradeoffs.
+- `engineering:product-delivery` — carry a product change through implementation and acceptance.
+- `engineering:backend-engineering` — implement reliable services, data access and asynchronous work.
+- `engineering:devops-and-recovery` — deploy, observe, back up and recover services.
+- `engineering:systematic-debugging` — reproduce failures, test causes and verify the fix.
+
 The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Garry Tan's `gstack` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.
 
 ## Business
 
-The `business` plugin contains seven complementary entrepreneurship and operating skills:
+The `business` plugin contains eleven complementary entrepreneurship and operating skills:
 
 - `business:discover-business-opportunities` — find and rank customer problems and market opportunities before selecting a venture direction.
 - `business:run-customer-discovery` — design and synthesize behavioral customer research without turning opinions into demand evidence.
@@ -62,6 +68,11 @@ The `business` plugin contains seven complementary entrepreneurship and operatin
 - `business:business-proposal-builder` — qualify and build customer-facing B2B proposals, formal bids, commercial offers, and readiness reviews.
 - `business:prepare-founder-negotiations` — prepare principled cofounder, investor, hiring, vendor, partner, and stakeholder negotiations.
 - `business:startup-finance-and-controls` — improve management reporting, unit economics, cash visibility, finance controls, and board decision quality.
+
+- `business:executive-assistance` — manage priorities, meetings, follow-ups and executive preparation.
+- `business:business-operations` — define and improve repeatable operating processes.
+- `business:sales-and-growth` — qualify pipeline and run measurable growth work.
+- `business:evidence-research` — investigate business questions using traceable sources.
 
 Each skill owns a distinct decision stage and hands specialist work to the appropriate neighboring workflow. Academic and professional sources inform the playbooks, but the plugin does not claim institutional affiliation or professional legal, accounting, tax, audit, or investment authority.
 
