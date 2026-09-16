@@ -59,7 +59,7 @@ The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Gar
 
 ## Business
 
-The `business` plugin contains eleven complementary entrepreneurship and operating skills:
+The `business` plugin contains twelve complementary entrepreneurship and operating skills:
 
 - `business:discover-business-opportunities` — find and rank customer problems and market opportunities before selecting a venture direction.
 - `business:run-customer-discovery` — design and synthesize behavioral customer research without turning opinions into demand evidence.
@@ -72,6 +72,7 @@ The `business` plugin contains eleven complementary entrepreneurship and operati
 - `business:executive-assistance` — manage priorities, meetings, follow-ups and executive preparation.
 - `business:business-operations` — define and improve repeatable operating processes.
 - `business:sales-and-growth` — qualify pipeline and run measurable growth work.
+- `business:cold-outreach` — research prospects and sales partners, draft personalised outreach, prepare calls, rehearse objections, and review conversations. Invoke `$cold-outreach` in Codex with the offer, target audience, exclusions, and desired output; preparation alone does not send messages or place calls.
 - `business:evidence-research` — investigate business questions using traceable sources.
 
 Each skill owns a distinct decision stage and hands specialist work to the appropriate neighboring workflow. Academic and professional sources inform the playbooks, but the plugin does not claim institutional affiliation or professional legal, accounting, tax, audit, or investment authority.

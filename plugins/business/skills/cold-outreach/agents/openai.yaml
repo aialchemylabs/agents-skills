@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cold Outreach"
+  short_description: "Research prospects and prepare sales conversations"
+  default_prompt: "Use $cold-outreach to research suitable prospects and prepare personalised messages, call openers, and qualification questions for review."
