@@ -3,7 +3,7 @@
 `aialchemy-skills` is a standalone command-line installer that treats the
 AIAlchemy LiteLLM skills marketplace as the central catalog, retrieves the
 referenced skills from their Git sources, validates and versions them locally,
-and exposes them to Codex, Claude Code, Kiro, and Hermes through each agent's
+and exposes them to Codex, Claude Code, and Hermes through each agent's
 native skill-discovery location.
 
 Responsibility split:
@@ -69,7 +69,6 @@ Common flags accepted by every command: `--catalog URL`, `--json`,
    |-------------|------------------------------------------------|
    | Codex       | `~/.agents/skills/<skill>`                     |
    | Claude Code | `~/.claude/skills/<skill>`                     |
-   | Kiro        | `~/.kiro/skills/<skill>`                       |
    | Hermes      | `~/.hermes/skills/aialchemy/<skill>`           |
 
    Links point through `<data-dir>/current`, so activation and rollback never
@@ -131,10 +130,6 @@ defaults.
 
 ## Agent-specific notes
 
-- **Kiro**: custom agents do not inherit global skills; each custom agent
-  definition needs a resource such as
-  `{"resources": ["skill://~/.kiro/skills/*/SKILL.md"]}`. `doctor` reminds
-  you of this.
 - **Claude Code**: if `~/.claude/skills` is created for the first time while
   Claude Code is running, restart it so the directory is discovered. A
   namespaced plugin copy of the same skill may coexist; the installer warns

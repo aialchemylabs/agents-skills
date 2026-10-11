@@ -1,6 +1,6 @@
 // Command aialchemy-skills installs skills published by the AIAlchemy LiteLLM
 // marketplace into the native skill-discovery locations of Codex, Claude Code,
-// Kiro, and Hermes.
+// and Hermes.
 package main
 
 import (

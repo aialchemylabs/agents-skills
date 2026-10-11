@@ -28,7 +28,7 @@ type Adapter struct {
 }
 
 // All lists every supported adapter in stable order.
-var All = []Adapter{Codex, Claude, Kiro, Hermes}
+var All = []Adapter{Codex, Claude, Hermes}
 
 // ByName resolves an adapter by its agent name.
 func ByName(name string) (Adapter, bool) {

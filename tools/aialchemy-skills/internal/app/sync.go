@@ -49,7 +49,7 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 	fs := newFlagSet("sync", &c)
 	fs.BoolVar(&all, "all", false, "synchronize every valid published skill")
 	fs.Var(&skillFlags, "skill", "skill name to synchronize (repeatable)")
-	fs.StringVar(&agentsSpec, "agents", "", "comma-separated agents (codex,claude,kiro,hermes), or \"auto\"")
+	fs.StringVar(&agentsSpec, "agents", "", "comma-separated agents (codex,claude,hermes), or \"auto\"")
 	fs.BoolVar(&dryRun, "dry-run", false, "report planned operations without cloning or writing anything")
 	fs.BoolVar(&prune, "prune", false, "remove managed links and installs for skills no longer selected")
 	fs.BoolVar(&requirePinned, "require-pinned", false, "fail when a selected skill is not pinned to an exact commit SHA")

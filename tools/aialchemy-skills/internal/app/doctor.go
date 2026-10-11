@@ -247,7 +247,6 @@ func runDoctor(ctx context.Context, args []string, getenv func(string) string, s
 	}
 
 	// Agent-specific caveats.
-	add("kiro custom agents", "info", adapters.KiroCustomAgentNote, 0)
 	if agentSet["claude"] {
 		add("claude restart", "info", "if "+adapters.Claude.SkillsRoot(cfg.UserHome)+" was created after Claude Code started, restart Claude Code so it discovers the directory", 0)
 	}
