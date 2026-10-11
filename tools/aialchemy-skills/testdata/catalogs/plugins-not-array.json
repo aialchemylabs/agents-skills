@@ -1,4 +1,0 @@
-{
-  "name": "litellm",
-  "plugins": {"name": "not-an-array"}
-}

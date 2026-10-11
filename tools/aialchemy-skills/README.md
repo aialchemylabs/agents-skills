@@ -147,11 +147,4 @@ defaults.
 ```bash
 cd tools/aialchemy-skills
 go fmt ./... && go vet ./...
-go test ./...
-go test -race ./...
 ```
-
-The automated test suite is fully self-contained: it uses temporary user
-homes, local fixture Git repositories served over loopback TLS, and loopback
-HTTP catalogs. It never touches the real home directory, the live gateway,
-GitHub, or any paid model.
