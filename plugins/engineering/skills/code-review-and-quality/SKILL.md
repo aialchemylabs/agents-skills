@@ -38,6 +38,18 @@ Before judging implementation:
 
 Do not treat passing tests as proof that the requirement is correct or fully covered.
 
+## Check the Change Against Its Specification
+
+Find the originating specification: the task's goal and acceptance criteria, the linked issue or plan, or the change description. Then report:
+
+- requirements that are missing or only partly implemented;
+- behavior the change adds that nobody asked for;
+- requirements that look implemented but behave incorrectly.
+
+Quote the specification line behind each finding. If no specification exists, say so and judge against the change description alone.
+
+Keep this judgement separate from the quality review below. A change can follow every standard and implement the wrong thing, or do exactly what was asked while breaking the repository's conventions. Reporting the two separately stops one from masking the other.
+
 ## Review in Risk Order
 
 ### 1. Correctness
@@ -67,6 +79,21 @@ Check whether the change improves the resulting system:
 - Notice dead or unreachable code, but do not delete it during review.
 
 Recommend a concrete structural remedy when structure is the problem: collapse duplicate branches, separate orchestration from policy, move feature logic to its owner, replace condition chains with an explicit model, or delete needless indirection.
+
+Also match the diff against this code smell baseline from Fowler's _Refactoring_. Each smell is a labelled judgement call ("possible Feature Envy"), never a hard violation. A documented repository standard overrides it, and anything tooling already enforces is skipped.
+
+- **Mysterious Name:** a name that does not reveal what it does or holds. Rename it; if no honest name comes, the design is murky.
+- **Duplicated Code:** the same logic shape in more than one hunk or file. Extract the shared shape and call it from both.
+- **Feature Envy:** a function that uses another module's data more than its own. Move it to the data it envies.
+- **Data Clumps:** the same few fields or parameters travelling together. Give them one type.
+- **Primitive Obsession:** a primitive or string standing in for a domain concept. Give the concept its own small type.
+- **Repeated Switches:** the same conditional cascade on the same type in several places. Replace it with one shared map or with polymorphism.
+- **Shotgun Surgery:** one logical change that forces scattered edits. Gather what changes together into one module.
+- **Divergent Change:** one module edited for several unrelated reasons. Split it so each part changes for one reason.
+- **Speculative Generality:** abstractions, parameters or hooks for needs the specification does not have. Inline them until a real need appears.
+- **Message Chains:** long navigation such as `a.b().c().d()` that the caller should not depend on. Hide the walk behind one call on the first object.
+- **Middle Man:** a function or class that mostly delegates. Call the real target directly.
+- **Refused Bequest:** an implementer that ignores or overrides most of what it inherits. Prefer composition.
 
 ### 3. Security and Privacy
 
@@ -148,10 +175,10 @@ Exclude:
 
 Use this order:
 
-1. **Findings** — highest severity first, then file order within a severity.
+1. **Findings** — highest severity first, then file order within a severity. Mark each finding as a specification finding or a quality finding.
 2. **Open questions or assumptions** — only those that could change a finding.
 3. **Verification** — exact commands or inspections performed and their results; list unavailable checks.
-4. **Summary and residual risk** — concise scope summary after the findings.
+4. **Summary and residual risk** — concise scope summary after the findings, with the count of specification and quality findings and the worst issue in each. Do not pick one winner across the two.
 
 If no actionable issues exist, begin with `No actionable findings.` Then state residual risk, missing evidence, or checks not run. Do not manufacture a finding to make the review look substantive, and do not write “LGTM” without evidence.
 

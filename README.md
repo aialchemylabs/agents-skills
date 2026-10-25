@@ -34,7 +34,7 @@ The AI Orchestration plugin adapts council and cross-critique methodology from W
 
 ## Engineering
 
-The `engineering` plugin contains seventeen complementary software-engineering skills:
+The `engineering` plugin contains eighteen complementary software-engineering skills:
 
 - `engineering:frontend-ui-engineering` — build accessible, responsive, design-system-aligned user interfaces.
 - `engineering:test-driven-development` — implement behavioral changes with RED, GREEN, and REFACTOR evidence.
@@ -53,9 +53,10 @@ The `engineering` plugin contains seventeen complementary software-engineering s
 - `engineering:product-delivery` — carry a product change through implementation and acceptance.
 - `engineering:backend-engineering` — implement reliable services, data access and asynchronous work.
 - `engineering:devops-and-recovery` — deploy, observe, back up and recover services.
-- `engineering:systematic-debugging` — reproduce failures, test causes and verify the fix.
+- `engineering:systematic-debugging` — build a feedback loop that fails on the bug, minimise it, test ranked hypotheses and fix behind a regression test.
+- `engineering:codebase-design` — design deep modules with small interfaces, clean seams and tests through the interface.
 
-The Engineering plugin adapts material from Addy Osmani's `agent-skills` and Garry Tan's `gstack` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.
+The Engineering plugin adapts material from Addy Osmani's `agent-skills`, Garry Tan's `gstack` and Matt Pocock's `skills` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.
 
 ## Business
 
