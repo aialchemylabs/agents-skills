@@ -19,6 +19,10 @@ Follow dependencies across contracts, storage, services and clients. Identify th
 
 Use available focused skills for architecture, API design, frontend/backend implementation, testing and debugging. These are optional handoffs, not required installed dependencies. Without them, perform the same scoped work directly using repository conventions. For design alternatives, distinguish an exploratory artifact from a working product.
 
+For a reference-informed interface, use `design-reference-research` for source evidence, `ui-design-exploration` for alternatives/selection, and frontend engineering for implementation. The research skill combines its built-in source catalog with user links. Carry the chosen requirements and evidence IDs into browser verification; skip stages already completed or unnecessary for the task. For a finished video, connect `video-storytelling-and-storyboarding` to `programmatic-video-production` and verify the actual export. These skills remain optional capabilities, not installation prerequisites.
+
+When creating temporary resources or an isolated checkout, record their exact session ownership early. At the authorized completion milestone, use `session-housekeeping` when available to inventory and clean disposable resources. Preserve requested artifacts and unfinished work; a child still running in its checkout hands cleanup to the parent after exit. Do not delete resources merely because a stage has ended.
+
 ## Verify and review
 
 Run the narrowest checks that prove the acceptance criteria. Behavioral defects need meaningful regression proof; purely visual work follows the repository's capture policy. Perform one integrated client pass when applicable. An unavailable runtime is an explicit verification gap, not a passing result.

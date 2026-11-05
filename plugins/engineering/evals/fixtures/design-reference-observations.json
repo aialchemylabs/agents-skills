@@ -1,0 +1,37 @@
+{
+  "product": {
+    "name": "Northstar",
+    "task": "Switch between a short task list and a selected task without losing place",
+    "tokens": "Existing neutral palette and dense list rows"
+  },
+  "evidence": [
+    {
+      "id": "E01",
+      "source": "https://example.com/atlas/tasks",
+      "type": "gallery",
+      "observed": "A persistent list beside a detail pane on a wide viewport",
+      "unknown": [
+        "narrow behavior",
+        "focus handling"
+      ],
+      "capture": "not supplied"
+    },
+    {
+      "id": "E02",
+      "source": "https://example.com/beacon/tasks",
+      "type": "recording notes",
+      "observed": "A narrow list navigates to a separate detail screen",
+      "unknown": [
+        "video not available for inspection",
+        "exact easing"
+      ],
+      "capture": "not supplied"
+    },
+    {
+      "id": "E03",
+      "source": "https://example.com/locked",
+      "status": "inaccessible",
+      "reason": "requires paid account"
+    }
+  ]
+}

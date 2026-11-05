@@ -58,6 +58,12 @@ A recording shows what happened; it does not establish the underlying cause. Sup
 
 See [Record a Scoped Flow](references/browser-verification-checklist.md#record-a-scoped-flow) for recording checks and an example tool sequence.
 
+## Compare the implemented design
+
+When verifying a selected design, label each artifact with an evidence ID, route, viewport, fixture/state, performed action, capture time and whether it was actually inspected. For recordings include relevant timestamps and the finalized path. Use the same labels in a design-research handoff when one exists, while keeping external reference evidence separate from our implementation evidence.
+
+Compare the actual interface to the selected acceptance criteria under matching conditions, including relevant state changes, responsive adaptations, focus and reduced motion. Explain intentional deviations. Gallery screenshots cannot establish native behavior or an accessibility baseline. Researching external inspiration belongs to `design-reference-research` when available; this skill verifies the implemented product.
+
 ## Inspect the Relevant Evidence
 
 Inspect only the channels relevant to the symptom, but normally cover:

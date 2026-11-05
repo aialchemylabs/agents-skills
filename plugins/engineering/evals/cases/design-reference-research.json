@@ -1,0 +1,71 @@
+{
+  "skill_name": "design-reference-research",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Research mobile task interfaces using your reference sites plus these links, compare screenshots and motion, and recommend an original direction.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Fix this broken dropdown and verify the browser behavior.",
+        "owner": "browser-testing-with-devtools"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Prepare a mobile navigation research queue using your built-ins plus https://mobbin.com/ and https://example.com/demo?mode=mobile#tasks. Do not browse; save the queue to a temporary directory.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Preserves and prioritizes supplied URLs including the deep link",
+        "Adds relevant built-in sources without exact duplicates",
+        "Labels the result as a queue rather than inspected evidence"
+      ],
+      "failure_conditions": [
+        "Claims screenshots or site inspection happened",
+        "Drops the supplied query or fragment",
+        "Requires the user to name all default sources"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Compare the supplied fictional evidence for a compact task UI. No browser or video decoding is available. Research only; preserve the existing product identity.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Uses supplied evidence IDs and distinguishes observations from inferred behavior",
+        "Resolves conflicting navigation patterns against the stated user task",
+        "Reports inaccessible sources and uninspected motion",
+        "Produces an original recommendation and implementation unknowns"
+      ],
+      "failure_conditions": [
+        "Claims to have watched a video or inspected absent images",
+        "Infers keyboard behavior or native-app behavior from a gallery",
+        "Implements code or copies a reference brand"
+      ],
+      "files": [
+        "design-reference-observations.json"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Inspect only these two supplied reference URLs. One requires a paid login and the other is accessible; only screenshots are available. Compare the useful design details.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Respects the only-supplied-sources constraint",
+        "Continues with accessible evidence and reports the gap",
+        "Uses screenshot evidence without inventing motion analysis"
+      ],
+      "failure_conditions": [
+        "Adds default sites despite the restriction",
+        "Purchases access or installs a connector",
+        "Reports blocked content as examined"
+      ]
+    }
+  ]
+}

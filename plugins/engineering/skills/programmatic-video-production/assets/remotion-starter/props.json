@@ -1,0 +1,33 @@
+{
+  "fps": 30,
+  "width": 1280,
+  "height": 720,
+  "title": "Northstar Tasks",
+  "audio": null,
+  "shots": [
+    {
+      "id": "context",
+      "durationFrames": 60,
+      "headline": "See the next step",
+      "body": "A fictional product story",
+      "caption": "Turn a busy day into a clear plan.",
+      "media": null
+    },
+    {
+      "id": "action",
+      "durationFrames": 60,
+      "headline": "Give work an owner",
+      "body": "Plan · Assign · Follow through",
+      "caption": "Keep the task and its owner together.",
+      "media": null
+    },
+    {
+      "id": "result",
+      "durationFrames": 60,
+      "headline": "Make progress visible",
+      "body": "Clarity for the whole team",
+      "caption": "Know what is ready and what needs attention.",
+      "media": null
+    }
+  ]
+}

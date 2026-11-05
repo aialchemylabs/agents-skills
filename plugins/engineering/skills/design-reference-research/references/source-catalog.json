@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "name": "60fps",
+      "url": "https://60fps.design/",
+      "platforms": [
+        "mobile",
+        "web"
+      ],
+      "tags": [
+        "motion",
+        "interaction",
+        "navigation",
+        "progress"
+      ],
+      "purpose": "Motion, transitions and interaction details",
+      "search_guidance": "Product name and interaction, then inspect an individual shot",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "public_index",
+        "evidence": "Public index lists shots, motion and storyboards; individual access is not verified"
+      }
+    },
+    {
+      "name": "Mobbin",
+      "url": "https://mobbin.com/",
+      "platforms": [
+        "mobile",
+        "web"
+      ],
+      "tags": [
+        "screens",
+        "flows",
+        "navigation",
+        "onboarding",
+        "tasks"
+      ],
+      "purpose": "Shipped interfaces and user flows",
+      "search_guidance": "Platform, product category, screen or flow",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "public_landing",
+        "evidence": "Landing page verified; library results may require login or plan"
+      }
+    },
+    {
+      "name": "ScreensDesign",
+      "url": "https://screensdesign.com/",
+      "platforms": [
+        "mobile"
+      ],
+      "tags": [
+        "flows",
+        "onboarding",
+        "motion",
+        "interaction"
+      ],
+      "purpose": "Recorded mobile app flows",
+      "search_guidance": "Find an app or flow and inspect its recording chapter",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "public_index",
+        "evidence": "Index describes tagged recordings; individual access is not verified"
+      }
+    },
+    {
+      "name": "Refero",
+      "url": "https://refero.design/",
+      "platforms": [
+        "mobile",
+        "web"
+      ],
+      "tags": [
+        "screens",
+        "flows",
+        "navigation",
+        "dashboard",
+        "tasks"
+      ],
+      "purpose": "Web and iOS patterns and flows",
+      "search_guidance": "Combine page type, UX pattern, element, text or product name",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "official_help",
+        "evidence": "Search/help pages verified; full results may require login"
+      }
+    },
+    {
+      "name": "Applama",
+      "url": "https://applama.io/",
+      "platforms": [
+        "mobile"
+      ],
+      "tags": [
+        "screens",
+        "flows"
+      ],
+      "purpose": "Candidate mobile screen/flow source",
+      "search_guidance": "Inspect available categories before assuming search support",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "unverified",
+        "evidence": "Fetch unavailable; coverage and browser access need checking"
+      }
+    },
+    {
+      "name": "Appshots",
+      "url": "https://appshots.design/",
+      "platforms": [
+        "mobile"
+      ],
+      "tags": [
+        "screens",
+        "interaction"
+      ],
+      "purpose": "Candidate mobile UI source",
+      "search_guidance": "Inspect categories and individual examples",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "unverified",
+        "evidence": "No readable fetch content; browser access and coverage need checking"
+      }
+    },
+    {
+      "name": "Appkittie",
+      "url": "https://www.appkittie.com/",
+      "platforms": [
+        "mobile"
+      ],
+      "tags": [
+        "screens",
+        "flows"
+      ],
+      "purpose": "Candidate mobile app research source",
+      "search_guidance": "Seek UI evidence; market metrics are not UX effectiveness evidence",
+      "access": "Re-check at use time; do not assume login, subscription or connector availability",
+      "verification": {
+        "checked_on": "2026-11-06",
+        "status": "unverified",
+        "evidence": "Homepage title only; UI coverage and access need checking"
+      }
+    }
+  ]
+}

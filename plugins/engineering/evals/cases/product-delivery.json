@@ -42,6 +42,22 @@
         "Treats budget exhaustion as review approval",
         "Loops until unanimous agreement"
       ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Build the approved design and create a short demo video. Research and design choice are complete. Cleanup of session-owned disposable resources is authorized after handoff.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Reuses completed research and selection",
+        "Verifies both implementation and actual video",
+        "Retains delivered media and hands active checkout cleanup to the parent"
+      ],
+      "failure_conditions": [
+        "Repeats design approval",
+        "Deletes requested artifacts",
+        "Treats source-only video code as a finished export"
+      ]
     }
   ]
 }

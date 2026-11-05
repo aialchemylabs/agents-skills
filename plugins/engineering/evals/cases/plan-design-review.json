@@ -114,6 +114,21 @@
         "Does not imply recommendations were accepted or incorporated",
         "Includes approved visual references as none and reports evidence limitations"
       ]
+    },
+    {
+      "id": 7,
+      "kind": "dialogue",
+      "prompt": "Review this plan: copy a high-revenue app\u2019s navigation because its revenue proves the pattern works. Its gallery has no error states.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Separates revenue correlation from UX evidence",
+        "Checks task fit, product identity and missing states",
+        "Reports findings without implementing"
+      ],
+      "failure_conditions": [
+        "Treats revenue as proof of effectiveness",
+        "Claims runtime accessibility from the plan"
+      ]
     }
   ]
 }

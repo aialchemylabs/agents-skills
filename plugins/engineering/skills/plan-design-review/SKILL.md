@@ -34,6 +34,12 @@ Inspect available evidence before proposing anything new:
 
 Record what already exists and what the plan should reuse. Prefer existing decisions unless they fail a stated requirement. Distinguish observed evidence, plan statements, assumptions, and unresolved choices. If the relevant product sources are unavailable, say so instead of claiming design-system alignment.
 
+## Check reference-backed decisions
+
+When reference research is supplied, trace consequential recommendations to the actual captured examples and their stated limitations. Check whether compared tasks, platforms and states match the intended product. Distinguish direct observations from aesthetic preferences, inferred behavior and claims based on popularity or revenue.
+
+Verify that the chosen direction resolves conflicting references, fits the existing components/tokens, and specifies missing states, accessibility and responsive behavior. Flag copied branding or unsupported assumptions; recommend concrete adaptations. Do not require external research when existing product evidence already answers the decision. A request to review remains findings-only unless changes are authorized.
+
 ## Rate Initial Design Completeness
 
 Before the seven passes:

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "engineering",
-  "version": "0.5.0",
-  "description": "Plan, build, test, review, secure, optimize, simplify, version, and document production software.",
+  "version": "0.6.0",
+  "description": "Research, design, build, verify and deliver software and product videos, then clean up session resources.",
   "author": {
     "name": "AI Alchemy Labs"
   },
@@ -17,7 +17,10 @@
     "security",
     "performance",
     "git",
-    "documentation"
+    "documentation",
+    "design-research",
+    "video-production",
+    "housekeeping"
   ],
   "skills": "./skills/"
 }

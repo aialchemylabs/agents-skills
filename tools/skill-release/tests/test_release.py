@@ -21,7 +21,7 @@ class ReleaseTests(unittest.TestCase):
     def test_portfolio_and_isolated_archives(self):
         folders = release.validate()
         engineering = [p for p in folders if p.parent.parent.name == "engineering"]
-        self.assertEqual(len(engineering), 21)
+        self.assertEqual(len(engineering), 25)
         for folder in folders:
             with (
                 self.subTest(skill=folder.name),
@@ -38,6 +38,39 @@ class ReleaseTests(unittest.TestCase):
                     installed = Path(directory) / folder.name
                     z.extractall(installed)
                 release.validate_skill(installed)
+                if folder.name == "design-reference-research":
+                    queue = json.loads(
+                        subprocess.run(
+                            [
+                                sys.executable,
+                                str(installed / "scripts/sources.py"),
+                                "--include-candidates",
+                            ],
+                            check=True,
+                            capture_output=True,
+                            text=True,
+                        ).stdout
+                    )
+                    self.assertEqual(len(queue["sources"]), 7)
+                    self.assertEqual(queue["status"], "source_queue_only")
+                if folder.name == "programmatic-video-production":
+                    starter = installed / "assets/remotion-starter"
+                    lock = json.loads((starter / "package-lock.json").read_text())
+                    package = json.loads((starter / "package.json").read_text())
+                    self.assertEqual(
+                        lock["packages"][""]["dependencies"], package["dependencies"]
+                    )
+                    self.assertTrue(
+                        all(
+                            not p or p.startswith("node_modules/")
+                            for p in lock["packages"]
+                        )
+                    )
+                    for dependency, version in package["dependencies"].items():
+                        self.assertEqual(
+                            lock["packages"]["node_modules/" + dependency]["version"],
+                            version,
+                        )
                 if folder.name == "technical-diagrams":
                     command = [sys.executable, str(installed / "scripts/diagram.py")]
                     output = Path(directory) / "actual.svg"

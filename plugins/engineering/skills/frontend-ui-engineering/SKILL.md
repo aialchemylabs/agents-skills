@@ -23,6 +23,12 @@ Do not assume React, Tailwind, a specific browser tool, or a particular componen
 
 For a selected exploration artifact, map its tokens, components, states and interactions onto the real product before implementation. Unselected alternatives are not requirements. For a motion change, read [motion.md](references/motion.md); use performance investigation when measurements are needed.
 
+## Implement the selected reference-informed direction
+
+Use the selected design’s evidence IDs and acceptance criteria to map layout, components, tokens, navigation, state and motion into the actual stack. External screenshots are research inputs, not exact-copy requirements or evidence of backend behavior. Preserve source/asset provenance and distinguish real product captures from simulated examples.
+
+Document consequential adaptations for different platforms, available data or accessibility. Verify the implementation against the selected requirements with matching viewports and meaningful fixture states; do not optimize for pixel similarity to another product’s branding. If source evidence lacks a failure state or keyboard behavior, implement the product’s required behavior and label it as a design decision.
+
 ## Define the UI Contract
 
 Before coding, make the required behavior concrete:

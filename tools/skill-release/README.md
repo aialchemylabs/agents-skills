@@ -12,6 +12,14 @@ python -m unittest discover -s tools/skill-release/tests -v
 
 The diagram PNG test additionally needs CairoSVG 2.8.2 and native Cairo. CI installs them. On macOS with an existing Homebrew Cairo, its library directory may need to be visible to the Python dynamic loader. A missing raster runtime is reported as a skipped PNG test, never as a passing export.
 
+Media tests need installed FFmpeg/ffprobe. The explicit integration check below installs the pinned starter dependencies into a new directory outside the repo, then renders landscape and portrait variants, including synthetic video/audio fixtures. CI runs it with an available Chrome executable. Generated media and dependency folders never enter the skill package.
+
+```sh
+python tools/skill-release/tests/render_starter.py --workspace /tmp/video-integration --browser-executable /path/to/chrome
+```
+
+This proves rendering, media integration, frame extraction and export contracts. It does not prove that a model watched the video or listened to its audio. Research cases separately cover supplied/default sources and evidence limitations. Housekeeping tests use disposable repositories and check retained deliverables, dirty/unmerged/active worktrees and nested repositories; they do not clean real development worktrees.
+
 Validation checks every skill's frontmatter, local references, metadata, plugin versions, case specifications and engineering coverage. Tests exercise isolated packages, the diagram renderer/exporter, publishing contracts and the council's fake-transport failure scenarios. These checks are distinct from evaluating a model's behavior. The Go installer has its own tests; run `go test ./...` and `go vet ./...` from `tools/aialchemy-skills`.
 
 ## Portable artifacts

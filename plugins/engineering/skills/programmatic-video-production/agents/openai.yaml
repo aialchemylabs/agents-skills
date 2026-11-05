@@ -1,0 +1,4 @@
+interface:
+  display_name: "Programmatic Video Production"
+  short_description: "Render editable videos and verify the actual export"
+  default_prompt: "Use $programmatic-video-production to produce an editable video from this brief and verify the rendered file."

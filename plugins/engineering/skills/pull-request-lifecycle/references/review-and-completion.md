@@ -9,3 +9,5 @@ When no other budget is specified, bound self-review/fix iteration to three roun
 For monitoring, prefer the host's PR watcher and follow its handoff instructions. Without one, inspect status at meaningful work boundaries; do not silently launch an unattended polling service. A child reviewer reports its PR URL, inspected head and findings to the parent.
 
 Before an authorized merge, confirm the exact head and base, required CI/reviews, unresolved blockers and repository merge policy. If any changed, reassess. Use a hosting operation with expected-head protection when available. Do not enable auto-merge merely because a PR was opened; if the requested milestone is ready-for-review, leave merge automation off. Report completion using the hosting response, not intent.
+
+After verified completion, use `session-housekeeping` when available to inventory this session's worktree and temporary resources. Preserve handoff artifacts and unfinished work, and remove only resources covered by cleanup authorization. A child still running in its checkout hands removal to its parent/host after exit. Merge confirmation alone does not prove a local checkout is clean or inactive.

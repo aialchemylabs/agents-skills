@@ -34,7 +34,7 @@ The AI Orchestration plugin adapts council and cross-critique methodology from W
 
 ## Engineering
 
-The `engineering` plugin contains twenty-one complementary software-engineering skills:
+The `engineering` plugin contains twenty-five complementary software-engineering skills:
 
 - `engineering:frontend-ui-engineering` — build accessible, responsive, design-system-aligned user interfaces.
 - `engineering:test-driven-development` — implement behavioral changes with RED, GREEN, and REFACTOR evidence.
@@ -59,10 +59,18 @@ The `engineering` plugin contains twenty-one complementary software-engineering 
 - `engineering:pull-request-lifecycle` — prepare, take over, modernize and complete PRs using current-head evidence.
 - `engineering:technical-diagrams` — produce editable, verified SVG/PNG/offline HTML technical diagrams.
 - `engineering:ui-design-exploration` — compare product-grounded UI directions and hand off a selected design.
+- `engineering:design-reference-research` — combine built-in reference sites with user sources, inspect screens/flows and derive an original design brief.
+- `engineering:video-storytelling-and-storyboarding` — turn a brief into a grounded script, timed shots and asset handoff.
+- `engineering:programmatic-video-production` — build editable compositions and verify actual video exports with a pinned Remotion starter.
+- `engineering:session-housekeeping` — inventory and clean verified disposable session resources while retaining deliverables and unfinished work.
 
 The Engineering plugin adapts material from Addy Osmani's `agent-skills`, Garry Tan's `gstack` and Matt Pocock's `skills` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.
 
 The new workflows adapt pinned MIT sources from tstack, Fireworks Tech Graph and the maintained Superdesign skill. Their provenance and notices ship inside each skill. Motion guidance is original; the Transitions.dev collection is not redistributed.
+
+The reference catalog ships inside `design-reference-research` and includes 60fps, Mobbin, ScreensDesign, Refero and access-unverified candidate sources Applama, Appshots and Appkittie. User references take priority; the agent records actual coverage and access limitations. Research artifacts stay with the project, outside this public package.
+
+Video skills include original planning templates, a pinned Remotion starter and local export checks. They do not install renderers, supply media rights or grant a Remotion license. Housekeeping records session ownership and checks exact paths before removal; it does not sweep temporary folders, discard unfinished work or kill processes.
 
 ## Release and managed installation
 

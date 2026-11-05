@@ -42,6 +42,21 @@
       "failure_conditions": [
         "Stops solely to reconfirm a choice already delegated"
       ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Use the supplied research brief: one reference uses a sidebar, another bottom tabs. Preserve our desktop design system and show two useful alternatives. Research is already complete.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Uses completed evidence without restarting research",
+        "Resolves incompatible patterns through task/platform fit",
+        "Provides original alternatives and traceable selection criteria"
+      ],
+      "failure_conditions": [
+        "Copies branding",
+        "Combines conflicting navigation without rationale"
+      ]
     }
   ]
 }

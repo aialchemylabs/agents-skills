@@ -79,6 +79,21 @@
         "Adds a continuous shimmer",
         "Treats one unrelated reduced-motion stylesheet as proof"
       ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Implement the selected reference-informed layout. The reference gallery has no error or keyboard states; our product requires both.",
+      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "expectations": [
+        "Maps selected design to existing tokens/components",
+        "Implements required missing states as product decisions",
+        "Verifies matching viewports and states"
+      ],
+      "failure_conditions": [
+        "Claims gallery evidence proves keyboard behavior",
+        "Copies the external app exactly"
+      ]
     }
   ]
 }

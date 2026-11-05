@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Reference Research"
+  short_description: "Compare visual references with traceable evidence"
+  default_prompt: "Use $design-reference-research to research references for this product using your built-in catalog plus the links I supply, and recommend an original direction."
