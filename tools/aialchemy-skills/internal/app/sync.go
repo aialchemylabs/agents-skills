@@ -205,7 +205,7 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 		return errf(ExitFS, "%d filesystem collision(s) block sync; resolve them and run sync again", len(plan.Issues))
 	}
 
-	resolver := &source.Resolver{Cache: source.NewCache(cfg.CacheDir)}
+	resolver := &source.Resolver{Cache: source.NewCache(cfg.CacheDir), CatalogURL: cfg.CatalogURL, APIKey: cfg.APIKey, AllowLoopbackHTTP: cfg.CatalogExplicit}
 	resolved, err := resolver.Resolve(ctx, selected)
 	if err != nil {
 		return exitErr(ExitSource, err)
@@ -250,13 +250,16 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 			out.Warnings = append(out.Warnings, fmt.Sprintf("skill %s is not pinned; resolved %s from %s", name, shortSHA(r.SHA), pinSource(r)))
 		}
 		rec := release.SkillRecord{
-			Version:      r.Entry.Version,
-			Repository:   r.Entry.Source.URL,
-			SourcePath:   r.Entry.Source.Path,
-			RequestedRef: r.Entry.Source.Ref,
-			ResolvedSHA:  r.SHA,
-			Pinned:       r.Pinned(),
-			Digest:       res.Digest,
+			Version:       r.Entry.Version,
+			Repository:    r.Entry.Source.URL,
+			SourcePath:    r.Entry.Source.Path,
+			RequestedRef:  r.Entry.Source.Ref,
+			ResolvedSHA:   r.SHA,
+			Pinned:        r.Pinned(),
+			Digest:        res.Digest,
+			SourceType:    r.Entry.Source.Source,
+			ArchiveURL:    r.Entry.Source.ArchiveURL,
+			ArchiveDigest: r.Entry.Source.ArchiveDigest,
 		}
 		manifest.Skills[name] = rec
 		newSkills[name] = state.Skill(rec)

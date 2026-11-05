@@ -1,0 +1,4 @@
+interface:
+  display_name: "Devops And Recovery"
+  short_description: "Deploy services and verify recovery"
+  default_prompt: "Use $devops-and-recovery to handle this task with concrete evidence and a usable handoff."

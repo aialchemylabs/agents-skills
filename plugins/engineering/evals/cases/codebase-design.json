@@ -1,0 +1,45 @@
+{
+  "skill_name": "codebase-design",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Redesign this module interface to hide repeated caller complexity.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Optimize an observed database query bottleneck.",
+        "owner": "performance-optimization"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "This repo names its concepts services, APIs and boundaries. Three services repeat parsing and retry rules. Propose a clearer interface.",
+      "expected_output": "Preserve local terminology and concentrate actual shared behavior.",
+      "expectations": [
+        "Explains responsibility and caller obligations",
+        "Justifies any seam with real variation or testability"
+      ],
+      "failure_conditions": [
+        "Renames concepts solely to enforce skill vocabulary",
+        "Introduces layers with no useful behavior"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "One production adapter exists, but deterministic failure injection is needed for recovery tests. Assess the seam.",
+      "expected_output": "Judge the seam by concrete isolation/testability requirements.",
+      "expectations": [
+        "Considers actual recovery-test needs"
+      ],
+      "failure_conditions": [
+        "Rejects the seam solely because there is one production adapter"
+      ]
+    }
+  ]
+}

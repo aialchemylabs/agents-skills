@@ -64,6 +64,21 @@
         "Forces React, Tailwind, or a specific browser tool onto a repository that uses another stack",
         "Introduces arbitrary gradients, rounded cards, spacing values, or placeholder copy instead of following the existing product design"
       ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Fix a drawer that loses focus and snaps when toggled quickly. Respect reduced motion and the product ban on continuous repainting.",
+      "expected_output": "A scoped correction with appropriate observable evidence.",
+      "expectations": [
+        "Tests interrupted/reversed transitions and focus restoration",
+        "Respects reduced motion for the changed interaction",
+        "Uses bounded motion tied to real state"
+      ],
+      "failure_conditions": [
+        "Adds a continuous shimmer",
+        "Treats one unrelated reduced-motion stylesheet as proof"
+      ]
     }
   ]
 }

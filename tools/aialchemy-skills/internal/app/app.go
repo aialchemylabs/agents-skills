@@ -90,6 +90,7 @@ func writeJSON(w io.Writer, v any) *ExitError {
 func loadCatalog(ctx context.Context, cfg *Config) ([]catalog.Entry, []catalog.Problem, *ExitError) {
 	data, err := catalog.Fetch(ctx, cfg.CatalogURL, catalog.FetchOptions{
 		AllowLoopbackHTTP: cfg.CatalogExplicit,
+		APIKey:            cfg.APIKey,
 	})
 	if err != nil {
 		return nil, nil, exitErr(ExitCatalog, err)
@@ -99,7 +100,21 @@ func loadCatalog(ctx context.Context, cfg *Config) ([]catalog.Entry, []catalog.P
 		return nil, nil, exitErr(ExitCatalog, err)
 	}
 	valid, problems := catalog.Validate(cat, cfg.AllowRepositories)
-	return valid, problems, nil
+	filtered := make([]catalog.Entry, 0, len(valid))
+	for i, entry := range valid {
+		if entry.Source.Source == catalog.SourceGitSubdir && !cfg.AllowGit {
+			problems = append(problems, catalog.Problem{Index: i, Name: entry.Name, Err: "direct Git content is disabled; use a gateway-archive entry or explicitly pass --allow-git-source"})
+			continue
+		}
+		if entry.Source.Source == catalog.SourceGatewayArchive {
+			if err := catalog.ValidateArchiveOrigin(cfg.CatalogURL, entry.Source.ArchiveURL, cfg.CatalogExplicit); err != nil {
+				problems = append(problems, catalog.Problem{Index: i, Name: entry.Name, Err: err.Error()})
+				continue
+			}
+		}
+		filtered = append(filtered, entry)
+	}
+	return filtered, problems, nil
 }
 
 func reportProblems(problems []catalog.Problem, stderr io.Writer) {

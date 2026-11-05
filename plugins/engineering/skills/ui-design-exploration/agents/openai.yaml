@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ui Design Exploration"
+  short_description: "Compare UI directions and hand off a design"
+  default_prompt: "Use $ui-design-exploration to handle this task with concrete evidence and a usable handoff."

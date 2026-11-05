@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "style": 4,
+  "title": "Example job flow",
+  "viewBox": "0 0 1000 500",
+  "nodes": [
+    {
+      "id": "client",
+      "label": "Client",
+      "x": 80,
+      "y": 160,
+      "width": 180,
+      "height": 90
+    },
+    {
+      "id": "api",
+      "label": "Job service",
+      "x": 400,
+      "y": 160,
+      "width": 180,
+      "height": 90
+    },
+    {
+      "id": "store",
+      "label": "Job store",
+      "x": 720,
+      "y": 160,
+      "width": 180,
+      "height": 90
+    }
+  ],
+  "edges": [
+    {
+      "source": "client",
+      "target": "api",
+      "label": "Submit job"
+    },
+    {
+      "source": "api",
+      "target": "store",
+      "label": "Persist"
+    }
+  ]
+}

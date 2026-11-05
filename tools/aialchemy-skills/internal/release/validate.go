@@ -92,6 +92,16 @@ func Validate(dataDir, id string) (*Manifest, error) {
 		if rec.Pinned && rec.RequestedRef != "" {
 			return nil, fmt.Errorf("release %s skill %s has incompatible pinned and requested-ref provenance", id, name)
 		}
+		if rec.SourceType == catalog.SourceGatewayArchive {
+			if !rec.Pinned || !digestRE.MatchString(rec.ArchiveDigest) {
+				return nil, fmt.Errorf("invalid archive provenance for %s", name)
+			}
+			if err := catalog.ValidateArchiveOrigin(m.CatalogURL, rec.ArchiveURL, true); err != nil {
+				return nil, err
+			}
+		} else if rec.SourceType != "" && rec.SourceType != catalog.SourceGitSubdir {
+			return nil, fmt.Errorf("unknown source type for %s", name)
+		}
 		if !digestRE.MatchString(rec.Digest) {
 			return nil, fmt.Errorf("release %s skill %s has invalid content digest", id, name)
 		}

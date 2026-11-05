@@ -15,7 +15,7 @@ Show the commands, outputs and artifacts you rely on, but redact every secret fi
 
 ## Phase 1: Build a feedback loop
 
-This is the skill. With a tight pass/fail signal that goes red on this bug, bisection, hypothesis testing and instrumentation only consume it. Without one, reading code will not find the cause. Spend disproportionate effort here.
+This is the skill. With a tight pass/fail signal that goes red on this bug, bisection, hypothesis testing and instrumentation only consume it. Targeted source inspection can help construct this signal; evidence-backed investigation remains useful when access prevents reproduction. Spend disproportionate effort here.
 
 Ways to build one, roughly in this order:
 
@@ -32,18 +32,18 @@ Ways to build one, roughly in this order:
 
 Then tighten it. Make it faster by narrowing scope and skipping unrelated setup. Make it sharper by asserting the specific symptom, not "did not crash". Make it deterministic by pinning time, seeding randomness, isolating the filesystem and freezing the network.
 
-For a non-deterministic bug, aim for a higher reproduction rate rather than a clean repro: loop the trigger, parallelise, add load and narrow timing windows. A 50% flake is debuggable; a 1% flake is not, so keep raising the rate.
+For a non-deterministic bug, aim for a higher reproduction rate rather than a clean repro: loop the trigger, parallelise, add load and narrow timing windows. Report the observed rate and uncertainty; a rare failure can still be investigated with traces or event capture. Avoid unbounded load or changing live-system conditions without authorization.
 
-If you cannot build a loop, stop and say so. List what you tried and ask for access to an environment that reproduces the bug, a redacted captured artifact such as a log, trace or timestamped recording, or permission to add temporary instrumentation. Do not hypothesise without a loop.
+If reproduction is unavailable, name the access or evidence gap and what was attempted. Continue useful source/trace inspection and label ranked hypotheses as provisional. Request only the missing artifact or access needed to distinguish them; do not claim a confirmed cause or verified fix. For purely visual defects, a repeatable manual flow with matched captures may be the appropriate proof.
 
 Phase 1 is done when you can name one command, already run with its redacted output shown, that is:
 
 - **Red-capable:** it drives the real code path and asserts the requester's exact symptom, so it fails on this bug and passes once fixed.
 - **Deterministic:** it gives the same verdict every run, or a pinned high reproduction rate for a flaky bug.
-- **Fast:** it takes seconds, not minutes.
+- **Focused:** it is as fast as practical without excluding the behavior that fails.
 - **Unattended:** it runs without a person, apart from a scripted manual procedure.
 
-If you catch yourself reading code to build a theory before this command exists, stop. Jumping straight to a hypothesis is the failure this skill prevents.
+A hypothesis can guide construction of the loop, but it is not a diagnosis until evidence distinguishes it from alternatives. When no executable loop is possible, state the substitute evidence and its limits.
 
 ## Phase 2: Reproduce and minimise
 
@@ -75,9 +75,9 @@ For a performance regression, logs are usually the wrong tool. Measure a baselin
 
 ## Phase 5: Fix with a regression test
 
-Write the regression test before the fix, at a seam where the test exercises the real bug pattern as it occurs at the call site. A seam too shallow to replicate the chain that triggered the bug gives false confidence. If no correct seam exists, that is a finding: report that the structure prevents locking the bug down.
+For a behavioral fix, write the regression test before the fix, at a seam where the test exercises the real bug pattern as it occurs at the call site. For purely visual defects, use the repository's matched-capture proof instead. A seam too shallow to replicate the chain that triggered the bug gives false confidence. If no correct seam exists, that is a finding: report that the structure prevents locking the bug down.
 
-1. Turn the minimised repro into a failing test at that seam.
+1. Turn the minimised behavioral repro into a failing test at that seam. For a purely visual change, follow repository policy for before/after captures instead.
 2. Watch it fail. If you forced the failure by changing code or a fixture, diff against a clean copy to prove the change landed.
 3. Apply the fix in the assigned workspace.
 4. Watch the test pass.

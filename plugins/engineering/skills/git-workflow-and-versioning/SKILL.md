@@ -171,3 +171,6 @@ State:
 - which later actions were not performed.
 
 Never describe a proposed command as executed or a local state change as remotely published.
+
+
+PR preparation, takeover, modernization, review responses and monitoring belong to `pull-request-lifecycle` when available. This skill continues to own local history, conflicts and release-version mechanics; a missing companion skill does not prevent performing an authorized Git operation.

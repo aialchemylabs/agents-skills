@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pull Request Lifecycle"
+  short_description: "Prepare, take over and complete pull requests"
+  default_prompt: "Use $pull-request-lifecycle to handle this task with concrete evidence and a usable handoff."

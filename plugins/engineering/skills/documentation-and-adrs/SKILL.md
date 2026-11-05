@@ -147,3 +147,6 @@ For authorized edits, report:
 - validations run and observed results;
 - assumptions, unresolved questions, and follow-up owners;
 - implementation or release work that remains separate from the documentation.
+
+
+For an editable/exported diagram, use `technical-diagrams` when available. Keep the rationale here and the visual artifact with its source; verify that relationships reflect the implementation or are clearly proposed. Do not require an export pipeline when a short Mermaid diagram or prose explains the decision.

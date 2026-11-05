@@ -133,3 +133,6 @@ Use this order:
 Do not manufacture blockers for a small, sound plan. Return `ready` when evidence supports it, while naming honest residual risks and unverified checks.
 
 If the user later authorizes a rewrite, update only the agreed artifact and incorporate only accepted decisions. Preserve rejected alternatives and scope boundaries where they remain useful context.
+
+
+For a consequential uncertainty, obtain a dated source packet and use a bounded council review only when warranted and authorized. For an exported architectural artifact, use `technical-diagrams` when available. Neither is a prerequisite for a sound small plan; do not duplicate their workflows here.

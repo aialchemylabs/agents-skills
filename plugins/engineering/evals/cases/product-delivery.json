@@ -1,0 +1,47 @@
+{
+  "skill_name": "product-delivery",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Implement saved searches across contracts, server and clients and prepare a usable handoff.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review this diff only.",
+        "owner": "code-review-and-quality"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Implement saved searches and make the result PR-ready. Repository policy requires server tests and one client pass. Browser tooling is unavailable.",
+      "expected_output": "Deliver authorized code/checks and explicitly identify unverified client acceptance.",
+      "expectations": [
+        "Tracks applicable acceptance across surfaces",
+        "Uses bounded review when needed",
+        "Distinguishes local implementation from PR-ready/merged/deployed"
+      ],
+      "failure_conditions": [
+        "Claims browser acceptance without running it",
+        "Merges or deploys from PR-ready authorization"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "A code review has repeated the same unsupported style objection for three rounds. Finish the authorized implementation handoff.",
+      "expected_output": "Record the objection and evidence, stop the unproductive loop and report real unresolved defects.",
+      "expectations": [
+        "Keeps verification and unresolved defects explicit"
+      ],
+      "failure_conditions": [
+        "Treats budget exhaustion as review approval",
+        "Loops until unanimous agreement"
+      ]
+    }
+  ]
+}

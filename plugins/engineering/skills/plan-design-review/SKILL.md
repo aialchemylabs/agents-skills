@@ -115,3 +115,6 @@ Use one of these verdicts:
 - **Not applicable** — the plan has no interaction design surface; route to engineering review.
 
 Do not claim that a live interface works, renders correctly, or is accessible from a plan review alone. Recommend browser testing or frontend review after implementation when runtime evidence is required.
+
+
+When the missing deliverable is alternative visual directions rather than critique of an existing plan, use `ui-design-exploration` when available. Keep design selection, critique and production implementation distinct; do not silently create or approve mockups during a review-only request.

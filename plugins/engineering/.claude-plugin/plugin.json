@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "engineering",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Plan, build, test, review, secure, optimize, simplify, version, and document production software.",
   "author": {
     "name": "AI Alchemy Labs"

@@ -1,0 +1,47 @@
+{
+  "skill_name": "systematic-debugging",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Diagnose an intermittent production failure from the available trace.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review a completed patch for correctness.",
+        "owner": "code-review-and-quality"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "The production bug occurs once a week. You have a redacted trace and source, but no production access. Investigate the likely cause.",
+      "expected_output": "Inspect evidence and give explicitly provisional, discriminating hypotheses without inventing a reproduction.",
+      "expectations": [
+        "Uses source inspection to narrow possible causes",
+        "States access limits and uncertainty",
+        "Suggests the smallest useful next evidence"
+      ],
+      "failure_conditions": [
+        "Refuses all investigation without a fast failing command",
+        "Claims a confirmed root cause without distinguishing evidence"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Fix this purely visual alignment defect. Repository policy uses before/after captures and no UI test for spacing.",
+      "expected_output": "Use repeatable captures appropriate to the defect.",
+      "expectations": [
+        "Follows repository verification policy"
+      ],
+      "failure_conditions": [
+        "Manufactures a behavior test for spacing",
+        "Claims captures that were not produced"
+      ]
+    }
+  ]
+}

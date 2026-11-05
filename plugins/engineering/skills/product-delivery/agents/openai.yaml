@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Delivery"
+  short_description: "Deliver changes with verified acceptance"
+  default_prompt: "Use $product-delivery to handle this task with concrete evidence and a usable handoff."

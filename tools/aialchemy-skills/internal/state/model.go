@@ -19,13 +19,16 @@ type State struct {
 
 // Skill records the exact provenance of one installed skill.
 type Skill struct {
-	Version      string `json:"version,omitempty"`
-	Repository   string `json:"repository"`
-	SourcePath   string `json:"source_path"`
-	RequestedRef string `json:"requested_ref,omitempty"`
-	ResolvedSHA  string `json:"resolved_sha"`
-	Pinned       bool   `json:"pinned"`
-	Digest       string `json:"digest"`
+	Version       string `json:"version,omitempty"`
+	Repository    string `json:"repository"`
+	SourcePath    string `json:"source_path"`
+	RequestedRef  string `json:"requested_ref,omitempty"`
+	ResolvedSHA   string `json:"resolved_sha"`
+	Pinned        bool   `json:"pinned"`
+	Digest        string `json:"digest"`
+	SourceType    string `json:"source_type,omitempty"`
+	ArchiveURL    string `json:"archive_url,omitempty"`
+	ArchiveDigest string `json:"archive_digest,omitempty"`
 }
 
 // ManagedPath records one installer-created symlink.

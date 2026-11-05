@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical Diagrams"
+  short_description: "Render verified technical diagram artifacts"
+  default_prompt: "Use $technical-diagrams to handle this task with concrete evidence and a usable handoff."

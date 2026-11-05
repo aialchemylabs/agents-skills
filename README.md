@@ -34,7 +34,7 @@ The AI Orchestration plugin adapts council and cross-critique methodology from W
 
 ## Engineering
 
-The `engineering` plugin contains eighteen complementary software-engineering skills:
+The `engineering` plugin contains twenty-one complementary software-engineering skills:
 
 - `engineering:frontend-ui-engineering` — build accessible, responsive, design-system-aligned user interfaces.
 - `engineering:test-driven-development` — implement behavioral changes with RED, GREEN, and REFACTOR evidence.
@@ -56,7 +56,19 @@ The `engineering` plugin contains eighteen complementary software-engineering sk
 - `engineering:systematic-debugging` — build a feedback loop that fails on the bug, minimise it, test ranked hypotheses and fix behind a regression test.
 - `engineering:codebase-design` — design deep modules with small interfaces, clean seams and tests through the interface.
 
+- `engineering:pull-request-lifecycle` — prepare, take over, modernize and complete PRs using current-head evidence.
+- `engineering:technical-diagrams` — produce editable, verified SVG/PNG/offline HTML technical diagrams.
+- `engineering:ui-design-exploration` — compare product-grounded UI directions and hand off a selected design.
+
 The Engineering plugin adapts material from Addy Osmani's `agent-skills`, Garry Tan's `gstack` and Matt Pocock's `skills` under their MIT licenses. The required notices are in `plugins/engineering/LICENSES/`.
+
+The new workflows adapt pinned MIT sources from tstack, Fireworks Tech Graph and the maintained Superdesign skill. Their provenance and notices ship inside each skill. Motion guidance is original; the Transitions.dev collection is not redistributed.
+
+## Release and managed installation
+
+[Release tooling](tools/skill-release/README.md) validates metadata, resources and eval specifications, builds complete per-skill archives and runs behavioral evaluation adapters. Deterministic checks do not imply that model evaluations passed.
+
+[The managed installer](tools/aialchemy-skills/README.md) supports authenticated gateway archives with integrity checks, provider links and offline rollback. GitHub remains the canonical authoring source; a gateway-archive catalog keeps installation traffic on the configured gateway. Hosted instructions do not provide browser, shell, renderer or model credentials.
 
 ## Business
 

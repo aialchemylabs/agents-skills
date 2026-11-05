@@ -1,9 +1,9 @@
 # aialchemy-skills
 
 `aialchemy-skills` is a standalone command-line installer that treats the
-AIAlchemy LiteLLM skills marketplace as the central catalog, retrieves the
-referenced skills from their Git sources, validates and versions them locally,
-and exposes them to Codex, Claude Code, and Hermes through each agent's
+AIAlchemy LiteLLM skills marketplace as the central catalog, retrieves reviewed
+archives from that gateway (or explicitly enabled legacy Git sources), validates and versions them locally,
+and exposes them to supported coding agents through each agent's
 native skill-discovery location.
 
 Responsibility split:
@@ -40,11 +40,11 @@ Common flags accepted by every command: `--catalog URL`, `--json`,
 `--data-dir`, `--state-dir`, `--cache-dir`, `--user-home`, and repeatable
 `--allow-repository URL`.
 
-## How it works
+## Legacy Git flow and shared activation
 
 1. The catalog (`https://llmgateway.aialchemylabs.net/claude-code/marketplace.json`)
    is fetched with size and time bounds and validated entry by entry: name
-   rules, unambiguous JSON fields, `git-subdir` source type, HTTPS/SSH URLs
+   rules, unambiguous JSON fields, `git-subdir` source type (only with `--allow-git-source`), HTTPS/SSH URLs
    without credentials, a
    repository allowlist (only `github.com/aialchemylabs/agents-skills` by
    default), traversal-free source paths, and full-SHA pins.
@@ -156,3 +156,45 @@ defaults.
 cd tools/aialchemy-skills
 go fmt ./... && go vet ./...
 ```
+
+## Authenticated gateway archives (0.3)
+
+Gateway-only content delivery is the default. A catalog entry uses:
+
+```json
+{
+  "name": "example-skill",
+  "version": "1.0.0",
+  "source": {
+    "source": "gateway-archive",
+    "url": "https://github.com/aialchemylabs/agents-skills",
+    "path": "plugins/engineering/skills/example-skill",
+    "sha": "0123456789abcdef0123456789abcdef01234567",
+    "archive_url": "https://gateway.example/skill-hub/skills/example-skill/versions/version-id/archive",
+    "archive_digest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  }
+}
+```
+
+`url`, `path` and `sha` retain reviewed source provenance; they are not fetched for an archive entry. `archive_url` must share the configured catalog origin. Both catalog and archive receive `AIALCHEMY_SKILLS_API_KEY` from the environment; the key is never stored in state or manifests. Cross-origin redirects, wrong digests, unsafe ZIP entries, oversized packages and unmanaged link collisions fail before activation. Rollback revalidates the retained release offline.
+
+Legacy `git-subdir` entries require the explicit `--allow-git-source` opt-in. The built-in catalog address remains the legacy marketplace address for configuration compatibility; point `--catalog` or `AIALCHEMY_SKILLS_CATALOG` at the deployed per-skill archive catalog for this format. The [release client](../skill-release/README.md) builds/publishes artifacts and emits that catalog; serving it is an infrastructure operation.
+
+## Provider discovery
+
+All provider links point to the same immutable installed content; project-local overrides are not modified.
+
+| Adapter | Managed user-level root | Discovery basis |
+|---|---|---|
+| codex | `~/.agents/skills` | Existing Codex adapter |
+| claude | `~/.claude/skills` | Existing Claude adapter |
+| cursor | `~/.cursor/skills` | Cursor discovery in the Athanor provider adapter |
+| grok | `~/.grok/skills` | [Grok Build skill locations](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager/docs/user-guide/08-skills.md) |
+| opencode | `~/.config/opencode/skills` | [OpenCode skill locations](https://opencode.ai/docs/skills/) |
+| antigravity | `~/.gemini/config/skills` | Antigravity CLI discovery in the Athanor provider adapter |
+| kiro | `~/.kiro/skills` | [Kiro skill scope](https://kiro.dev/docs/skills/) |
+| hermes | `~/.hermes/skills/aialchemy` | Existing Hermes adapter |
+
+Adapter tests install and read a real skill through every link in an isolated home. This proves filesystem delivery, not every CLI version's runtime discovery or model behavior. Custom provider homes and agent profiles may override native defaults; check the provider's actual configuration and skill listing before declaring a live rollout complete. Kiro custom agents can require explicit `skill://` resource entries. The Antigravity adapter describes its Gemini-home layout, not every standalone Gemini CLI distribution.
+
+For legacy `synced` trees, first inventory resolved targets and compare their content with the proposed release. Run `sync --dry-run`, resolve collisions without deleting personal/project skills, and verify provider discovery. Retire the old syncing job/tree only after parity and rollback are demonstrated. The installer never disables external sync jobs or removes unmanaged copies automatically.

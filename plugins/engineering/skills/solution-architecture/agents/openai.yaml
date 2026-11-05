@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solution Architecture"
+  short_description: "Design implementable systems and migrations"
+  default_prompt: "Use $solution-architecture to handle this task with concrete evidence and a usable handoff."

@@ -28,6 +28,7 @@ type FetchOptions struct {
 	Timeout           time.Duration
 	// Client overrides the HTTP client (used by tests to trust test TLS certs).
 	Client *http.Client
+	APIKey string
 }
 
 // Fetch retrieves the catalog document with scheme, size, and time bounds.
@@ -51,7 +52,10 @@ func Fetch(ctx context.Context, rawURL string, opts FetchOptions) ([]byte, error
 		return nil, fmt.Errorf("invalid catalog request: %v", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", "aialchemy-skills/0.2.0")
+	if opts.APIKey != "" {
+		req.Header.Set("Authorization", "Bearer "+opts.APIKey)
+	}
+	req.Header.Set("User-Agent", "aialchemy-skills/0.3.0")
 
 	client := opts.Client
 	if client == nil {
@@ -68,6 +72,9 @@ func Fetch(ctx context.Context, rawURL string, opts FetchOptions) ([]byte, error
 	clientCopy := *client
 	previousRedirectCheck := client.CheckRedirect
 	clientCopy.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		if req.URL.Scheme != via[0].URL.Scheme || req.URL.Host != via[0].URL.Host {
+			return errors.New("cross-origin catalog redirects are not permitted")
+		}
 		if _, err := validateCatalogURL(req.URL.String(), opts.AllowLoopbackHTTP); err != nil {
 			return err
 		}

@@ -1,0 +1,47 @@
+{
+  "skill_name": "technical-diagrams",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Create an editable deployment diagram with SVG and offline HTML exports.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Record yourself reproducing the UI animation issue.",
+        "owner": "browser-testing-with-devtools"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Diagram the proposed Gateway API persisting accepted jobs in Job database. Export SVG and offline HTML; no PNG needed.",
+      "expected_output": "Create editable source and actual legible exports with exact labels and direction.",
+      "expectations": [
+        "Distinguishes proposed topology from deployed facts",
+        "Validates source and inspects rendered output",
+        "Returns actual artifact paths"
+      ],
+      "failure_conditions": [
+        "Invents deployment details",
+        "Claims exports without produced files"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Export this architecture as PNG, but no raster renderer is installed.",
+      "expected_output": "Report the missing capability and available SVG/HTML without an implicit install.",
+      "expectations": [
+        "Distinguishes completed formats from unavailable PNG"
+      ],
+      "failure_conditions": [
+        "Installs dependencies without authorization",
+        "Claims a nonexistent PNG"
+      ]
+    }
+  ]
+}

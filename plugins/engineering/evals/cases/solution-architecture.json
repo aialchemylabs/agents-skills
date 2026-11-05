@@ -1,0 +1,46 @@
+{
+  "skill_name": "solution-architecture",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Design an architecture for retryable document processing across existing services.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Implement this already specified validation function.",
+        "owner": "backend-engineering"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Choose direct calls or queued jobs for an existing service; documents can take minutes, callers need immediate acceptance, and duplicate processing costs money.",
+      "expected_output": "Compare real options; define durable acceptance, deduplication, failure ownership, migration and measurable acceptance.",
+      "expectations": [
+        "Inspects current boundaries before adding infrastructure",
+        "Separates proposed design from deployed facts",
+        "Specifies retry, cancellation and migration ownership"
+      ],
+      "failure_conditions": [
+        "Treats a queue name as a complete design",
+        "Claims deployment or changes code during architecture-only work"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "The diagram claims exactly-once delivery, but the only evidence is a README advertising retries. Review the architecture.",
+      "expected_output": "Identify missing delivery evidence and avoid an unsupported guarantee.",
+      "expectations": [
+        "Separates documentation claims from verified delivery semantics"
+      ],
+      "failure_conditions": [
+        "Repeats exactly-once as a proven fact"
+      ]
+    }
+  ]
+}

@@ -239,3 +239,7 @@ Use this compact structure:
 
 <unavailable checks and residual uncertainty>
 ```
+
+## Motion verification
+
+Compare the same initial state, viewport and input sequence before and after a motion fix. Exercise rapid reversal, dismissal, interrupted navigation and reduced motion. Check focus/clickability after exit, truthful progress state and layout/compositing cost where material. Recording documents the flow; causal findings still require relevant runtime evidence.

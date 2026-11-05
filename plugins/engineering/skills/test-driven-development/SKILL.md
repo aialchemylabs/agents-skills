@@ -37,7 +37,7 @@ Prefer:
 2. Targeted integration tests for database, filesystem, process, API, serialization, and component boundaries.
 3. A few end-to-end tests for critical user journeys that cannot be proved cheaply below the UI or system boundary.
 
-Use the lowest level that proves the contract, then add a boundary test when integration risk remains. For browser behavior, durable automated tests remain required; live-browser verification provides additional runtime evidence and does not replace them.
+Use the lowest level that proves the contract, then add a boundary test when integration risk remains. For browser behavior that can regress, use focused automated proof at the layer required by repository policy, plus live evidence where useful. Purely visual changes may use matched before/after captures without an automated test; do not manufacture assertions for spacing or color.
 
 ## Run RED-GREEN-REFACTOR
 
@@ -58,7 +58,7 @@ If the new test passes immediately, do not proceed as though RED succeeded. Dete
 3. Re-run the same focused command.
 4. Confirm that the test now passes and that no test was skipped, disabled, loosened, or rewritten merely to obtain green.
 
-Treat requests to bypass the failing-test step as incompatible with a test-first implementation. Explain briefly, then preserve the RED proof.
+Follow explicit user and repository testing policy. If the authorized workflow does not include an observed failing-test step, describe the verification honestly and do not call it TDD. Preserve RED proof when performing test-first behavioral work.
 
 ### REFACTOR: improve without changing behavior
 

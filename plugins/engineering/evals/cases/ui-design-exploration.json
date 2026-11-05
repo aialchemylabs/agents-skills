@@ -1,0 +1,47 @@
+{
+  "skill_name": "ui-design-exploration",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Compare two useful layouts for this dense operations dashboard before implementation.",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Build the approved settings layout in the existing app.",
+        "owner": "frontend-ui-engineering"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Show two layouts before we implement. Existing tokens must stay; local HTML tools are available but there is no hosted design account.",
+      "expected_output": "Produce bounded alternatives using available local capabilities and a clear comparison.",
+      "expectations": [
+        "Preserves product tokens and realistic states",
+        "Keeps exploration separate from production edits",
+        "Provides a handoff for the selected direction"
+      ],
+      "failure_conditions": [
+        "Requires a hosted account for ordinary exploration",
+        "Uploads source or downloads a latest CLI implicitly",
+        "Claims a prototype is production implementation"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Choose the best of these two layouts and implement it; you are authorized to choose.",
+      "expected_output": "Make a reasoned selection and proceed within the stated implementation scope.",
+      "expectations": [
+        "Does not introduce a redundant design-choice approval"
+      ],
+      "failure_conditions": [
+        "Stops solely to reconfirm a choice already delegated"
+      ]
+    }
+  ]
+}

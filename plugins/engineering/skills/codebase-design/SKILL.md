@@ -9,13 +9,13 @@ Design **deep modules**: a lot of behavior behind a small interface, placed at a
 
 ## Vocabulary
 
-Use these terms exactly. Do not substitute "component", "service", "API" or "boundary"; consistent language is the point.
+Use these concepts to reason about design, while preserving the repository's established vocabulary. A service, component, API or boundary may be the correct local name; do not rename domain concepts merely to fit this glossary.
 
-- **Module:** anything with an interface and an implementation, at any scale: a function, class, package or a slice spanning tiers. Avoid "unit", "component" and "service".
-- **Interface:** everything a caller must know to use the module correctly: the type signature, but also its invariants, ordering constraints, error modes, required configuration and performance characteristics. Avoid "API" and "signature", which name only the type-level surface.
+- **Module:** anything with an interface and an implementation, at any scale: a function, class, package or a slice spanning tiers.
+- **Interface:** everything a caller must know to use the module correctly: the type signature, but also its invariants, ordering constraints, error modes, required configuration and performance characteristics. Include non-type obligations when discussing an API or signature.
 - **Implementation:** the code inside a module. It is distinct from an **adapter**: a small adapter can have a large implementation (a database repository), and a large adapter a small one (an in-memory fake). Say "adapter" when the seam is the topic and "implementation" otherwise.
 - **Depth:** leverage at the interface, meaning the behavior a caller or test can exercise per unit of interface it must learn. A module is **deep** when much behavior sits behind a small interface, and **shallow** when the interface is nearly as complex as the implementation.
-- **Seam** (Michael Feathers): a place where behavior can change without editing in that place; the location where a module's interface lives. Where the seam goes is a design decision separate from what sits behind it. Avoid "boundary", which is overloaded with domain-driven design's bounded context.
+- **Seam** (Michael Feathers): a place where behavior can change without editing in that place; the location where a module's interface lives. Where the seam goes is a design decision separate from what sits behind it. State which kind of boundary is meant.
 - **Adapter:** a concrete thing that satisfies an interface at a seam. The word describes its role, not its contents.
 - **Leverage:** what callers get from depth: more capability per unit of interface learned. One implementation pays back across every call site and test.
 - **Locality:** what maintainers get from depth: change, bugs, knowledge and verification concentrate in one place instead of spreading across callers.
@@ -37,7 +37,7 @@ When designing an interface, ask:
 - **Depth belongs to the interface, not the implementation.** A deep module can be built from small, swappable internal parts; they are simply not part of its interface. A module can have **internal seams**, private to its implementation and used by its own tests, as well as the **external seam** at its interface.
 - **The deletion test.** Imagine deleting the module. If the complexity vanishes, it was a pass-through. If the complexity reappears across many callers, it was earning its keep.
 - **The interface is the test surface.** Callers and tests cross the same seam. Wanting to test past the interface suggests the module has the wrong shape.
-- **One adapter means a hypothetical seam; two adapters mean a real one.** Do not introduce a seam unless something actually varies across it.
+- **Justify seams by actual needs.** Multiple adapters demonstrate variation, but isolation, recovery or testability can justify a seam with one production adapter. Avoid abstractions based only on hypothetical future implementations.
 
 ## Designing for testability
 
@@ -71,7 +71,7 @@ When designing an interface, ask:
 
 - **Depth as a ratio of implementation lines to interface lines:** it rewards padding the implementation. Measure depth as leverage instead.
 - **"Interface" as a language keyword or a class's public methods:** too narrow. Here the interface includes every fact a caller must know.
-- **"Boundary":** overloaded. Say **seam** or **interface**.
+- **Terminology as a design fix:** renaming a service or boundary does not improve its interface. Preserve local language and explain the underlying responsibility.
 
 ## Going deeper
 

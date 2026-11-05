@@ -76,3 +76,5 @@ Pass the question and evidence on standard input, never as command-line argument
 - Use only an approved, fingerprinted fallback chairman. Otherwise return a structured dossier for explicitly labeled host synthesis.
 - Propose an accessible substitute when a route is unavailable, but require a new preview and approval before changing the roster.
 - Block on authentication failure, unsafe egress, unknown required cost, oversized context, mismatched fingerprint, or an exhausted budget.
+
+For research and technology selection, read [research-handoff.md](references/research-handoff.md) before building the evidence payload.

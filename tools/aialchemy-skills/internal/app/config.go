@@ -10,7 +10,7 @@ import (
 )
 
 // Version is the installer version.
-const Version = "0.2.0"
+const Version = "0.3.0"
 
 // DefaultCatalogURL is the AIAlchemy LiteLLM marketplace catalog.
 const DefaultCatalogURL = "https://llmgateway.aialchemylabs.net/claude-code/marketplace.json"
@@ -36,7 +36,9 @@ type Config struct {
 	CacheDir string
 	UserHome string
 
-	JSON bool
+	JSON     bool
+	APIKey   string
+	AllowGit bool
 	// AllowRepositories holds normalized additional allowlist entries.
 	AllowRepositories []string
 }
@@ -150,6 +152,8 @@ func resolveConfig(c *commonFlags, getenv func(string) string) (*Config, *ExitEr
 		CacheDir:          cacheDir,
 		UserHome:          home,
 		JSON:              c.json,
+		APIKey:            getenv("AIALCHEMY_SKILLS_API_KEY"),
+		AllowGit:          c.allowGit,
 		AllowRepositories: allowed,
 	}, nil
 }

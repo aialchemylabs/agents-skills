@@ -16,6 +16,7 @@ var DefaultAllowedRepositories = []string{"github.com/aialchemylabs/agents-skill
 
 // SourceGitSubdir is the only source type supported in 0.1.0.
 const SourceGitSubdir = "git-subdir"
+const SourceGatewayArchive = "gateway-archive"
 
 var (
 	nameRE     = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,63}$`)
@@ -250,8 +251,18 @@ func validateEntry(e Entry, allowed map[string]bool) error {
 	if e.Source.Source == "" {
 		return errors.New("missing source.source")
 	}
-	if e.Source.Source != SourceGitSubdir {
-		return fmt.Errorf("unsupported source type %q (only %q is supported in 0.1.0)", e.Source.Source, SourceGitSubdir)
+	if e.Source.Source != SourceGitSubdir && e.Source.Source != SourceGatewayArchive {
+		return fmt.Errorf("unsupported source type %q", e.Source.Source)
+	}
+	if e.Source.Source == SourceGatewayArchive {
+		if !shaRE.MatchString(e.Source.SHA) || !regexp.MustCompile(`^sha256:[0-9a-f]{64}$`).MatchString(e.Source.ArchiveDigest) {
+			return errors.New("gateway archives require a source commit and sha256 archive digest")
+		}
+		if _, err := validateCatalogURL(e.Source.ArchiveURL, true); err != nil {
+			return fmt.Errorf("invalid archive URL: %w", err)
+		}
+	} else if e.Source.ArchiveURL != "" || e.Source.ArchiveDigest != "" {
+		return errors.New("Git sources must not contain archive fields")
 	}
 	if e.Source.URL == "" {
 		return errors.New("missing source.url")

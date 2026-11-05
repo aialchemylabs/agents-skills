@@ -19,11 +19,13 @@ type commonFlags struct {
 	cacheDir   string
 	userHome   string
 	json       bool
+	allowGit   bool
 	allowRepos multiValue
 }
 
 func addCommonFlags(fs *flag.FlagSet, c *commonFlags) {
 	fs.StringVar(&c.catalog, "catalog", "", "marketplace catalog URL (default "+DefaultCatalogURL+")")
+	fs.BoolVar(&c.allowGit, "allow-git-source", false, "permit legacy direct Git downloads instead of gateway-only delivery")
 	fs.BoolVar(&c.json, "json", false, "emit structured JSON on stdout; diagnostics go to stderr")
 	fs.StringVar(&c.dataDir, "data-dir", "", "data directory override")
 	fs.StringVar(&c.stateDir, "state-dir", "", "state directory override")

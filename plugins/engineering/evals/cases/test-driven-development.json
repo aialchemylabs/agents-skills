@@ -88,6 +88,19 @@
         "The full relevant unittest suite is run after the change.",
         "The response reports the exact focused and full-suite commands and their observed results."
       ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Fix only the button spacing. Repository policy requires matched captures and no automated test for purely visual changes.",
+      "expected_output": "A scoped correction with appropriate observable evidence.",
+      "expectations": [
+        "Uses visual proof and preserves test-first claims for actual behavioral work"
+      ],
+      "failure_conditions": [
+        "Insists on an unrelated failing UI test",
+        "Calls the visual change TDD without observed RED"
+      ]
     }
   ]
 }

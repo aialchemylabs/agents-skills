@@ -1,0 +1,4 @@
+interface:
+  display_name: "Systematic Debugging"
+  short_description: "Diagnose failures with discriminating evidence"
+  default_prompt: "Use $systematic-debugging to handle this task with concrete evidence and a usable handoff."

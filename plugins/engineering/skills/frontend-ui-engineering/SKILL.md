@@ -21,6 +21,8 @@ Build interfaces that fit the product already present in the repository. Preserv
 
 Do not assume React, Tailwind, a specific browser tool, or a particular component API. Use the repository's stack. Do not add a UI library, state library, icon set, or test dependency unless existing capabilities are demonstrably insufficient and the user authorizes the addition.
 
+For a selected exploration artifact, map its tokens, components, states and interactions onto the real product before implementation. Unselected alternatives are not requirements. For a motion change, read [motion.md](references/motion.md); use performance investigation when measurements are needed.
+
 ## Define the UI Contract
 
 Before coding, make the required behavior concrete:

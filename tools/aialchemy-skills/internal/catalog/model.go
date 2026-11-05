@@ -27,11 +27,13 @@ type Entry struct {
 
 // Source describes where an entry's content lives.
 type Source struct {
-	Source string `json:"source"`
-	URL    string `json:"url"`
-	Path   string `json:"path"`
-	Ref    string `json:"ref,omitempty"`
-	SHA    string `json:"sha,omitempty"`
+	Source        string `json:"source"`
+	URL           string `json:"url"`
+	Path          string `json:"path"`
+	Ref           string `json:"ref,omitempty"`
+	SHA           string `json:"sha,omitempty"`
+	ArchiveURL    string `json:"archive_url,omitempty"`
+	ArchiveDigest string `json:"archive_digest,omitempty"`
 }
 
 // Pin status values reported by list/status/doctor.
