@@ -102,6 +102,19 @@ anything outside the exact configured installer-owned roots.
 entries resolve the remote default branch head. `sync --require-pinned`
 rejects anything that is not SHA-pinned (for CI and managed installs).
 
+### After an upstream history rewrite
+
+Catalog maintainers must replace any `source.sha` pins that refer to rewritten
+commits with their verified replacement SHAs before clients sync. Old commits
+may remain fetchable for a while; a successful sync alone does not prove that
+an old pin has migrated. Unpinned entries resolve the new default branch head.
+
+On machines that already use this installer, rerun `sync` with the existing
+skill and agent selections, then run `status` and `doctor`. Check the recorded
+resolved SHAs against the rewritten history. Installations that link directly
+to a source checkout instead need that checkout refreshed while preserving its
+path; they do not use installer commit pins.
+
 ## Exit codes
 
 ```
