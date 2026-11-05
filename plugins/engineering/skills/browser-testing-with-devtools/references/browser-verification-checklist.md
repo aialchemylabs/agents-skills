@@ -7,6 +7,7 @@ Use the sections relevant to the reported behavior. Record observations as evide
 - [Choose the Browser Surface](#choose-the-browser-surface)
 - [Prepare a Safe Environment](#prepare-a-safe-environment)
 - [Capture the Baseline](#capture-the-baseline)
+- [Record a Scoped Flow](#record-a-scoped-flow)
 - [Inspect the Console](#inspect-the-console)
 - [Inspect Network Activity](#inspect-network-activity)
 - [Inspect DOM and Styles](#inspect-dom-and-styles)
@@ -30,6 +31,7 @@ Inspect what is already configured; never install a capability automatically.
 | Chrome control surface | The request depends on an existing Chrome tab, profile, extension, or user-authorized signed-in state | Restrict work to the named profile and relevant tabs; avoid unrelated windows and session material |
 | DevTools integration | Console, network, DOM, accessibility, computed-style, or performance inspection is required | Prefer a dedicated or isolated profile; keep JavaScript read-only by default |
 | Repository Playwright, Cypress, WebDriver, or equivalent | The project already encodes the flow or can run a focused browser test without adding dependencies | Distinguish headless/test-runner evidence from manual browser evidence; retain screenshots, traces, or videos when useful |
+| Browser recording facility | The user asks to see the test run, or motion, timing, or a transition is the evidence | Records the page or tab only; it does not supply console, network, or DOM evidence and does not diagnose causes |
 | Another sanctioned browser facility | It supplies the required evidence and is within the user's environment | State what it can and cannot prove |
 
 Choose the least-privileged surface that can answer the question. Do not attach to a personal profile merely because it is convenient.
@@ -58,6 +60,22 @@ Choose the least-privileged surface that can answer the question. Do not attach 
 - Note whether the issue is deterministic, intermittent, timing-sensitive, or state-dependent.
 - Reproduce once more when flakiness is plausible.
 - Avoid refreshing, clearing state, or changing fixtures before preserving evidence from the failing attempt.
+
+## Record a Scoped Flow
+
+- Record only when requested or when motion, timing, or a transition must be shown.
+- Confirm the surface records the relevant tab or page, not the whole desktop.
+- Set up route, state, viewport, and test account before starting, so login and setup stay out of frame.
+- Start just before the first relevant action and stop soon after the outcome.
+- Keep credentials, personal data, unrelated tabs, and notifications out of the capture.
+- Stop and finalize the recording in every outcome, including a failed or interrupted flow.
+- Collect relevant console, network, DOM, or accessibility evidence during the same run to support a causal diagnosis.
+- Review the video or key frames only when the environment supports it; otherwise describe what snapshots and runtime evidence showed.
+- Return or link the artifact the tool actually produced, with its reproduction steps.
+- For an authorized fix to a recorded flow, capture the same flow before and after under matching conditions.
+- When recording is unavailable, say so and use supported screenshots or state evidence instead.
+
+Example: in Athanor, where the Browser panel exposes preview tools, call `preview_status`, call `preview_open` only if no suitable tab exists, then `preview_recording_start({ tabId })`, perform the scoped interactions, and `preview_recording_stop({ tabId })`. The stop call returns a local recording path (50 MiB maximum). It records the selected tab, not the agent's reasoning or terminal.
 
 ## Inspect the Console
 
@@ -161,7 +179,7 @@ Treat the table as hypotheses, not diagnoses.
 - Reinspect DOM, accessibility, focus, and computed style where relevant.
 - Reload or revisit the route when persistence is part of the requirement.
 - Run the repository's focused automated tests.
-- Compare before-and-after screenshots or traces under matching conditions.
+- Compare before-and-after screenshots, traces, or recordings under matching conditions.
 - Check a nearby regression-prone boundary rather than only the happy path.
 - Report a fix as verified only when the original symptom is absent and the expected behavior is present.
 
@@ -207,6 +225,7 @@ Use this compact structure:
 - Network: <request path/status/shape observations or not inspected>
 - DOM/accessibility: <element, semantics, focus observations or not inspected>
 - Visual/performance: <screenshot/trace observations or not inspected>
+- Recording: <artifact path or link, or not recorded and why>
 
 ### Diagnosis
 

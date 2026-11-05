@@ -1,6 +1,6 @@
 ---
 name: browser-testing-with-devtools
-description: Reproduce, diagnose, and verify browser-facing behavior with live runtime evidence from an already available browser connector, Chrome control surface, DevTools integration, or repository test runner. Use for broken interactions, rendering or styling defects, console errors, failed or malformed network requests, accessibility-tree and focus-order checks, responsive visual verification, persistence flows, and browser performance investigation. Do not use for backend-only work or pre-implementation UX critique; co-trigger with TDD when implementing a regression fix.
+description: Reproduce, diagnose, and verify browser-facing behavior with live runtime evidence from an already available browser connector, Chrome control surface, DevTools integration, or repository test runner. Use for broken interactions, rendering or styling defects, console errors, failed or malformed network requests, accessibility-tree and focus-order checks, responsive visual verification, persistence flows, browser performance investigation, and recorded test runs of a flow when a video is requested or motion and timing matter. Do not use for backend-only work or pre-implementation UX critique; co-trigger with TDD when implementing a regression fix.
 ---
 
 # Browser Testing with DevTools
@@ -43,6 +43,20 @@ The request to diagnose browser behavior authorizes the normal interactions nece
 5. Repeat once when timing, state, or flakiness might affect the outcome.
 
 Do not diagnose from a different route, viewport, account state, or fixture without naming the difference.
+
+## Record a Scoped Flow When Useful
+
+Record when the user asks to see the test run or when motion, timing, or a transition is the evidence. Do not record routine checks, whole sessions, or the desktop.
+
+1. Confirm the surface can record the relevant tab or page. If it cannot, say so, use screenshots or state evidence the surface supports, and never imply a video exists.
+2. Prepare the route, state, and viewport, then start recording just before the first relevant action. Keep credentials, personal data, and unrelated tabs out of frame; prefer test accounts and synthetic values.
+3. Perform only the scoped reproduction steps.
+4. Stop and finalize the recording even when the flow fails or an error interrupts it.
+5. Return or link the produced artifact with its reproduction steps.
+
+A recording shows what happened; it does not establish the underlying cause. Support a diagnosis with relevant snapshots, console, network, DOM, or accessibility evidence, and review the video or key frames only when the environment supports it. For an authorized fix to a recorded flow, capture the same flow under matching conditions before and after.
+
+See [Record a Scoped Flow](references/browser-verification-checklist.md#record-a-scoped-flow) for recording checks and an example tool sequence.
 
 ## Inspect the Relevant Evidence
 
@@ -100,7 +114,7 @@ Report:
 - the diagnosis or leading hypothesis, with observations separated from inference;
 - whether the finding points to application, backend, authentication, policy, fixture, environment, or tooling;
 - verification steps repeated after an authorized fix, including automated tests;
-- screenshots or artifact locations when captured;
+- screenshots, recordings, or artifact locations when actually produced;
 - checks not performed and the residual uncertainty they leave.
 
 Report a finding without changing code when implementation was not requested. Never imply that unavailable browser evidence was collected.
