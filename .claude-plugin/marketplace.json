@@ -1,37 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "aialchemy-agent-skills",
-  "version": "1.11.0",
-  "description": "Reusable AI Alchemy Labs skills for AI gateways, engineering, business, and related infrastructure.",
+  "version": "1.12.0",
+  "description": "Reusable AI Alchemy Labs skills for engineering, business, and multi-model orchestration.",
   "owner": {
     "name": "AI Alchemy Labs"
   },
   "plugins": [
-    {
-      "name": "ai-gateway",
-      "description": "Operate and secure AI gateways, including LiteLLM identity and access workflows.",
-      "version": "0.1.0",
-      "author": {
-        "name": "AI Alchemy Labs"
-      },
-      "homepage": "https://github.com/aialchemylabs/agents-skills",
-      "repository": "https://github.com/aialchemylabs/agents-skills",
-      "keywords": [
-        "ai-gateway",
-        "litellm",
-        "microsoft-entra",
-        "oidc",
-        "sso"
-      ],
-      "category": "infrastructure",
-      "tags": [
-        "identity-and-access",
-        "docker-compose",
-        "security"
-      ],
-      "source": "./plugins/ai-gateway",
-      "strict": true
-    },
     {
       "name": "engineering",
       "description": "Research, design, build, verify and deliver software and product videos, then clean up session resources.",
@@ -67,7 +42,7 @@
     {
       "name": "business",
       "description": "Discover opportunities, validate ventures, review plans, prepare sales outreach, build proposals, prepare negotiations, and strengthen startup finance and controls.",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "author": {
         "name": "AI Alchemy Labs"
       },
@@ -101,7 +76,7 @@
     {
       "name": "ai-orchestration",
       "description": "Coordinate multiple models through LiteLLM into evidence-backed, cross-critiqued decisions.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": {
         "name": "AI Alchemy Labs"
       },

@@ -64,4 +64,4 @@ For coaching or review, give the strongest supported observation, a concrete rev
 
 When analysing results, keep attempts, delivered messages, replies, positive replies, meetings and qualified opportunities distinct. State denominators and time windows; do not infer causal uplift or forecast revenue from a tiny uncontrolled sample. Apply campaign-specific lessons to that campaign rather than silently rewriting the canonical skill.
 
-Broader pipeline management belongs with `sales-and-growth`, neutral research with `run-customer-discovery`, formal proposals with `business-proposal-builder`, and negotiated terms with `prepare-founder-negotiations`, when those skills are available and the user requests that stage. This skill can complete ordinary outreach preparation without them.
+Company-wide pipeline management is outside this outreach workflow. Neutral research belongs with `run-customer-discovery`, formal proposals with `business-proposal-builder`, and negotiated terms with `prepare-founder-negotiations`, when those skills are available and the user requests that stage. This skill can complete ordinary outreach preparation without them.

@@ -25,8 +25,8 @@
     ],
     "negative": [
       {
-        "prompt": "Redesign our company-wide sales pipeline stages, forecasting, channel strategy, and quarterly growth operating rhythm.",
-        "owner": "sales-and-growth"
+        "prompt": "Review this existing company-wide growth plan and challenge its strategy, economics, execution risks, and learning assumptions.",
+        "owner": "plan-ceo-review"
       },
       {
         "prompt": "Create neutral research interviews to learn how customers currently work without pitching them.",

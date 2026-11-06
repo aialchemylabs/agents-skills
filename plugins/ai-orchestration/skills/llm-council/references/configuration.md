@@ -26,7 +26,7 @@ Require HTTPS. Permit plain HTTP only for an explicitly approved loopback develo
 
 Never accept a key in the request, configuration file, or CLI. Never fall back to `LITELLM_MASTER_KEY`, print environment values, or include authorization headers in diagnostics.
 
-Restrict the virtual key outside this repository to approved council aliases, bounded spend, appropriate expiry, and no management permissions beyond model listing and inference. Creating or changing that key is an AI Gateway task, not a council task.
+Restrict the virtual key outside this repository to approved council aliases, bounded spend, appropriate expiry, and no management permissions beyond model listing and inference. Creating or changing that key is gateway administration and requires separate user authorization as a host operation outside the council.
 
 ## Deployment policy file
 

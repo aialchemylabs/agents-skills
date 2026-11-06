@@ -1,4 +1,0 @@
-interface:
-  display_name: "Evaluate AI Adoption"
-  short_description: "Evaluate responsible, outcome-led AI adoption"
-  default_prompt: "Use $ai-advisory-and-enablement to evaluate our organization, compare AI with simpler alternatives, and recommend the smallest evidence-backed next decision."

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "business",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Discover opportunities, validate ventures, review plans, prepare sales outreach, build proposals, prepare negotiations, and strengthen startup finance and controls.",
   "author": {
     "name": "AI Alchemy Labs"

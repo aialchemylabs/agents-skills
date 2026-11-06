@@ -37,8 +37,7 @@
         "owner": "code-review-and-quality"
       },
       {
-        "prompt": "Configure a new LiteLLM route and rotate its provider key.",
-        "owner": "ai-gateway-operations"
+        "prompt": "Configure a new LiteLLM route and rotate its provider key."
       },
       {
         "prompt": "Create three subagents on the same model to implement this feature.",

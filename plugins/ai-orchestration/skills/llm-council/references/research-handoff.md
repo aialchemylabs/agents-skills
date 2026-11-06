@@ -1,6 +1,6 @@
 # Research handoff
 
-The host gathers source evidence before running research mode. Use `evidence-research` when available, or collect dated primary sources directly. The council's members are tool-free: they compare supplied evidence; they do not browse independently or inspect the repository.
+The host gathers dated primary-source evidence before running research mode. The council's members are tool-free: they compare supplied evidence; they do not browse independently or inspect the repository.
 
 Give each material claim a stable evidence ID. Record source URL/path, revision/date, observation, whether it is documented or directly observed, confidence and conflicting evidence. Distinguish source capability from deployed availability. Map selected entries to the manifest's `context.evidence` objects (`id`, `source`, `content`); include dates/revisions and limitations in the content. Keep the packet within the approved context and data-egress scope.
 

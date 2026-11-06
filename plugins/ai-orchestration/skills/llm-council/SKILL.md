@@ -33,7 +33,7 @@ Pass the question and evidence on standard input, never as command-line argument
 
 ## Follow the workflow
 
-1. Confirm explicit multi-model intent. Explain that a council makes multiple potentially paid calls when the user only asks for an ambiguous "second opinion." Route ordinary code review to `engineering:code-review-and-quality` and LiteLLM configuration, routes, keys, or budgets to the AI Gateway workflow.
+1. Confirm explicit multi-model intent. Explain that a council makes multiple potentially paid calls when the user only asks for an ambiguous "second opinion." Route ordinary code review to `engineering:code-review-and-quality`. LiteLLM configuration, routes, keys, or budgets are gateway administration and require separate user authorization as host operations outside the council.
 2. State one decision question, the options or hypotheses, decision criteria, mode, and authority boundary. Keep the council read-only. Complete the council before performing any separately authorized implementation.
 3. Gather bounded, relevant evidence. Assign stable evidence IDs, distinguish facts from assumptions, redact secrets and unnecessary personal data, and stop before egress when sensitive-data authorization is unclear. Never send a whole repository or uncontrolled logs.
 4. Read [configuration.md](references/configuration.md) before constructing the manifest. Read [security-and-cost-policy.md](references/security-and-cost-policy.md) before any real gateway access. Read [workflow-and-prompts.md](references/workflow-and-prompts.md) before running inference. Read [output-contract.md](references/output-contract.md) before interpreting or rendering results.

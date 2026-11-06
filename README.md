@@ -6,19 +6,12 @@ Claude Code plugin marketplace for reusable AI Alchemy Labs workflows.
 
 ```text
 claude plugin marketplace add aialchemylabs/agents-skills
-claude plugin install ai-gateway@aialchemy-agent-skills
 claude plugin install engineering@aialchemy-agent-skills
 claude plugin install business@aialchemy-agent-skills
 claude plugin install ai-orchestration@aialchemy-agent-skills
 ```
 
 Run `/reload-plugins` in Claude Code after installing or updating the plugin.
-
-## AI Gateway
-
-The `ai-gateway` plugin contains LiteLLM operational skills. Its first skill is:
-
-- `ai-gateway:configuring-litellm-entra-sso` — configure and harden direct Microsoft Entra OIDC SSO for a LiteLLM Admin UI while keeping API clients on scoped virtual keys.
 
 The marketplace metadata is in `.claude-plugin/marketplace.json`. Each plugin keeps only `plugin.json` inside its `.claude-plugin/` directory and places its skills under `skills/<skill-name>/SKILL.md`.
 
@@ -80,7 +73,7 @@ Video skills include original planning templates, a pinned Remotion starter and 
 
 ## Business
 
-The `business` plugin contains twelve complementary entrepreneurship and operating skills:
+The `business` plugin contains eight complementary entrepreneurship and commercial skills:
 
 - `business:discover-business-opportunities` — find and rank customer problems and market opportunities before selecting a venture direction.
 - `business:run-customer-discovery` — design and synthesize behavioral customer research without turning opinions into demand evidence.
@@ -90,12 +83,12 @@ The `business` plugin contains twelve complementary entrepreneurship and operati
 - `business:prepare-founder-negotiations` — prepare principled cofounder, investor, hiring, vendor, partner, and stakeholder negotiations.
 - `business:startup-finance-and-controls` — improve management reporting, unit economics, cash visibility, finance controls, and board decision quality.
 
-- `business:executive-assistance` — manage priorities, meetings, follow-ups and executive preparation.
-- `business:business-operations` — define and improve repeatable operating processes.
-- `business:sales-and-growth` — qualify pipeline and run measurable growth work.
 - `business:cold-outreach` — research prospects and sales partners, draft personalised outreach, prepare calls, rehearse objections, and review conversations. Invoke `$cold-outreach` in Codex with the offer, target audience, exclusions, and desired output; preparation alone does not send messages or place calls.
-- `business:evidence-research` — investigate business questions using traceable sources.
 
 Each skill owns a distinct decision stage and hands specialist work to the appropriate neighboring workflow. Academic and professional sources inform the playbooks, but the plugin does not claim institutional affiliation or professional legal, accounting, tax, audit, or investment authority.
 
 The Business plugin adapts the CEO plan-review methodology from Garry Tan's `gstack` under the MIT license. The required notice is in `plugins/business/LICENSES/`.
+
+## Licensing
+
+Original contributions to this repository are licensed under the [MIT License](LICENSE), copyright 2026 AI Alchemy Labs. Third-party material retains its own copyright notices and license terms, including those in plugin and skill `LICENSES/` directories. External tools, services and dependencies, including Remotion, are subject to their own licenses and terms; this repository's MIT license does not relicense them.
