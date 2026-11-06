@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "python": "3.12.14",
+  "lock": "locks/macos-arm64-cpu.txt",
+  "lock_sha256": "d6a3c634d2d889a153a99ea201ad1071666ab9ec10ab49016ea17c03fdcf95f0",
+  "platforms": {
+    "Darwin-arm64-cpu": "verified: bounded synthetic inference/backtesting and enforced network-denied rerun",
+    "Linux-x86_64-cpu": "unverified; refused",
+    "Linux-cuda": "unverified; refused",
+    "MPS/MLX": "unverified; refused"
+  },
+  "models": {
+    "timesfm": {
+      "repo": "google/timesfm-2.5-200m-pytorch",
+      "revision": "1d952420fba87f3c6dee4f240de0f1a0fbc790e3",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "name": "config.json",
+          "bytes": 475,
+          "sha256": "cd3315b760d5cc7e278d7afdf41b897031ced888fc6c115bd9b3ac0ea2c47408"
+        },
+        {
+          "name": "model.safetensors",
+          "bytes": 925181104,
+          "sha256": "2f776efe6245e42b24bc4153ffdf61810140210e4bd3b01fb21f7aa779ab6ce8"
+        }
+      ],
+      "statistic": "median",
+      "max_context": 16384,
+      "max_horizon": 1024,
+      "covariates": false,
+      "verification": {
+        "platform": "macOS arm64 CPU",
+        "python": "3.12.14",
+        "context": 128,
+        "generated_horizon": 8,
+        "reported_steps": 6,
+        "input_series": 2,
+        "rolling_origins": 2,
+        "threads": 4,
+        "batch_size": 8,
+        "quantile_correction": "clamp-about-median",
+        "cross_learning": false,
+        "known_numeric_covariate": false,
+        "loaded_point_equals_q50": true,
+        "enforced_network_denied": true,
+        "scope": "bounded synthetic contract evidence, not accuracy/calibration/performance guarantees"
+      }
+    },
+    "chronos": {
+      "repo": "amazon/chronos-2",
+      "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "name": "config.json",
+          "bytes": 1067,
+          "sha256": "ef1143bfdc9c0376d9a056eefca46cb4b1ec3d0ffacd541ff56feb40fb708031"
+        },
+        {
+          "name": "model.safetensors",
+          "bytes": 477930472,
+          "sha256": "ddcda3c7508bf2528087723e98a20707cc04b7f370ae275a9fd88078ddba4f42"
+        }
+      ],
+      "statistic": "median",
+      "max_context": 8192,
+      "max_horizon": 1024,
+      "covariates": true,
+      "verification": {
+        "platform": "macOS arm64 CPU",
+        "python": "3.12.14",
+        "context": 128,
+        "generated_horizon": 8,
+        "reported_steps": 6,
+        "input_series": 2,
+        "rolling_origins": 2,
+        "threads": 4,
+        "batch_size": 8,
+        "quantile_correction": "clamp-about-median",
+        "cross_learning": true,
+        "known_numeric_covariate": true,
+        "loaded_point_equals_q50": true,
+        "enforced_network_denied": true,
+        "scope": "bounded synthetic contract evidence, not accuracy/calibration/performance guarantees"
+      }
+    }
+  },
+  "build_lock": "locks/build.txt",
+  "build_lock_sha256": "8509ca3879d83867b3c43d3a28166938e8d567ba55e8f21454db30f4e42af298",
+  "uv_tested": "0.13.7"
+}

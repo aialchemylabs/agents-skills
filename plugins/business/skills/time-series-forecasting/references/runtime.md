@@ -1,0 +1,31 @@
+# Runtime and lifecycle
+
+## Support and pins
+
+`runtime-manifest.json` is authoritative for immutable checkpoints, config/weight SHA-256, licenses and tested support. The shared hash-locked Python environment contains both adapter packages; downloading a selected checkpoint fetches only its two manifest files. Package TimesFM 3.0.2 contains the **2.5** adapter; this does not select TimesFM 3.0 weights. The selected 2.5 and Chronos-2 checkpoint licenses are Apache-2.0. No remote code trust, mutable revisions or cloud inference.
+
+Only macOS arm64 CPU is targeted/advertised after integration verification. Linux CPU/CUDA, MPS and MLX are unverified and refused by foundation proposals. Statistical functions remain portable stdlib (the report worker uses POSIX resource observations). See the manifest's verification fields for bounded test sizes/results; these are observations, never latency/RAM guarantees.
+
+Python 3.12.14, Torch 2.8.0 and Transformers 4.57.6 are fixed alongside all dependencies in `locks/macos-arm64-cpu.txt`. `uv` must already be available. After conversation selection, `run` creates an external environment with `uv venv`, then `uv pip sync --require-hashes --require-build-hashes` with the separate hash-pinned build constraints. The tested uv version is recorded in the manifest; older versions lacking build-hash enforcement must be updated only within approved bootstrap scope. It checks Python, installed package versions and adapter archive identity before inference. Existing environments with a mismatched identity stop; rebuild the same lock in the same selected location only when that directory is confirmed task-owned. Do not repair an unrelated environment.
+
+CPU threads and batch size are explicit. TimesFM device is forced to CPU before weights load; torch compilation is disabled. Its algorithmic `compile(ForecastConfig)` prepares decoding without `torch.compile`. It pads context to 32 and internal horizon to 128, then returns exactly the approved horizon; this is internal patch work, not a change to requested dates. Context plus padded horizon must fit the native context limit. Continuous-head horizons above 1024 are refused. Chronos uses CPU float32, local files, no remote code, explicit context and `limit_prediction_length=True`. Both reject quantile crossing by default; the explicitly selected clamp-about-median policy is applied consistently by the shared evaluator.
+
+## Three separate roots
+
+Use independent absolute roots for environment, versioned HF-style cache and task output. All must be outside this skill and its public source checkout; explicitly authorized outputs in another project/repository are allowed. Paths are resolved through symlinks before checking. Never write task manifests, weights, environments, source data or private outputs into a distributed skill. Environment and verified model caches are reusable; reports, partial downloads and task exports have separate task lifetimes. Never edit verified model files. A corrupt cache is a blocker, not permission to overwrite it.
+
+The cache layout is `<cache>/<org>--<repo>/<full-revision>/{config.json,model.safetensors}`. Pre-existing files are rehashed, including configs. Offline mode refuses missing files/environment; loaders use local directories with HF/Transformers offline flags regardless of download mode. Those flags alone do **not** establish enforced no-network evidence. The explicit integration script separately uses macOS `sandbox-exec` to deny networking for offline reruns.
+
+## Bounds and recovery
+
+Choose finite seconds, threads, batch, maximum series/origins/generated horizon, planned download bytes and 0–2 retries. `run` bounds setup, download and inference children by one wall-clock budget. Workload dimensions are checked before optional imports. Download streaming enforces each declared file size and digest; preflight compares weights/configs plus a conservative package/Python/source/build/bootstrap estimate against the approved footprint ceiling. This is **not an enforceable total network traffic limit**: wheels, metadata, bootstrap, retries and transport overhead are not counted on the wire. Disclose this distinction. Reused caches reduce actual downloads, not the selection requirement. The default estimate floor is 1.5 GB; use a larger informed estimate for a cold environment. Refuse the option if an enforceable all-traffic ceiling is required but unavailable.
+
+Same-pin retry/resume up to the selected bound is allowed. The run rechecks snapshot, code, lock and full scope each time. A partial file, checksum error, failed setup, OOM, invalid output or exhausted time must be reported. Do not change models, backends or budgets automatically. Failed backtest folds remain visible, while final selected forecast failure stops report completion. Baseline superiority completes the analysis and requires no new choice just to report.
+
+Artifacts: `proposal.json`, `provenance.json`, `status.json`, `runtime.log`, `forecast.csv` (all generated dates with reporting mask), `metrics.json`, `report.html` and numbered SVG charts. Reports disclose actual statistics, uncertainty, scope/digests and excluded folds. A process killed by its wall-clock limit yields a failed status; logs and completed task files remain for diagnosis. Never interpret an old complete report as success after a failed status.
+
+## Validation layers
+
+Default unittest discovery is stdlib, deterministic, credential/weight-free. Real integration is explicit: `python3 tools/skill-release/tests/forecasting_integration.py --workspace EXTERNAL --model timesfm` (then `chronos`); `--network-deny` verifies offline with networking denied and `--cross-learning` separately exercises selected Chronos grouping/covariates. It uses synthetic data, context 128, horizon 8, two origins and four CPU threads. It must be run only under an authorized model/setup scope.
+
+Behavior cases use `tools/skill-release/evals.py`: prepare a case, give the request to a real harness and independently grade **observed tool traces**. Deterministic tests and adapter assertions are not behavioral pass evidence. `/evals`, marketplace payload generation and optional remote services remain separate; no gateway registration or remote scheduling occurs here.

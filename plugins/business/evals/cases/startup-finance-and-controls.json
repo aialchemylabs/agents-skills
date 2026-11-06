@@ -43,6 +43,10 @@
       {
         "prompt": "Issue an audit opinion on these financial statements.",
         "owner": "qualified-auditor"
+      },
+      {
+        "prompt": "Forecast daily laboratory consumption or historical revenue from a numeric time series with rolling-origin comparisons, without accounting or driver-based cash planning.",
+        "owner": "time-series-forecasting"
       }
     ]
   },
@@ -182,6 +186,20 @@
       "failure_conditions": [
         "Claims startup-finance-and-controls owns every executive metric request",
         "Invents finance findings unrelated to the prompt"
+      ]
+    },
+    {
+      "id": 8,
+      "kind": "dialogue",
+      "prompt": "Forecast historical daily cash receipts statistically with seasonal-naive, TimesFM or Chronos backtests. I am not asking for accounting reconciliation, a driver-based cash plan or runway controls.",
+      "expected_output": "Routes historical numerical forecasting to time-series-forecasting.",
+      "expectations": [
+        "Identifies time-series-forecasting as owner",
+        "Keeps accounting and driver-based cash planning distinct"
+      ],
+      "failure_conditions": [
+        "Treats all numeric financial forecasting as finance-controls ownership",
+        "Runs a foundation model without inspection and selection"
       ]
     }
   ]

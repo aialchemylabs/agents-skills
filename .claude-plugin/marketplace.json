@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "aialchemy-agent-skills",
-  "version": "1.12.1",
+  "version": "1.13.0",
   "description": "Reusable AI Alchemy Labs skills for engineering, business, and multi-model orchestration.",
   "owner": {
     "name": "AI Alchemy Labs"
@@ -41,8 +41,8 @@
     },
     {
       "name": "business",
-      "description": "Discover opportunities, validate ventures, review plans, prepare sales outreach, build proposals, prepare negotiations, and strengthen startup finance and controls.",
-      "version": "0.6.1",
+      "description": "Discover opportunities, validate ventures, prepare commercial decisions, strengthen finance controls, and forecast historical numerical series across domains.",
+      "version": "0.7.0",
       "author": {
         "name": "AI Alchemy Labs"
       },
@@ -61,7 +61,9 @@
         "negotiation",
         "finance",
         "controls",
-        "decision-making"
+        "decision-making",
+        "forecasting",
+        "time-series"
       ],
       "category": "business",
       "tags": [

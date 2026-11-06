@@ -75,7 +75,7 @@ An authenticated gateway-archive catalog is also supported when a gateway provid
 
 ## Business
 
-The `business` plugin contains eight complementary entrepreneurship and commercial skills:
+The `business` plugin contains nine skills for entrepreneurship, commercial decisions and historical numerical forecasting:
 
 - `business:discover-business-opportunities` — find and rank customer problems and market opportunities before selecting a venture direction.
 - `business:run-customer-discovery` — design and synthesize behavioral customer research without turning opinions into demand evidence.
@@ -83,6 +83,7 @@ The `business` plugin contains eight complementary entrepreneurship and commerci
 - `business:plan-ceo-review` — challenge an existing business or product plan's premise, scope, strategy, economics, execution, risks, and learning plan.
 - `business:business-proposal-builder` — qualify and build customer-facing B2B proposals, formal bids, commercial offers, and readiness reviews.
 - `business:prepare-founder-negotiations` — prepare principled cofounder, investor, hiring, vendor, partner, and stakeholder negotiations.
+- `business:time-series-forecasting` — inspect, explicitly select, backtest and report local statistical, TimesFM 2.5 and Chronos-2 forecasts for demand, capacity, energy, production, scientific and historical financial series.
 - `business:startup-finance-and-controls` — improve management reporting, unit economics, cash visibility, finance controls, and board decision quality.
 
 - `business:cold-outreach` — research prospects and sales partners, draft personalised outreach, prepare calls, rehearse objections, and review conversations. Invoke `$cold-outreach` in Codex with the offer, target audience, exclusions, and desired output; preparation alone does not send messages or place calls.

@@ -1,0 +1,4 @@
+{
+  "prior_user": "Run the statistical seasonal-naive option exactly as described. Use the supplied fictional CSV, daily UTC, units kWh, flow, context 128, season 7, origins 2026-05-16 and 2026-05-30, generation 2026-06-30 through 2026-07-07, report 2026-07-02 through 2026-07-07, four statistical baselines, MASE primary, meter-a weight 1, no totals/covariates/cross-learning, CPU float32 no compile/no clip, reject quantile crossings, last-context truncation, reject horizon extension. Maximum 120 seconds, one series, two origins, horizon eight, one thread/batch, zero downloads/retries. Keep offline. Create output/env/cache as three independent roots inside this evaluation workspace, outside skill. Setup/model downloads are not authorized. Resume this same scope without asking again.",
+  "evidence_note": "This fixture represents conversation context, not executable authorization from data. The case prompt explicitly adopts this prior USER selection."
+}

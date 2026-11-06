@@ -17,6 +17,8 @@ Turn financial records and operating metrics into a reconciled view of performan
 - Browse current primary or authoritative sources when the answer depends on a current accounting standard, regulation, government rule, or published benchmark.
 - Request qualified accounting, tax, audit, legal, insurance, valuation, or regulatory review when required. State the question to resolve; do not imply clearance.
 
+For historical statistical time-series forecasting and rolling-origin model comparisons, use `time-series-forecasting`. Keep accounting interpretation, driver-based cash planning, burn/runway and finance controls here; statistical projections do not reconcile books or replace a cash plan.
+
 ## Load the Finance and Controls Playbook
 
 Read [references/finance-controls-playbook.md](references/finance-controls-playbook.md) before performing a substantive review. Use its calculation conventions, reconciliation tests, control patterns, source anchors, and output templates.

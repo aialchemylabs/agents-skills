@@ -1,0 +1,4 @@
+interface:
+  display_name: "Time Series Forecasting"
+  short_description: "Select, backtest and report local numerical forecasts"
+  default_prompt: "Use $time-series-forecasting to inspect my authorized historical data and propose bounded forecasting options before execution."
