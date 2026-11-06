@@ -69,7 +69,9 @@ Video skills include original planning templates, a pinned Remotion starter and 
 
 [Release tooling](tools/skill-release/README.md) validates metadata, resources and eval specifications, builds complete per-skill archives and runs behavioral evaluation adapters. Deterministic checks do not imply that model evaluations passed.
 
-[The managed installer](tools/aialchemy-skills/README.md) supports authenticated gateway archives with integrity checks, provider links and offline rollback. GitHub remains the canonical authoring source; a gateway-archive catalog keeps installation traffic on the configured gateway. Hosted instructions do not provide browser, shell, renderer or model credentials.
+[The managed installer](tools/aialchemy-skills/README.md) can use the same LiteLLM marketplace as Claude Code. With `--allow-git-source`, it expands pinned plugin bundles into individual skills for supported agents, retaining license notices. LiteLLM controls the catalog; clients download the approved revision from GitHub. Listing or planning a Git bundle may fetch temporary metadata, but does not install skills or change agent files.
+
+An authenticated gateway-archive catalog is also supported when a gateway provides the separate portable Skills Hub API. That mode keeps installation downloads on the gateway; registering Git sources in the Claude marketplace does not provide archive hosting. Both modes support managed provider links and offline rollback. Hosted instructions do not provide browser, shell, renderer or model credentials.
 
 ## Business
 

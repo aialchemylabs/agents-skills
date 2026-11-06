@@ -28,7 +28,11 @@ func (r Resolved) Archive(ctx context.Context) ([]byte, error) {
 	if r.archiveData != nil {
 		return r.archiveData, nil
 	}
-	return r.repo.ArchiveSubdir(ctx, r.SHA, r.Entry.Source.Path)
+	data, err := r.repo.ArchiveSubdir(ctx, r.SHA, r.Entry.Source.Path)
+	if err != nil {
+		return nil, err
+	}
+	return r.withNotices(ctx, data)
 }
 
 // Resolver groups entries by repository and resolves each to a commit while

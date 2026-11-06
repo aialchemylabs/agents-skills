@@ -8,6 +8,7 @@ import (
 	"io"
 
 	"github.com/aialchemylabs/agents-skills/tools/aialchemy-skills/internal/catalog"
+	"github.com/aialchemylabs/agents-skills/tools/aialchemy-skills/internal/source"
 )
 
 const usageText = `aialchemy-skills — sync AIAlchemy marketplace skills into local coding agents
@@ -114,7 +115,14 @@ func loadCatalog(ctx context.Context, cfg *Config) ([]catalog.Entry, []catalog.P
 		}
 		filtered = append(filtered, entry)
 	}
-	return filtered, problems, nil
+	expanded, discoveryProblems, err := source.ExpandCatalog(ctx, filtered)
+	if err != nil {
+		return nil, problems, exitErr(ExitSource, err)
+	}
+	problems = append(problems, discoveryProblems...)
+	valid, expandedProblems := catalog.Validate(&catalog.Catalog{Plugins: expanded}, cfg.AllowRepositories)
+	problems = append(problems, expandedProblems...)
+	return valid, problems, nil
 }
 
 func reportProblems(problems []catalog.Problem, stderr io.Writer) {

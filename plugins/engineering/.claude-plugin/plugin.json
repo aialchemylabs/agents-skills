@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "engineering",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Research, design, build, verify and deliver software and product videos, then clean up session resources.",
   "author": {
     "name": "AI Alchemy Labs"

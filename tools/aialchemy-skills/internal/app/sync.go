@@ -50,7 +50,7 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 	fs.BoolVar(&all, "all", false, "synchronize every valid published skill")
 	fs.Var(&skillFlags, "skill", "skill name to synchronize (repeatable)")
 	fs.StringVar(&agentsSpec, "agents", "", "comma-separated agents (codex,claude,hermes), or \"auto\"")
-	fs.BoolVar(&dryRun, "dry-run", false, "report planned operations without cloning or writing anything")
+	fs.BoolVar(&dryRun, "dry-run", false, "plan without installing or changing state/links; Git discovery may use a disposable cache")
 	fs.BoolVar(&prune, "prune", false, "remove managed links and installs for skills no longer selected")
 	fs.BoolVar(&requirePinned, "require-pinned", false, "fail when a selected skill is not pinned to an exact commit SHA")
 	if err := fs.Parse(args); err != nil {
@@ -197,7 +197,7 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 		return nil
 	}
 
-	// Preflight gate: nothing is fetched or activated while collisions exist.
+	// Metadata discovery is complete; collisions still block installation fetches and activation.
 	if len(plan.Issues) > 0 {
 		for _, i := range plan.Issues {
 			fmt.Fprintf(stderr, "collision: %s\n", fmtIssue(i))
@@ -414,7 +414,7 @@ func renderSync(cfg *Config, out syncOutput, stdout, stderr io.Writer) *ExitErro
 		return writeJSON(stdout, out)
 	}
 	if out.DryRun {
-		fmt.Fprintf(stdout, "dry run — nothing was fetched or changed\n")
+		fmt.Fprintf(stdout, "dry run — no installations, state, or agent links changed; temporary Git discovery may have run\n")
 	}
 	fmt.Fprintf(stdout, "catalog: %s\n", out.CatalogURL)
 	fmt.Fprintf(stdout, "agents:  %v\n", out.Agents)

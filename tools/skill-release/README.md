@@ -53,7 +53,23 @@ Fixture council tests prove runner behavior with scripted responses, not live mo
 
 ## Gateway publication
 
-GitHub is the authoring source; managed installation can download only gateway-hosted artifacts. The release client uses the portable LiteLLM Skills Hub API, which must be present and migrated in the deployed gateway. The older public discovery `/v1/skills/.../archive` API is not an authenticated replacement for this workflow.
+### Git-backed marketplace
+
+The native LiteLLM marketplace registers approved Git sources. Claude installs plugin bundles; the installer expands those pinned bundles into individually selectable skills with `--allow-git-source`. Both clients use `/claude-code/marketplace.json`. The gateway controls discovery, while clients fetch the selected revision from GitHub; registering a skill does not install it on any agent or attach it to model requests.
+
+Build registration payloads from a clean, committed checkout:
+
+```sh
+python tools/skill-release/marketplace.py build --output /tmp/marketplace-registration.json
+```
+
+The artifact contains `revision`, `publishable`, `skill_count` and `plugins`. Each `plugins` item is a complete `POST /claude-code/plugins` body for LiteLLM 1.108.0, with a full commit SHA and a plugin subdirectory. The generator validates the portfolio and requires each plugin's `LICENSE` to match the root license, so native subdirectory installations retain the MIT grant alongside upstream notices. It makes no network requests and does not register anything.
+
+An authorized gateway administrator applies the reviewed payloads through the native plugin API and verifies the returned catalog has the expected names, versions, paths and SHAs. Creating an entry enables it in LiteLLM 1.108.0; updates must preserve the complete intended metadata because omitted fields can reset. Keep credentials and deployment operations in the owning gateway/infrastructure repository. Do not mix individual skill entries into this native plugin catalog.
+
+### Optional gateway-hosted archives
+
+The separate archive release client supports installations that download packages only from the gateway. It requires the portable LiteLLM Skills Hub API to be present and migrated; that API is not available in the inspected LiteLLM 1.108.0 deployment. The native plugin marketplace does not provide it, and `/v1/skills` model-provider passthrough is not a replacement.
 
 Set `AIALCHEMY_SKILLS_API_KEY` through the environment's secret mechanism, using a scoped publishing identity. Then:
 
@@ -64,7 +80,7 @@ python tools/skill-release/gateway.py publish --gateway https://gateway.example 
 
 Publishing uploads complete artifacts, defaults to private visibility, reads their immutable version IDs, downloads them again and verifies all reviewed files before emitting the installer catalog. Keep the public index disabled when anonymous discovery is unwanted. Configure team/key grants in the gateway; making an entry private does not create those grants. Member submissions may require administrator review; the client stops rather than approving its own submission. `--replace` explicitly selects the update API for an existing skill; `--visibility public` explicitly requests public entries.
 
-Serve the generated catalog from the **same gateway origin** under the existing deployment's authenticated static/artifact routing, then pass that URL to `aialchemy-skills --catalog`. The native Claude marketplace document and this per-skill installer catalog are different formats. Gateway routes, deployment configuration and credentials belong in the owning gateway/infrastructure repository, not in this public skills repository. This client does not deploy a route or update the live catalog by itself.
+Serve this archive catalog from the **same gateway origin** under the existing deployment's authenticated static/artifact routing, then pass that URL to `aialchemy-skills --catalog`. This per-skill archive catalog is separate from the native Git plugin marketplace above. Gateway routes, deployment configuration and credentials belong in the owning gateway/infrastructure repository, not in this public skills repository. This client does not deploy a route or update the live catalog by itself.
 
 Publication has no automatic retries after a write. A progress file records completed uploads; inspect it and gateway version history before resuming a partial publication. The final catalog is replaced only after every package succeeds. Gateway redirects are rejected; downloaded content and its digest are verified. No Git fallback occurs in gateway-only installation.
 

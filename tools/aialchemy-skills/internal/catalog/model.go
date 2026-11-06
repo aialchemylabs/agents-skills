@@ -23,6 +23,8 @@ type Entry struct {
 	Version     string `json:"version"`
 	Description string `json:"description"`
 	Source      Source `json:"source"`
+	// PluginRoot is discovered from the pinned Git tree, never trusted from JSON.
+	PluginRoot string `json:"-"`
 }
 
 // Source describes where an entry's content lives.

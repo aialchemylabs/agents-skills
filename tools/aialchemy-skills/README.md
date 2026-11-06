@@ -2,7 +2,7 @@
 
 `aialchemy-skills` is a standalone command-line installer that treats the
 AIAlchemy LiteLLM skills marketplace as the central catalog, retrieves reviewed
-archives from that gateway (or explicitly enabled legacy Git sources), validates and versions them locally,
+archives from that gateway or explicitly enabled Git sources, validates and versions them locally,
 and exposes them to supported coding agents through each agent's
 native skill-discovery location.
 
@@ -25,10 +25,10 @@ go build ./cmd/aialchemy-skills
 ## Commands
 
 ```bash
-aialchemy-skills list                      # show the published catalog (read-only)
+aialchemy-skills list                      # show the published catalog
 aialchemy-skills sync --all --agents auto  # install every skill for detected agents
 aialchemy-skills sync --skill <name>       # install/update one skill
-aialchemy-skills sync --all --dry-run      # plan only; fetches the catalog, changes nothing
+aialchemy-skills sync --all --dry-run      # plan without changing installations, state or links
 aialchemy-skills status [--check-updates]  # local install state and link health
 aialchemy-skills doctor                    # environment and installation diagnostics
 aialchemy-skills rollback [--to <id>]      # re-activate a retained release (offline)
@@ -38,9 +38,15 @@ aialchemy-skills uninstall --all --purge   # remove everything installer-owned
 
 Common flags accepted by every command: `--catalog URL`, `--json`,
 `--data-dir`, `--state-dir`, `--cache-dir`, `--user-home`, and repeatable
-`--allow-repository URL`.
+`--allow-repository URL`. Git content requires `--allow-git-source`.
 
-## Legacy Git flow and shared activation
+With Git sources enabled, catalog discovery (`list`, `doctor`, update checks and
+sync planning) may fetch repositories into a temporary bare Git cache to inspect
+metadata. The cache is removed when discovery finishes. A dry run makes no
+changes to installer state, installed releases, permanent caches or agent links;
+it can perform this temporary discovery fetch. Plugin hooks and scripts never run.
+
+## Git flow and shared activation
 
 1. The catalog (`https://llmgateway.aialchemylabs.net/claude-code/marketplace.json`)
    is fetched with size and time bounds and validated entry by entry: name
@@ -48,11 +54,16 @@ Common flags accepted by every command: `--catalog URL`, `--json`,
    without credentials, a
    repository allowlist (only `github.com/aialchemylabs/agents-skills` by
    default), traversal-free source paths, and full-SHA pins.
-2. Selected skills are grouped by repository; each repository is fetched at
-   most once per sync into `~/.cache/aialchemy-skills/repositories/` using the
+2. Discovery expands pinned Claude plugin bundles into individual skills before
+   selection and collision checks. Installation then groups selected skills by
+   repository and fetches each repository at most once into
+   `~/.cache/aialchemy-skills/repositories/` using the
    system `git` (hooks disabled, no submodules, no shell, prompts suppressed).
    Content is read with `git archive` — nothing is ever checked out or
-   executed.
+   executed. This installation fetch is separate from temporary discovery.
+   Each installed skill includes the repository `LICENSE`, its parent plugin's
+   `LICENSE`, and the plugin's `LICENSES` files. Different notices claiming the
+   same destination fail closed.
 3. Each skill is validated: `SKILL.md` frontmatter (name/description rules of
    the open Agent Skills format), safe file types, no escaping symlinks, and a
    deterministic content digest.
@@ -101,6 +112,29 @@ anything outside the exact configured installer-owned roots.
 `source.sha` counts as pinned; a branch/tag `ref` is movable and unpinned
 entries resolve the remote default branch head. `sync --require-pinned`
 rejects anything that is not SHA-pinned (for CI and managed installs).
+
+## One catalog for Claude plugins and individual skills (0.4)
+
+The native LiteLLM marketplace can list three `git-subdir` sources rooted at
+`plugins/engineering`, `plugins/business`, and `plugins/ai-orchestration`.
+Claude installs these as plugins. This installer reads each pinned plugin's
+manifest and `skills/*/SKILL.md`, exposes the child names through `list`, and
+allows `sync --skill NAME` or `--all` against the same catalog:
+
+```bash
+aialchemy-skills list --allow-git-source
+aialchemy-skills sync --skill browser-testing-with-devtools --agents codex --allow-git-source --require-pinned --dry-run
+```
+
+Plugin bundles require an exact `source.sha`, matching manifest name/version,
+and the default `skills/` directory (`skills` may be omitted from the manifest or
+set to `./skills/`). Custom component paths are rejected. Duplicate child names
+across bundles or direct entries are rejected before installation. Only skill
+content and its notices are installed; plugin hooks, commands and other runtime
+components are not installed or executed. Existing per-skill Git entries and
+gateway archives remain supported, including the Git opt-in and repository
+allowlist. Git content downloads directly from its registered Git host; gateway
+catalog registration does not proxy those downloads or install skills on agents.
 
 ### After an upstream history rewrite
 
@@ -178,7 +212,7 @@ Gateway-only content delivery is the default. A catalog entry uses:
 
 `url`, `path` and `sha` retain reviewed source provenance; they are not fetched for an archive entry. `archive_url` must share the configured catalog origin. Both catalog and archive receive `AIALCHEMY_SKILLS_API_KEY` from the environment; the key is never stored in state or manifests. Cross-origin redirects, wrong digests, unsafe ZIP entries, oversized packages and unmanaged link collisions fail before activation. Rollback revalidates the retained release offline.
 
-Legacy `git-subdir` entries require the explicit `--allow-git-source` opt-in. The built-in catalog address remains the legacy marketplace address for configuration compatibility; point `--catalog` or `AIALCHEMY_SKILLS_CATALOG` at the deployed per-skill archive catalog for this format. The [release client](../skill-release/README.md) builds/publishes artifacts and emits that catalog; serving it is an infrastructure operation.
+`git-subdir` entries require the explicit `--allow-git-source` opt-in. The built-in catalog address supports the native plugin marketplace described above; point `--catalog` or `AIALCHEMY_SKILLS_CATALOG` at a deployed per-skill archive catalog for gateway-only downloads. The [release client](../skill-release/README.md) builds/publishes artifacts and emits that archive catalog; serving it is an infrastructure operation.
 
 ## Provider discovery
 

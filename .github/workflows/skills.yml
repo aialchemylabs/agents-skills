@@ -30,6 +30,7 @@ jobs:
       - run: test -z "$(gofmt -l .)"
         working-directory: tools/aialchemy-skills
       - run: python tools/skill-release/release.py build --output "$RUNNER_TEMP/skill-packages"
+      - run: python tools/skill-release/marketplace.py build --output "$RUNNER_TEMP/skill-packages/marketplace-registration.json"
       - uses: actions/upload-artifact@v4
         with:
           name: skill-packages

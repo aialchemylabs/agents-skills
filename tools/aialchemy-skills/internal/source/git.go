@@ -41,6 +41,7 @@ type Repo struct {
 	url          string
 	dir          string
 	fetchedHeads bool
+	trees        map[string]map[string]treeFile
 }
 
 // Dir returns the on-disk location of the cached repository.
