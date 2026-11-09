@@ -148,9 +148,11 @@ func runStatus(ctx context.Context, args []string, getenv func(string) string, s
 			switch {
 			case e.Source.SHA != "" && e.Source.SHA != s.SHA:
 				s.Update = "update available (new pinned commit " + shortSHA(e.Source.SHA) + ")"
+			case e.ResolvedSHA != "" && e.ResolvedSHA != s.SHA:
+				s.Update = "update available (resolved commit " + shortSHA(e.ResolvedSHA) + ")"
 			case e.Version != "" && e.Version != st.Skills[s.Name].Version:
 				s.Update = "update available (version " + e.Version + ")"
-			case !e.Pinned():
+			case !e.Pinned() && e.ResolvedSHA == "":
 				s.Update = "possibly (unpinned; sync to re-resolve)"
 			default:
 				s.Update = "up to date"

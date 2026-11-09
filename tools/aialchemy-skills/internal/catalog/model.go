@@ -23,8 +23,11 @@ type Entry struct {
 	Version     string `json:"version"`
 	Description string `json:"description"`
 	Source      Source `json:"source"`
-	// PluginRoot is discovered from the pinned Git tree, never trusted from JSON.
+	// PluginRoot is discovered from the resolved Git tree, never trusted from JSON.
 	PluginRoot string `json:"-"`
+	// ResolvedSHA keeps discovery and installation on the same commit even if
+	// a branch advances between them. It does not change the requested pin.
+	ResolvedSHA string `json:"-"`
 }
 
 // Source describes where an entry's content lives.

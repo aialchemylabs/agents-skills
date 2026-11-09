@@ -178,6 +178,7 @@ func (r Resolved) expand(ctx context.Context) ([]catalog.Entry, error) {
 			return nil, fmt.Errorf("skill name does not match catalog and source directory")
 		}
 		e := r.Entry
+		e.ResolvedSHA = r.SHA
 		for ancestor := path.Dir(root); ancestor != "."; ancestor = path.Dir(ancestor) {
 			if _, ok := files[ancestor+"/.claude-plugin/plugin.json"]; ok {
 				if _, err := r.repo.manifest(ctx, r.SHA, ancestor); err != nil {
@@ -192,8 +193,8 @@ func (r Resolved) expand(ctx context.Context) ([]catalog.Entry, error) {
 	if !plugin {
 		return nil, fmt.Errorf("source contains neither SKILL.md nor .claude-plugin/plugin.json")
 	}
-	if !r.Entry.Pinned() {
-		return nil, fmt.Errorf("plugin bundles require a full source.sha pin")
+	if !r.Entry.Pinned() && r.Entry.Source.Ref == "" {
+		return nil, fmt.Errorf("plugin bundles require a full source.sha pin or an explicit source.ref")
 	}
 	manifest, err := r.repo.manifest(ctx, r.SHA, root)
 	if err != nil {
@@ -202,7 +203,7 @@ func (r Resolved) expand(ctx context.Context) ([]catalog.Entry, error) {
 	if err := manifest.validateSkillsPath(); err != nil {
 		return nil, err
 	}
-	if manifest.Name != r.Entry.Name || manifest.Version == "" || (r.Entry.Version != "" && manifest.Version != r.Entry.Version) {
+	if manifest.Name != r.Entry.Name || manifest.Version == "" || (r.Entry.Pinned() && r.Entry.Version != "" && manifest.Version != r.Entry.Version) {
 		return nil, fmt.Errorf("plugin manifest name/version does not match catalog")
 	}
 	var paths []string
@@ -232,6 +233,7 @@ func (r Resolved) expand(ctx context.Context) ([]catalog.Entry, error) {
 		e := r.Entry
 		e.Name, e.Description, e.Version = fm.Name, fm.Description, manifest.Version
 		e.Source.Path, e.PluginRoot = path.Dir(name), root
+		e.ResolvedSHA = r.SHA
 		children = append(children, e)
 	}
 	return children, nil

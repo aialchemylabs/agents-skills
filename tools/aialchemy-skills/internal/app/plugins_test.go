@@ -159,3 +159,80 @@ func TestPluginDiscoveryPreservesCollisionAndOptInGates(t *testing.T) {
 		})
 	}
 }
+
+func TestBranchPluginSyncTracksCommitsAndPreservesPinPolicy(t *testing.T) {
+	repo, first := pluginFixture(t)
+	git := func(args ...string) string {
+		t.Helper()
+		cmd := exec.Command("git", append([]string{"-C", repo, "-c", "core.hooksPath=/dev/null"}, args...)...)
+		data, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatalf("fixture git: %v: %s", err, data)
+		}
+		return strings.TrimSpace(string(data))
+	}
+	git("branch", "-M", "main")
+	home := t.TempDir()
+	t.Cleanup(func() { safety.MakeTreeWritable(home) })
+	entry := catalog.Entry{Name: "demo", Version: "0.9.0", Source: catalog.Source{Source: catalog.SourceGitSubdir, URL: "https://github.com/aialchemylabs/agents-skills", Path: "plugins/demo", Ref: "main"}}
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		json.NewEncoder(w).Encode(map[string]any{"plugins": []catalog.Entry{entry}})
+	}))
+	defer server.Close()
+	run := func(args ...string) (int, []byte) {
+		t.Helper()
+		var out, errs bytes.Buffer
+		args = append(args, "--catalog", server.URL, "--user-home", home, "--allow-git-source", "--json")
+		code := Main(context.Background(), args, func(string) string { return "" }, &out, &errs)
+		if code != 0 {
+			t.Log(errs.String())
+		}
+		return code, out.Bytes()
+	}
+	if code, _ := run("sync", "--skill", "alpha", "--agents", "codex", "--require-pinned", "--dry-run"); code != ExitCatalog {
+		t.Fatalf("branch bypassed require-pinned: %d", code)
+	}
+	code, data := run("sync", "--skill", "alpha", "--agents", "codex", "--dry-run")
+	var planned syncOutput
+	if err := json.Unmarshal(data, &planned); err != nil || code != 0 || len(planned.Skills) != 1 || planned.Skills[0].SHA != first || planned.Skills[0].Pin != catalog.PinRef || planned.Skills[0].Version != "1.0.0" {
+		t.Fatalf("incorrect branch plan: %v %d %s", err, code, data)
+	}
+	if files, err := os.ReadDir(home); err != nil || len(files) != 0 {
+		t.Fatalf("dry run changed installation: %v %v", err, files)
+	}
+	if code, data := run("sync", "--skill", "alpha", "--agents", "codex"); code != 0 {
+		t.Fatalf("initial branch sync: %d %s", code, data)
+	}
+	assertStatus := func(wantSHA, wantUpdate string) {
+		t.Helper()
+		code, data := run("status", "--check-updates")
+		var status statusOutput
+		if err := json.Unmarshal(data, &status); err != nil || code != 0 || len(status.Problems) != 0 {
+			t.Fatalf("branch status: %v %d %s", err, code, data)
+		}
+		if len(status.Skills) != 2 || status.Skills[0].SHA != wantSHA || status.Skills[0].Pin != catalog.PinRef || !strings.HasPrefix(status.Skills[0].Update, wantUpdate) || status.Skills[1].Update != "not installed" {
+			t.Fatalf("incorrect branch update status: %s", data)
+		}
+	}
+	assertStatus(first, "up to date")
+	// Even a content-only change without a version bump must be detected.
+	if err := os.WriteFile(filepath.Join(repo, "plugins/demo/skills/alpha/references/example.md"), []byte("updated material"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	git("add", ".")
+	git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.test", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "update content")
+	second := git("rev-parse", "HEAD")
+	assertStatus(first, "update available (resolved commit")
+	if code, data := run("sync", "--skill", "alpha", "--agents", "codex"); code != 0 {
+		t.Fatalf("updated branch sync: %d %s", code, data)
+	}
+	assertStatus(second, "up to date")
+	installed := filepath.Join(home, ".agents/skills/alpha/references/example.md")
+	if content, err := os.ReadFile(installed); err != nil || string(content) != "updated material" {
+		t.Fatalf("provider did not receive update: %q %v", content, err)
+	}
+	if code, data := run("rollback"); code != 0 {
+		t.Fatalf("branch release rollback: %d %s", code, data)
+	}
+	assertStatus(first, "update available (resolved commit")
+}

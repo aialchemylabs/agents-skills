@@ -79,21 +79,34 @@ func (rz *Resolver) Resolve(ctx context.Context, entries []catalog.Entry) ([]Res
 			return nil, fmt.Errorf("skill %s: %w", entries[idxs[0]].Name, err)
 		}
 		headSHA := ""
+		refs := make(map[string]string)
 		for _, i := range idxs {
 			e := entries[i]
 			var sha string
 			switch {
+			case e.ResolvedSHA != "":
+				if !shaLike(e.ResolvedSHA) || (e.Source.SHA != "" && e.Source.SHA != e.ResolvedSHA) {
+					return nil, fmt.Errorf("skill %s: invalid discovery commit", e.Name)
+				}
+				if err := repo.EnsureCommit(ctx, e.ResolvedSHA); err != nil {
+					return nil, fmt.Errorf("skill %s: %w", e.Name, err)
+				}
+				sha = e.ResolvedSHA
 			case e.Source.SHA != "":
 				if err := repo.EnsureCommit(ctx, e.Source.SHA); err != nil {
 					return nil, fmt.Errorf("skill %s: %w", e.Name, err)
 				}
 				sha = e.Source.SHA
 			case e.Source.Ref != "":
-				s, err := repo.ResolveRef(ctx, e.Source.Ref)
-				if err != nil {
-					return nil, fmt.Errorf("skill %s: %w", e.Name, err)
+				sha = refs[e.Source.Ref]
+				if sha == "" {
+					s, err := repo.ResolveRef(ctx, e.Source.Ref)
+					if err != nil {
+						return nil, fmt.Errorf("skill %s: %w", e.Name, err)
+					}
+					sha = s
+					refs[e.Source.Ref] = s
 				}
-				sha = s
 			default:
 				if headSHA == "" {
 					s, err := repo.DefaultHead(ctx)

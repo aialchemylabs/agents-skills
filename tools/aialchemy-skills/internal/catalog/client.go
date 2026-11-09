@@ -55,7 +55,7 @@ func Fetch(ctx context.Context, rawURL string, opts FetchOptions) ([]byte, error
 	if opts.APIKey != "" {
 		req.Header.Set("Authorization", "Bearer "+opts.APIKey)
 	}
-	req.Header.Set("User-Agent", "aialchemy-skills/0.4.0")
+	req.Header.Set("User-Agent", "aialchemy-skills/0.5.0")
 
 	client := opts.Client
 	if client == nil {

@@ -182,7 +182,11 @@ func runSync(ctx context.Context, args []string, getenv func(string) string, std
 				seenRepo[norm] = true
 				out.Sources = append(out.Sources, fmt.Sprintf("would fetch %s", catalog.Redact(e.Source.URL)))
 			}
-			out.Skills = append(out.Skills, syncSkillOut{Name: e.Name, Version: e.Version, Pin: e.PinStatus(), SHA: e.Source.SHA})
+			sha := e.ResolvedSHA
+			if sha == "" {
+				sha = e.Source.SHA
+			}
+			out.Skills = append(out.Skills, syncSkillOut{Name: e.Name, Version: e.Version, Pin: e.PinStatus(), SHA: sha})
 		}
 		for _, name := range carried {
 			prev := st.Skills[name]

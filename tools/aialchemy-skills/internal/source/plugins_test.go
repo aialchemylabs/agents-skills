@@ -2,6 +2,7 @@ package source
 
 import (
 	"context"
+	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -156,6 +157,106 @@ func TestExpandCatalogCleansTemporaryCacheAfterFetchFailure(t *testing.T) {
 		t.Fatal("unknown commit was accepted")
 	}
 	assertDiscoveryCleaned(t, tmp)
+}
+
+func TestBranchDiscoveryFreezesContentUntilNextDiscovery(t *testing.T) {
+	repo, first := discoveryFixture(t, nil, nil)
+	git := func(args ...string) string {
+		t.Helper()
+		cmd := exec.Command("git", append([]string{"-C", repo, "-c", "core.hooksPath=/dev/null"}, args...)...)
+		data, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatalf("fixture git: %v: %s", err, data)
+		}
+		return strings.TrimSpace(string(data))
+	}
+	git("branch", "-M", "main")
+	entry := discoveryEntry(repo, "", "demo", "plugins/demo")
+	entry.Source.Ref = "main"
+	expanded, problems, err := ExpandCatalog(context.Background(), []catalog.Entry{entry})
+	if err != nil || len(problems) != 0 || len(expanded) != 2 {
+		t.Fatalf("branch discovery: %v %v %#v", err, problems, expanded)
+	}
+	for _, child := range expanded {
+		if child.ResolvedSHA != first || child.Pinned() || child.Source.Ref != "main" {
+			t.Fatalf("incorrect discovery provenance: %#v", child)
+		}
+	}
+	manifest := filepath.Join(repo, "plugins/demo/.claude-plugin/plugin.json")
+	if err := os.WriteFile(manifest, []byte(`{"name":"demo","version":"2.0.0"}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(repo, "plugins/demo/skills/alpha/new.txt"), []byte("later commit"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	git("add", ".")
+	git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.test", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "advance main")
+	second := git("rev-parse", "HEAD")
+	resolver := Resolver{Cache: NewCache(t.TempDir())}
+	resolved, err := resolver.Resolve(context.Background(), expanded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, r := range resolved {
+		if r.SHA != first || r.Pinned() || r.Entry.Version != "1.2.3" {
+			t.Fatalf("branch movement mixed discovery and installation: %#v", r)
+		}
+	}
+	archive, err := resolved[0].Archive(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	dest := t.TempDir()
+	if err := ExtractSkill(archive, resolved[0].Entry.Source.Path, dest); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(filepath.Join(dest, "new.txt")); !os.IsNotExist(err) {
+		t.Fatalf("installed content from a later commit: %v", err)
+	}
+	expanded, problems, err = ExpandCatalog(context.Background(), []catalog.Entry{entry})
+	if err != nil || len(problems) != 0 || len(expanded) != 2 || expanded[0].ResolvedSHA != second || expanded[0].Version != "2.0.0" {
+		t.Fatalf("next discovery did not follow main with manifest version: %v %v %#v", err, problems, expanded)
+	}
+
+	// Internal discovery fields cannot be injected by the marketplace response.
+	var injected catalog.Entry
+	if err := json.Unmarshal([]byte(`{"name":"alpha","ResolvedSHA":"bad","resolved_sha":"bad","PluginRoot":"bad"}`), &injected); err != nil {
+		t.Fatal(err)
+	}
+	if injected.ResolvedSHA != "" || injected.PluginRoot != "" {
+		t.Fatal("catalog JSON supplied trusted discovery metadata")
+	}
+}
+
+func TestResolverResolvesSharedRefOnce(t *testing.T) {
+	repo, sha := discoveryFixture(t, nil, nil)
+	cmd := exec.Command("git", "-C", repo, "branch", "-M", "main")
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("fixture branch: %v: %s", err, out)
+	}
+	entries := []catalog.Entry{discoveryEntry(repo, "", "demo", "plugins/demo"), discoveryEntry(repo, "", "solo", "standalone/solo")}
+	for i := range entries {
+		entries[i].Source.Ref = "main"
+	}
+	cache := NewCache(t.TempDir())
+	lookups := 0
+	cache.Trace = func(args []string) {
+		for _, arg := range args {
+			if arg == "ls-remote" {
+				lookups++
+			}
+		}
+	}
+	resolver := Resolver{Cache: cache}
+	resolved, err := resolver.Resolve(context.Background(), entries)
+	if err != nil || len(resolved) != 2 || lookups != 1 {
+		t.Fatalf("shared ref: %v, %d lookups, %#v", err, lookups, resolved)
+	}
+	for _, r := range resolved {
+		if r.SHA != sha || r.Pinned() {
+			t.Fatalf("incorrect branch provenance: %#v", r)
+		}
+	}
 }
 
 func TestGitSkillArchivesPreserveInheritedAndLocalNotices(t *testing.T) {

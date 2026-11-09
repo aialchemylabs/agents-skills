@@ -53,8 +53,8 @@ it can perform this temporary discovery fetch. Plugin hooks and scripts never ru
    rules, unambiguous JSON fields, `git-subdir` source type (only with `--allow-git-source`), HTTPS/SSH URLs
    without credentials, a
    repository allowlist (only `github.com/aialchemylabs/agents-skills` by
-   default), traversal-free source paths, and full-SHA pins.
-2. Discovery expands pinned Claude plugin bundles into individual skills before
+   default), traversal-free source paths, and valid commit pins or refs.
+2. Discovery expands Claude plugin bundles into individual skills before
    selection and collision checks. Installation then groups selected skills by
    repository and fetches each repository at most once into
    `~/.cache/aialchemy-skills/repositories/` using the
@@ -115,11 +115,11 @@ anything outside the exact configured installer-owned roots.
 entries resolve the remote default branch head. `sync --require-pinned`
 rejects anything that is not SHA-pinned (for CI and managed installs).
 
-## One catalog for Claude plugins and individual skills (0.4)
+## One catalog for Claude plugins and individual skills
 
 The native LiteLLM marketplace can list three `git-subdir` sources rooted at
 `plugins/engineering`, `plugins/business`, and `plugins/ai-orchestration`.
-Claude installs these as plugins. This installer reads each pinned plugin's
+Claude installs these as plugins. This installer reads each resolved plugin's
 manifest and `skills/*/SKILL.md`, exposes the child names through `list`, and
 allows `sync --skill NAME` or `--all` against the same catalog:
 
@@ -128,8 +128,8 @@ aialchemy-skills list --allow-git-source
 aialchemy-skills sync --skill frontend-ui-engineering --agents codex --allow-git-source --require-pinned --dry-run
 ```
 
-Plugin bundles require an exact `source.sha`, matching manifest name/version,
-and the default `skills/` directory (`skills` may be omitted from the manifest or
+Plugin bundles require an exact `source.sha` or an explicit `source.ref`,
+a matching manifest name, and the default `skills/` directory (`skills` may be omitted from the manifest or
 set to `./skills/`). Custom component paths are rejected. Duplicate child names
 across bundles or direct entries are rejected before installation. Only skill
 content and its notices are installed; plugin hooks, commands and other runtime
@@ -137,6 +137,16 @@ components are not installed or executed. Existing per-skill Git entries and
 gateway archives remain supported, including the Git opt-in and repository
 allowlist. Git content downloads directly from its registered Git host; gateway
 catalog registration does not proxy those downloads or install skills on agents.
+
+To follow a branch, publish `"ref": "main"` in the source and omit `sha`.
+Each sync resolves the branch once per repository and uses that exact commit
+for discovery, metadata, and installed content. The next sync picks up later
+commits. Versions come from the plugin manifest at the resolved commit;
+SHA-pinned bundles also require any catalog version to match the manifest.
+State records both the requested ref and the installed commit, and
+`status --check-updates` compares the current branch commit with the installation.
+`--require-pinned` still rejects branch sources. Automatic refresh needs an
+external scheduler; the installer itself runs once per invocation.
 
 ### After an upstream history rewrite
 
