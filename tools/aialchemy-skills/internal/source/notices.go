@@ -9,11 +9,16 @@ import (
 	"path"
 	"sort"
 	"strings"
+
+	"github.com/aialchemylabs/agents-skills/tools/aialchemy-skills/internal/catalog"
 )
 
 // withNotices keeps repository and plugin grants inside each independently
 // installed skill, rather than leaving them above the archived subdirectory.
 func (r Resolved) withNotices(ctx context.Context, original []byte) ([]byte, error) {
+	if err := catalog.ValidateSourcePath(r.Entry.Source.Path); err != nil {
+		return nil, fmt.Errorf("invalid archive prefix: %w", err)
+	}
 	files, err := r.repo.tree(ctx, r.SHA)
 	if err != nil {
 		return nil, err
@@ -36,6 +41,9 @@ func (r Resolved) withNotices(ctx context.Context, original []byte) ([]byte, err
 	notices := make(map[string][]byte)
 	totalBytes := 0
 	add := func(sourcePath, dest string) error {
+		if err := validateRelPath(dest); err != nil {
+			return fmt.Errorf("invalid inherited notice path %q: %w", dest, err)
+		}
 		content, err := r.repo.readFile(ctx, r.SHA, sourcePath, 10<<20)
 		if err != nil {
 			return err
@@ -76,9 +84,6 @@ func (r Resolved) withNotices(ctx context.Context, original []byte) ([]byte, err
 			}
 		}
 	}
-	if len(notices) == 0 {
-		return original, nil
-	}
 	if len(original) > 50<<20 {
 		return nil, fmt.Errorf("skill archive exceeds 50 MiB")
 	}
@@ -96,8 +101,11 @@ func (r Resolved) withNotices(ctx context.Context, original []byte) ([]byte, err
 		if header.Typeflag == tar.TypeXGlobalHeader || header.Typeflag == tar.TypeXHeader {
 			continue
 		}
-		relative, inSkill := strings.CutPrefix(header.Name, r.Entry.Source.Path+"/")
-		if inherited, ok := notices[relative]; inSkill && ok {
+		relative, err := skillArchivePath(header, r.Entry.Source.Path)
+		if err != nil {
+			return nil, err
+		}
+		if inherited, ok := notices[relative]; ok {
 			if header.Typeflag != tar.TypeReg || header.Size > 10<<20 {
 				return nil, fmt.Errorf("conflicting skill notice %q", relative)
 			}

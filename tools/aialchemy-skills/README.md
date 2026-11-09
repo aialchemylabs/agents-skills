@@ -65,8 +65,10 @@ it can perform this temporary discovery fetch. Plugin hooks and scripts never ru
    `LICENSE`, and the plugin's `LICENSES` files. Different notices claiming the
    same destination fail closed.
 3. Each skill is validated: `SKILL.md` frontmatter (name/description rules of
-   the open Agent Skills format), safe file types, no escaping symlinks, and a
-   deterministic content digest.
+   the open Agent Skills format), regular files and directories only, and a
+   deterministic content digest. Downloaded packages cannot contain symlinks
+   or hardlinks. Extraction confines writes to the installation directory;
+   the provider links created by the installer remain supported.
 4. A release is assembled in a temporary directory, flipped read-only, renamed
    into `~/.local/share/aialchemy-skills/releases/<id>`, and activated by
    atomically swapping the `current` symlink. A partial release can never
