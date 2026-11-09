@@ -38,7 +38,7 @@
       },
       {
         "prompt": "Calculate a defensible TAM, SAM, and SOM for Australian payroll software.",
-        "owner": "market-sizing-workflow"
+        "outside_catalog": "market-sizing-workflow"
       },
       {
         "prompt": "Prepare our response to this government request for proposal.",

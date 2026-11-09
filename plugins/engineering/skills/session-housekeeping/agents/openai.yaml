@@ -1,4 +1,4 @@
 interface:
   display_name: "Session Housekeeping"
-  short_description: "Clean up verified resources from this session"
-  default_prompt: "Use $session-housekeeping to inventory this completed session’s resources and clean up eligible disposable paths within the authorized scope."
+  short_description: "Track resources and retire verified session scratch"
+  default_prompt: "Use $session-housekeeping to track this task’s resources, retire closed scratch within the authorized scope, and return a final cleanup handoff."

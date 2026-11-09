@@ -1,9 +1,7 @@
-# Research handoff
+# Source-based decisions
 
-The host gathers dated primary-source evidence before running research mode. The council's members are tool-free: they compare supplied evidence; they do not browse independently or inspect the repository.
+Use this for research, policy, purchasing, operational, or other decisions whose answer depends on external facts. Gather dated primary-source evidence using available authorized tools. Do not assume council members can browse: harness reviewers may use scoped read-only tools if offered; gateway members reason only over supplied evidence.
 
-Give each material claim a stable evidence ID. Record source URL/path, revision/date, observation, whether it is documented or directly observed, confidence and conflicting evidence. Distinguish source capability from deployed availability. Map selected entries to the manifest's `context.evidence` objects (`id`, `source`, `content`); include dates/revisions and limitations in the content. Keep the packet within the approved context and data-egress scope.
+Assign stable evidence IDs. Include source URL/path, date/revision, observation, whether it was documented or directly observed, and limitations/conflicting evidence. Map these to gateway `context.evidence` objects (`id`, `source`, `content`) when applicable. Distinguish a documented capability from deployed availability and a model listing from successful inference.
 
-Run the existing preflight and approval/budget process. Reuse a configured preapproved policy only when it actually covers this run. A `/v1/models` listing establishes route visibility, not chat-parameter compatibility or successful inference. Report actual compatibility evidence separately.
-
-Independent answers, critique and chairman synthesis must cite supplied IDs, preserve supported minority findings and identify unknowns. If missing evidence could reverse the decision, return that gap rather than voting it away. Host-side follow-up research may support a later bounded run; do not add an indefinite agreement loop.
+Compare evidence quality and conflicting interpretations, preserving supported minority concerns. If missing evidence could reverse the decision, recommend a bounded measurement, experiment, or deferral. Record any follow-up research and re-assessment in the same at-most-three-round invocation; new evidence or fixes do not reset the limit. Report uncertainty without manufacturing consensus.

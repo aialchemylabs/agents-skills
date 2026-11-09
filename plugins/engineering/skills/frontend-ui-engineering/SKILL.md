@@ -1,128 +1,50 @@
 ---
 name: frontend-ui-engineering
-description: Build or modify production-quality user interfaces, pages, layouts, and components that are accessible, responsive, design-system aligned, and robust across real UI states. Use for frontend implementation, component architecture, interaction and state design, visual or UX remediation, responsive behavior, and WCAG conformance; co-trigger with testing, browser diagnosis, security, or performance skills when the request spans those concerns. Route plan-only design critique, backend performance work, and release operations to their dedicated skills.
+description: Implement or fix working frontend components, pages, forms, routing, and interaction state in the repository's existing stack. Use for responsive layouts, design-system integration, accessibility, focus and keyboard behavior, and visual or interaction defects, including runtime verification. Research of existing products belongs to design-reference-research; original visual alternatives belong to ui-design-exploration.
 ---
 
 # Frontend UI Engineering
 
-Build interfaces that fit the product already present in the repository. Preserve its framework, visual language, and interaction conventions while improving semantics, resilience, accessibility, and responsiveness.
+Deliver working interfaces that fit the actual product, including the states and input methods needed to complete the user's task. Scale the work to the change: a small fix with a known design needs focused inspection, implementation and verification, not a new design process.
 
-## Inspect the Product Before Implementing
+## Establish the local contract
 
-1. Read repository instructions and identify the framework, rendering model, styling approach, package manager, test commands, and local runtime command.
-2. Inspect nearby pages and components before choosing structure. Find:
-   - existing primitives and design-system components;
-   - spacing, color, typography, radius, motion, and breakpoint tokens;
-   - state, routing, form, data-fetching, and error-handling conventions;
-   - component, story, and test organization;
-   - comparable interactions already implemented.
-3. Inspect supplied designs, screenshots, requirements, or acceptance criteria. Resolve apparent conflicts in favor of explicit user requirements, then established product behavior.
-4. Record what must be verified: behaviors, representative states, viewports, keyboard paths, accessible output, tests, and browser evidence.
+Inspect repository instructions, nearby components and the relevant runtime/test commands. Identify the actual rendering model, styling, tokens, primitives, form/data patterns and routing conventions before choosing an implementation. Use the existing stack and dependencies; do not impose a framework, library or browser tool. Honor existing user authorization without asking for it again.
 
-Do not assume React, Tailwind, a specific browser tool, or a particular component API. Use the repository's stack. Do not add a UI library, state library, icon set, or test dependency unless existing capabilities are demonstrably insufficient and the user authorizes the addition.
+Make the affected behavior concrete: content hierarchy, state ownership, applicable loading/empty/error/success/pending/disabled states, recovery and focus paths. Use realistic copy, long values and partial data where they can occur. Do not invent states the feature cannot enter or redesign unrelated surfaces.
 
-For a selected exploration artifact, map its tokens, components, states and interactions onto the real product before implementation. Unselected alternatives are not requirements. For a motion change, read [motion.md](references/motion.md); use performance investigation when measurements are needed.
+Researching existing products is the role of `design-reference-research`; comparing original design alternatives is the role of `ui-design-exploration`. Use those companions only when the task needs them and they are available. If a needed companion is missing, name the gap and handle what can be done directly without inventing research or review results. A selected or established design does not require either stage.
 
-## Implement the selected reference-informed direction
+When implementing a selected design, map its layout, components, tokens, navigation, states and motion into the real product. Use supplied evidence IDs when present; unselected alternatives are not requirements. Keep source/asset provenance. External screenshots show appearance, not backend, keyboard or failure behavior. Fill required gaps as explicit product decisions, and explain consequential adaptations for available data, platform or accessibility.
 
-Use the selected design’s evidence IDs and acceptance criteria to map layout, components, tokens, navigation, state and motion into the actual stack. External screenshots are research inputs, not exact-copy requirements or evidence of backend behavior. Preserve source/asset provenance and distinguish real product captures from simulated examples.
+## Implement coherent behavior
 
-Document consequential adaptations for different platforms, available data or accessibility. Verify the implementation against the selected requirements with matching viewports and meaningful fixture states; do not optimize for pixel similarity to another product’s branding. If source evidence lacks a failure state or keyboard behavior, implement the product’s required behavior and label it as a design decision.
+- Reuse actual project primitives, semantic tokens, typography, icons, spacing and density. Let information priority drive layout; avoid generic decoration or placeholder copy that hides overflow. Preserve stable component APIs unless the task calls for a change.
+- Prefer native HTML and existing accessible widgets. A navigation action is a link; a command is a button. Choose disclosure, menu, select or combobox semantics from the behavior, not the popup's appearance.
+- Keep responsibility and state ownership clear. Use local or lifted state for local interactions, URL state for shareable navigation/filtering, and existing server-state or global-store conventions where appropriate. Avoid duplicated derived state and artificial layers for trivial components.
+- For forms, preserve values after recoverable failures, connect errors to fields, and make submission/pending/retry behavior explicit. Handle repeated activation and stale async responses so they cannot overwrite newer input or route state.
+- For routing, preserve the project's URL, back/forward, deep-link and scroll conventions. Handle pending/not-found/error routes as applicable, and keep focus and page context meaningful when content changes.
+- Preserve logical DOM, reading and focus order across breakpoints. Keep essential content and actions reachable at supported narrow widths, with long or translated text, zoom and dynamic content. Use project breakpoints or content-driven changes; include language direction when supported by the product.
 
-## Define the UI Contract
+## Preserve accessibility and motion semantics
 
-Before coding, make the required behavior concrete:
+Use WCAG 2.2 AA as the default target unless the project or user specifies otherwise; do not equate a targeted check with full conformance. Provide semantic structure, accessible names and labels, visible unobscured focus, non-color state cues, adequate contrast and operable targets.
 
-- Identify the primary user task and information hierarchy.
-- List meaningful loading, empty, error, success, disabled, pending, and partial-data states that apply.
-- Define keyboard and focus behavior for every interaction.
-- Identify narrow, tablet, desktop, and wide layouts using project breakpoints. If none exist, use representative widths such as 320, 768, 1024, and 1440 CSS pixels.
-- Decide what belongs in presentation, data access, navigation or URL state, and reusable primitives.
-- Include realistic content lengths and failure messages so wrapping, overflow, and recovery paths are visible.
+For interactive controls, forms, overlays, async updates or accessibility work, read [accessibility-checklist.md](references/accessibility-checklist.md). It covers complete keyboard patterns, modal versus nonmodal focus, validation recovery and announcement timing. Implement focus transitions deliberately: opening, closing, route changes, removed triggers and failed submissions must leave users in a meaningful place.
 
-Do not manufacture states that the feature cannot enter. Do not omit states merely because the happy path is easier to demonstrate.
+For changed motion, read [motion.md](references/motion.md). Preserve interruption/reversal behavior and reduced-motion feedback; focus, inertness and dismissal cannot depend on an animation finishing.
 
-## Build the Smallest Coherent Component Model
+## Verify the changed experience
 
-- Prefer native semantic HTML and platform behavior before custom roles or JavaScript emulation.
-- Keep components focused on a recognizable responsibility.
-- Prefer composition and explicit child content over large configuration surfaces.
-- Separate presentation from data acquisition when it improves testability or reuse; avoid artificial container layers for trivial components.
-- Use the simplest state scope that meets the behavior:
-  1. local component state for local interaction;
-  2. lifted state for a small shared subtree;
-  3. URL state for shareable navigation, filtering, sorting, or pagination;
-  4. the project's server-state mechanism for remote data;
-  5. an existing global store only for genuinely cross-cutting client state.
-- Avoid duplicating derived state. Make ownership, transitions, and rollback behavior explicit.
-- Preserve stable public component APIs unless the requirement calls for a breaking change.
+Own the debugging and verification needed for the change. Use the repository's configured checks and available runtime tools; a separate testing or debugging skill is not required.
 
-Split components by responsibility, not by arbitrary line-count limits. Keep closely related behavior colocated according to repository convention.
+- Run relevant existing lint/type/build/tests. Add focused behavioral coverage for changed logic or regressions where useful; do not create tests that merely duplicate styling or implementation details.
+- Exercise the changed user task in the real application or a representative component runtime when available. Check affected success, failure and intermediate states, with keyboard and pointer/touch as relevant. Inspect console/network failures that could invalidate the result.
+- Check representative viewports around affected breakpoints, including narrow layouts. For affected content or interactions, verify long/localized content, zoom/reflow, accessible names/states and reduced motion. Compare selected designs at matching viewports and fixture states.
+- Use actual accessibility-tree, keyboard, visual or configured audit evidence for the claims made. Automated audits cannot establish usable focus flow or announcement behavior; DOM mocks and source inspection cannot establish browser rendering.
 
-## Reuse the Existing Visual Vocabulary
+If the runtime, browser or assistive technology is unavailable, run the checks that remain possible and state exactly what is unverified. Do not invent observations or install tooling merely to claim coverage. A screenshot alone cannot prove keyboard operation, asynchronous recovery or motion behavior.
 
-- Reuse existing tokens, primitives, icons, typography, layout patterns, and density.
-- Use semantic tokens instead of raw colors or one-off values when tokens exist.
-- Preserve the established product design over personal taste. Explain any necessary deviation.
-- Use real or realistic copy, including long values and validation messages.
-- Make information priority drive layout; do not default every item to an identical card.
-- Keep spacing, radii, shadows, gradients, and motion within the system's established scales.
+## Return evidence
 
-Avoid generic generated styling: arbitrary purple or indigo gradients, excessive rounding, uniform card grids, oversized padding, decorative shadows, invented spacing values, and placeholder copy that hides layout failures.
-
-## Implement Responsive Behavior Mobile First
-
-1. Start with content order and controls that work at the narrowest supported width.
-2. Add layout changes at content-driven or project-defined breakpoints.
-3. Preserve readable line lengths, control reachability, table or chart alternatives, and logical focus order as the layout changes.
-4. Test long labels, localization expansion, zoom, and dynamic content.
-5. Avoid hiding essential actions or information only to make a narrow screenshot fit.
-
-Use the project's responsive primitives. Do not impose framework-specific classes or breakpoint values on another stack.
-
-## Meet the Accessibility Baseline
-
-Default to WCAG 2.2 AA unless the project or user specifies another baseline. Prefer native elements because they provide semantics and keyboard behavior that custom widgets must otherwise reproduce.
-
-At minimum:
-
-- provide landmarks and a logical heading hierarchy;
-- give every control an accessible name and every input an associated label;
-- support complete keyboard operation with visible, logical focus;
-- manage focus when dialogs, popovers, errors, or route content appear and restore it when appropriate;
-- meet text and non-text contrast requirements;
-- never use color as the only state cue;
-- keep controls operable at the required target size;
-- announce meaningful asynchronous updates without creating noisy live regions;
-- respect reduced-motion preferences and avoid unexpected motion;
-- preserve content and operation through zoom and reflow.
-
-Read [references/accessibility-checklist.md](references/accessibility-checklist.md) when implementing or reviewing interactive controls, forms, dialogs, dynamic updates, or accessibility acceptance criteria.
-
-## Verify Behavior at the Correct Layers
-
-Treat automated tests and live-browser checks as complementary evidence.
-
-1. Run the repository's relevant format, lint, type, unit, and component tests.
-2. Add or update focused tests for behavior, states, keyboard input, accessible names, and regression-prone boundaries.
-3. Start the real application when a runnable UI and suitable browser tooling are available.
-4. Exercise the primary task and applicable loading, empty, error, disabled, partial, and success states.
-5. Check representative narrow, tablet, desktop, and wide viewports.
-6. Traverse all controls with the keyboard. Inspect focus movement, focus visibility, escape behavior, and focus restoration.
-7. Inspect the accessibility tree and accessible names. Use the project's configured accessibility tooling; do not install a tool or dependency without authorization.
-8. Check console errors, failed requests, overflow, clipping, unexpected layout shift, and reduced-motion behavior.
-
-Never claim that a UI renders correctly, is keyboard-operable, or passes an automated accessibility tool without runtime evidence. If browser execution is unavailable, report exactly which checks remain unverified.
-
-## Report Concrete Evidence
-
-End with:
-
-- the user-facing behavior implemented;
-- important architecture and state decisions;
-- commands run and their outcomes;
-- browser routes, states, viewports, and keyboard paths exercised;
-- accessibility evidence and any remaining limitations;
-- deviations from the existing design system or requirements.
-
-Replace generic checklist claims with observed results, such as the exact dialog focus path, the viewport at which layout changed, or the test that covers an error state.
+Report the implemented behavior and changed paths, relevant commands and outcomes, and actual runtime routes/states/viewports/input paths checked. Include consequential design adaptations and remaining failures or unverified behavior. Keep the report proportional to the change; distinguish observed results from inference and intended behavior.

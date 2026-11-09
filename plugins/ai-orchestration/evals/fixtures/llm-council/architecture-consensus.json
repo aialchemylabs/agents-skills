@@ -90,7 +90,9 @@
       "run_addy_revision": "auto",
       "expose_model_identities_after_synthesis": true,
       "persist": "none",
-      "output_directory": null
+      "output_directory": null,
+      "score_candidates": true,
+      "anonymize_candidates": true
     }
   },
   "gateway": {

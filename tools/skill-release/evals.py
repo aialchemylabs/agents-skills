@@ -24,7 +24,10 @@ def prepare(skill, case_id, output):
     if len(matches) != 1:
         raise ValueError("skill has no unique case specification")
     path = matches[0]
-    spec = validate_cases(path, {skill})
+    catalog_names = {
+        p.parent.name for p in (ROOT / "plugins").glob("*/skills/*/SKILL.md")
+    }
+    spec = validate_cases(path, catalog_names)
     cases = [c for c in spec["evals"] if c["id"] == case_id]
     if len(cases) != 1:
         raise ValueError("unknown case id")

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "aialchemy-agent-skills",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Reusable AI Alchemy Labs skills for engineering, business, and multi-model orchestration.",
   "owner": {
     "name": "AI Alchemy Labs"
@@ -9,8 +9,8 @@
   "plugins": [
     {
       "name": "engineering",
-      "description": "Research, design, build, verify and deliver software and product videos, then clean up session resources.",
-      "version": "0.6.1",
+      "description": "Deliver features through review and merge, build interfaces and videos, research designs, and maintain code and documentation.",
+      "version": "0.7.0",
       "author": {
         "name": "AI Alchemy Labs"
       },
@@ -18,13 +18,10 @@
       "repository": "https://github.com/aialchemylabs/agents-skills",
       "keywords": [
         "engineering",
-        "frontend",
-        "testing",
-        "api-design",
+        "feature-delivery",
         "code-review",
-        "security",
+        "frontend",
         "performance",
-        "git",
         "documentation",
         "design-research",
         "video-production",
@@ -76,8 +73,8 @@
     },
     {
       "name": "ai-orchestration",
-      "description": "Coordinate multiple models through LiteLLM into evidence-backed, cross-critiqued decisions.",
-      "version": "0.2.2",
+      "description": "Use multiple models to investigate questions, compare proposals, and review work through harness delegates or LiteLLM.",
+      "version": "0.3.0",
       "author": {
         "name": "AI Alchemy Labs"
       },
@@ -87,8 +84,8 @@
         "orchestration",
         "llm-council",
         "multi-model",
-        "cross-critique",
-        "benchmarking",
+        "delegation",
+        "review",
         "litellm"
       ],
       "category": "productivity",

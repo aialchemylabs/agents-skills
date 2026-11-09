@@ -1,367 +1,68 @@
-# Output contract
+# Council output
 
-## Contents
+## Shared handoff (all backends)
 
-- [Top-level result](#top-level-result)
-- [Statuses](#statuses)
-- [Stage objects](#stage-objects)
-- [Ranking and benchmark](#ranking-and-benchmark)
-- [Usage, failures, and persistence](#usage-failures-and-persistence)
-- [Exit codes](#exit-codes)
-- [Rendering rules](#rendering-rules)
+Return a concise recommendation or blocking outcome, supported findings and evidence, accepted/rejected material feedback with reasons, credible dissent, unresolved unknowns, and actual verification. Record backend, actual roster/model identity and relevant settings, rounds used (maximum three), stop reason, failures and coverage. Separate the host's reconciliation from member claims. A launch, score, or majority vote is not verification evidence. State what was inspected, tested, changed, or left advisory.
 
-## Top-level result
+For an authorized PR description edit, add a short review summary with models/backend, rounds, consequential findings and disposition, remaining dissent/risks, and final checks. Do not dump transcripts or claim unavailable checks passed. Also return results to the requester/parent; writing the PR description alone is not a handoff.
 
-Return versioned JSON on standard output. Send only bounded, sanitized progress to standard error.
+An example non-code handoff:
 
-```json
-{
-  "schema_version": 1,
-  "request_id": "opaque-request-id",
-  "run_id": "generated-run-id",
-  "status": "complete",
-  "mode": "decision",
-  "diversity": {
-    "status": "verified",
-    "families": ["anthropic", "openai", "google"],
-    "limitations": []
-  },
-  "stages": {
-    "preflight": {"status": "complete"},
-    "independent": {"status": "complete"},
-    "cross_critique": {"status": "complete"},
-    "revision": {"status": "skipped"},
-    "chairman": {"status": "complete"}
-  },
-  "candidates": [],
-  "critiques": [],
-  "ranking": {},
-  "chairman": {
-    "status": "complete",
-    "model": "approved-chairman-alias",
-    "family": "openai",
-    "used_fallback": false,
-    "participated_as_member": false,
-    "request_id": "gateway-request-id",
-    "response": {
-      "recommendation": "Adopt the bounded option.",
-      "why": ["It best satisfies the supplied criteria."],
-      "consensus": [],
-      "disagreements": [],
-      "minority_report": [],
-      "risks": [],
-      "next_steps": [],
-      "confidence": 0.8,
-      "material_unknowns": []
-    }
-  },
-  "benchmark": {},
-  "usage": {},
-  "failures": [],
-  "persistence": {
-    "mode": "none",
-    "paths": []
-  }
-}
-```
+> Recommend a small pilot before extending opening hours. Two accessible models independently assessed the visitor-access and staffing evidence; host reconciliation completed after one round. Accepted the demand-measurement objection (E1 lacks demand data); rejected an immediate full rollout because the staffing evidence does not support it. One member still prefers weekend workshops. Demand and operating-cost estimates remain unknown. No schedule was changed.
 
-Preserve `request_id` as opaque. Generate a distinct run ID. Validate all model-produced objects before including them. Do not treat HTTP `200` or syntactically valid JSON as semantic success without the expected content and schema.
+## Gateway schema version 1
 
-## Statuses
+`validate_result` is the authoritative shape checker for helper JSON; harness reports need not emulate this wire format. Successful helper output is a **dossier**, not proof that host reconciliation or implementation occurred. Exit 0 can mean `partial`; inspect `status`, stage coverage, and failures.
 
-Use one run status:
+Required result fields:
 
-```text
-complete
-partial
-failed
-cancelled
-blocked
-```
+- `schema_version`, `request_id`, `run_id`, `status`, `mode`;
+- `diversity`: status (`verified`, `unverified`, `perspective-only`), families, limitations. `verified` here concerns declared/trusted provider-family metadata, not a quality guarantee or proof that different aliases resolve to distinct models;
+- `stages`: preflight, independent, cross_critique, revision, chairman, each with status;
+- `candidates`: candidate label, response, and identities after synthesis when disclosure enabled;
+- `critiques`, `ranking` (may have no scores/order), `chairman` (may be skipped);
+- `benchmark` (call telemetry retained for accounting; this does not require a benchmarking exercise), `usage`, `failures`, `persistence`.
 
-Use one stage status:
+New helper results also contain `execution_report`: `backend: litellm`, actual `roster`, `round_number` (1–3), `maximum_rounds: 3`, `stop_reason`, and non-secret `plan_fingerprint`. Older results without it still validate. Optional `revision`, `transitions`, and full-persistence `identity_mapping` retain prior compatibility.
 
-```text
-pending
-running
-complete
-partial
-failed
-skipped
-cancelled
-```
-
-Record state transitions with the stage, monotonic timestamp, status, non-secret reason, and related call IDs.
-
-## Stage objects
-
-### Independent member response
-
-Require:
+### Member
 
 ```json
 {
-  "recommendation": "Choose A, choose B, use a hybrid, or defer",
-  "rationale": [
-    "Concise reason tied to supplied evidence"
-  ],
-  "evidence": [
-    {
-      "evidence_id": "E1",
-      "claim": "What this evidence supports"
-    }
-  ],
-  "assumptions": [
-    "Material assumption"
-  ],
-  "risks": [
-    {
-      "risk": "Concrete failure mode",
-      "severity": "high",
-      "mitigation": "Proposed mitigation"
-    }
-  ],
-  "unknowns": [
-    "Information that could change the recommendation"
-  ],
-  "confidence": 0.78
+  "recommendation": "Run a bounded pilot",
+  "rationale": ["Demand is not measured"],
+  "evidence": [{"evidence_id": "E1", "claim": "Only one session can be staffed"}],
+  "assumptions": [],
+  "risks": [{"risk": "Unfilled sessions", "severity": "medium", "mitigation": "Measure pilot bookings"}],
+  "unknowns": ["Visitor demand"],
+  "confidence": 0.6
 }
 ```
 
-Validate evidence IDs against the supplied packet, confidence within `0.0` to `1.0`, and severity against the implemented enum. Ask for concise rationale, not hidden chain-of-thought.
+Evidence IDs must refer to supplied evidence. All arrays shown are required; empty arrays are allowed. Severity is low/medium/high/critical and confidence is 0–1, subjective.
 
-### Cross-critique
+### Critique
 
-Require:
+Required: `evaluations` with unique candidate labels, `strengths`, `weaknesses`, `unsupported_claims`; `revised_position`; `confidence`. Every candidate must be evaluated unless explicitly `partial: true`. Each evaluation may optionally include `scores` (all five criteria: evidence_quality, correctness, feasibility, risk_awareness, instruction_fit; integer 1–5). An optional `ranking` contains each label exactly once unless partial. Omitted scores/ranking remain absent. `policy.score_candidates` requests them; default qualitative review needs neither.
 
-```json
-{
-  "evaluations": [
-    {
-      "candidate_label": "Candidate A",
-      "strengths": ["Specific supported strength"],
-      "weaknesses": ["Specific weakness"],
-      "unsupported_claims": ["Claim not supported by supplied evidence"],
-      "scores": {
-        "evidence_quality": 4,
-        "correctness": 4,
-        "feasibility": 3,
-        "risk_awareness": 5,
-        "instruction_fit": 4
-      }
-    }
-  ],
-  "ranking": [
-    "Candidate C",
-    "Candidate A",
-    "Candidate B"
-  ],
-  "revised_position": "Concise revised recommendation after seeing alternatives",
-  "confidence": 0.82
-}
-```
+Aggregation returns advisory rubric/Borda metrics and coverage only from supplied values. No scores means no rank order. Weights, when used, sum to one (default .30/.25/.15/.15/.15 for the criteria above). Scores do not cancel material defects or settle an evidence dispute.
 
-Require integer criterion scores from `1` to `5`. Validate every label against the randomized neutral-label set. Reject duplicate or unknown labels. Reject missing labels unless the critique is explicitly partial and coverage is recorded.
+### Optional textual proposer reply
 
-### Proposer response
+`accepted_feedback`: objects with `feedback`, `response` (include the reason). `rejected_feedback`: objects with `feedback`, `reason`. Also `revised_proposal`, `remaining_risks`, `confidence`. It is text only; no implementation or round reset. This legacy stage is called `revision` in JSON.
 
-Use this object only when the Addy proposer/reviewer/response stage applies:
+### Optional synthesis
 
-```json
-{
-  "accepted_feedback": [
-    {
-      "feedback": "Issue accepted",
-      "response": "How the proposal changes"
-    }
-  ],
-  "rejected_feedback": [
-    {
-      "feedback": "Issue rejected",
-      "reason": "Evidence-based reason"
-    }
-  ],
-  "revised_proposal": "Concise revised textual proposal",
-  "remaining_risks": ["Risk"],
-  "confidence": 0.8
-}
-```
+`chairman.status` is complete/failed/skipped. Only complete has a validated `response`: `recommendation`, `why`, `consensus`, `disagreements` (issue, positions, resolution), `minority_report`, `risks` (risk, mitigation, owner), `next_steps`, `confidence`, `material_unknowns`. Identity, `used_fallback`, and request metadata identify the actual synthesis route. It may be a member model. A failed route cannot receive credit for host reconciliation.
 
-This stage revises text only. It never edits files.
+Default skipped synthesis means the host still owes evidence-weighted reconciliation, feedback disposition, dissent and final evidence. Independent-only benchmark mode instead reports measurements without a verdict. A failed optional synthesis returns a useful partial dossier when possible. Rendering never fabricates its missing recommendation.
 
-### Chairman result wrapper
+### Accounting and failure
 
-Wrap a successful model-produced chairman response with execution and provenance fields:
+Call telemetry includes stage/model/family/member, status, latency, tokens when available, retries, request ID, HTTP status and cost status. Missing cost is null/unknown; it is never displayed as zero. Usage counts every inference attempt, requested output-token allowance and reported usage/cost. Peer scores are optional advisory metadata.
 
-```json
-{
-  "status": "complete",
-  "model": "approved-chairman-alias",
-  "family": "openai",
-  "used_fallback": false,
-  "request_id": "gateway-request-id",
-  "response": {
-    "recommendation": "The final evidence-weighted call",
-    "why": ["Most important supported reason"],
-    "consensus": [],
-    "disagreements": [],
-    "minority_report": [],
-    "risks": [],
-    "next_steps": [],
-    "confidence": 0.8,
-    "material_unknowns": []
-  }
-}
-```
+Failures include stage, subject/model when known, category and sanitized message. No raw headers/keys/provider error dumps. A run with quorum and incomplete coverage is partial, not unanimous. One successful answer cannot become a council verdict. On a fatal error the CLI emits a blocked/cancelled envelope with an error category; do not render it as a successful dossier. The host retains its ledger and any evidence already returned to it.
 
-Set `used_fallback` to `true` only when the approved fallback route produced the response. Set `model` and `family` to `null` when `expose_model_identities_after_synthesis` is false. Preserve `request_id` when the gateway returns one; otherwise it may be `null`.
+CLI exit codes: 0 useful complete/partial, 2 validation, 3 preflight/authentication/client failure, 4 budget, 5 insufficient members, 6 chairman unavailable, 7 persistence, 130 cancelled. See `scripts/llm_council/errors.py` for exact exception mapping.
 
-When no chairman or approved fallback succeeds, return:
-
-```json
-{
-  "status": "failed",
-  "used_fallback": false,
-  "response": null,
-  "host_synthesis_required": true,
-  "host_synthesis_label": "Host synthesis; chairman unavailable"
-}
-```
-
-Do not add successful-chairman provenance to the failed wrapper and never attribute later host synthesis to a model.
-
-### Chairman model response
-
-Require this nested value in `chairman.response` after a successful chairman call:
-
-```json
-{
-  "recommendation": "The final evidence-weighted call",
-  "why": [
-    "Most important supported reason"
-  ],
-  "consensus": [
-    "Material point of agreement"
-  ],
-  "disagreements": [
-    {
-      "issue": "What remains disputed",
-      "positions": ["Candidate A says...", "Candidate C says..."],
-      "resolution": "How the chair weighed it"
-    }
-  ],
-  "minority_report": [
-    "Credible minority concern that should not be erased"
-  ],
-  "risks": [
-    {
-      "risk": "Remaining risk",
-      "mitigation": "Action",
-      "owner": "Suggested owner if known"
-    }
-  ],
-  "next_steps": [
-    "Concrete next action"
-  ],
-  "confidence": 0.8,
-  "material_unknowns": [
-    "Unknown that could change the final call"
-  ]
-}
-```
-
-Keep provider/model identity hidden from the chairman by default. Include failure coverage and unavailable evidence in its dossier. Validate that the chairman uses the supplied dossier rather than inventing external facts.
-
-## Ranking and benchmark
-
-Expose rankings as advisory signals with critique coverage.
-
-Calculate the weighted rubric score using:
-
-```text
-evidence quality 30%
-correctness      25%
-feasibility      15%
-risk awareness   15%
-instruction fit  15%
-```
-
-Normalize the mean weighted score from the `1`–`5` input scale to `0.0`–`1.0`. For `N` candidates, assign Borda points as `N - rank_position` and divide received points by maximum possible points. Handle ties deterministically. Never make the top aggregate score the chairman result automatically.
-
-For every attempted model call, emit a benchmark row shaped like:
-
-```json
-{
-  "model": "approved-model-alias",
-  "family": "openai",
-  "stage": "independent",
-  "status": "success",
-  "latency_ms": 1234,
-  "input_tokens": 1500,
-  "output_tokens": 700,
-  "total_tokens": 2200,
-  "cost_usd": null,
-  "cost_status": "unknown",
-  "retry_count": 0,
-  "quality": {
-    "peer_score": 0.82,
-    "rank_score": 0.75,
-    "chairman_selected": true,
-    "subjective": true
-  }
-}
-```
-
-Allow `cost_status` values `reported`, `estimated`, and `unknown`. Never turn absent cost into `0`. Treat peer score, rank score, and chairman selection as subjective quality signals. A benchmark of one prompt is not a general model ranking.
-
-When `expose_model_identities_after_synthesis` is false:
-
-- omit `member_id`, `model`, and `family` from candidate objects;
-- set benchmark-call `member_id`, `model`, and `family` to `null`;
-- retain neutral `candidate_label` values for member-stage benchmark rows;
-- set chairman-wrapper `model` and `family` to `null`.
-
-Do not reconstruct or infer hidden identities from aliases, request IDs, answer style, or call order.
-
-## Usage, failures, and persistence
-
-Aggregate request counts, retries, repairs, actual token usage, and cost without hiding per-call records. Include `usage.requested_output_tokens` for the sum of per-attempt output caps reserved across base calls, retries, repairs, and fallback-chair attempts. Include sanitized failures with stage, route alias where disclosure permits, error category, retry count, and whether the failure changed run status. Never include authorization values, raw headers, environment dumps, or unsanitized provider error bodies.
-
-Return persistence metadata in all modes:
-
-| Mode | Persisted content |
-|---|---|
-| `none` | Nothing; return output through stdout |
-| `summary` | Non-secret request metadata, route provenance, stage statuses, chairman, aggregate ranking, benchmark, failures |
-| `full` | Validated secret-free manifest, neutral candidates, critiques, identity mapping, revision, chairman, metrics, failures |
-
-For `summary`, omit raw evidence, member answers, and critiques. For `full`, require explicit approval. Record only paths created for this run. Use a new run-specific directory, mode `0700`, files mode `0600`, atomic same-directory rename, and no overwrite.
-
-## Exit codes
-
-| Code | Meaning |
-|---:|---|
-| `0` | Complete or intentionally partial result emitted |
-| `2` | Invalid input or configuration |
-| `3` | Preflight or authentication blocked |
-| `4` | Budget blocked |
-| `5` | Insufficient successful council members |
-| `6` | Chairman unavailable with no usable partial result |
-| `7` | Persistence failure prevented safe completion |
-| `130` | Cancelled or interrupted |
-
-Always inspect JSON status. A partial result with enough useful evidence exits `0`.
-
-## Rendering rules
-
-Render in this order:
-
-1. recommendation;
-2. evidence-backed reasons;
-3. consensus and material disagreement;
-4. credible minority report;
-5. risks, mitigations, and next steps;
-6. council quality and benchmark table;
-7. failures, unknowns, diversity, cost, and persistence limitations.
-
-Escape Markdown table content. Respect identity-disclosure policy. Omit raw transcripts by default. Label host fallback exactly `Host synthesis; chairman unavailable`.
+Persistence: none by default; summary retains synthesis/provenance/accounting but omits member/critique transcripts and source packet; full retains normalized manifest and result. Neither is automatically public-safe. The renderer gives a bounded dossier; the host still supplies the shared handoff above.

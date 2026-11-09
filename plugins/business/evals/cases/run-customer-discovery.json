@@ -34,11 +34,11 @@
       },
       {
         "prompt": "Calculate market share and TAM from this census dataset.",
-        "owner": "market-sizing-workflow"
+        "outside_catalog": "market-sizing-workflow"
       },
       {
         "prompt": "Run a detailed accessibility and usability test of this finished checkout interface.",
-        "owner": "usability-or-design-research-workflow"
+        "outside_catalog": "usability-or-design-research-workflow"
       },
       {
         "prompt": "Critique the board's existing expansion plan before approval.",

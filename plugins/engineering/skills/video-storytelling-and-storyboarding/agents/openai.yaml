@@ -1,4 +1,0 @@
-interface:
-  display_name: "Video Storytelling and Storyboarding"
-  short_description: "Plan a grounded script and timed video storyboard"
-  default_prompt: "Use $video-storytelling-and-storyboarding to turn this brief into a timed script, storyboard and production handoff."

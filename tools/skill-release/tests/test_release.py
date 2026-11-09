@@ -21,7 +21,7 @@ class ReleaseTests(unittest.TestCase):
     def test_portfolio_and_isolated_archives(self):
         folders = release.validate()
         engineering = [p for p in folders if p.parent.parent.name == "engineering"]
-        self.assertEqual(len(engineering), 25)
+        self.assertEqual(len(engineering), 11)
         for folder in folders:
             with (
                 self.subTest(skill=folder.name),
@@ -53,7 +53,7 @@ class ReleaseTests(unittest.TestCase):
                     )
                     self.assertEqual(len(queue["sources"]), 7)
                     self.assertEqual(queue["status"], "source_queue_only")
-                if folder.name == "programmatic-video-production":
+                if folder.name == "video-production":
                     starter = installed / "assets/remotion-starter"
                     lock = json.loads((starter / "package-lock.json").read_text())
                     package = json.loads((starter / "package.json").read_text())
@@ -110,10 +110,31 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 release.validate_skill(folder)
 
+    def test_trigger_routing_cannot_point_to_a_removed_skill(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "demo.json"
+            data = {
+                "skill_name": "demo",
+                "trigger": {
+                    "positive": [{"prompt": "Use the demo."}],
+                    "negative": [{"prompt": "Review a change.", "owner": "retired"}],
+                },
+                "evals": [{
+                    "id": 1, "kind": "dialogue", "prompt": "Use the demo.",
+                    "expectations": ["Produces a result."],
+                }],
+            }
+            path.write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, "unknown trigger owner"):
+                release.validate_cases(path, {"demo", "review"})
+            data["trigger"]["negative"][0]["owner"] = "review"
+            path.write_text(json.dumps(data))
+            self.assertEqual(release.validate_cases(path, {"demo", "review"}), data)
+
     def test_eval_artifacts_and_human_grade_do_not_imply_an_automatic_pass(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "run"
-            request = evals.prepare("pull-request-lifecycle", 1, output)
+            request = evals.prepare("feature-delivery-full-stop", 1, output)
             self.assertNotIn("expectations", request)
             response = Path(directory) / "response.json"
             response.write_text(
@@ -152,11 +173,36 @@ class ReleaseTests(unittest.TestCase):
             grade.write_text(json.dumps(assessment))
             self.assertEqual(evals.grade(output, grade)["status"], "failed")
 
+    def test_council_preparation_includes_declared_fixtures(self):
+        cases_path = ROOT / "plugins/ai-orchestration/evals/cases/llm-council.json"
+        cases = json.loads(cases_path.read_text())["evals"]
+        expected_new_fixtures = {
+            16: "llm-council/non-code-decision.json",
+            17: "llm-council/harness-no-gateway.json",
+        }
+        for case in cases:
+            with self.subTest(case=case["id"]):
+                self.assertNotIn("fixture", case)
+                if case["id"] in expected_new_fixtures:
+                    self.assertIn(expected_new_fixtures[case["id"]], case["files"])
+                if not case.get("files"):
+                    continue
+                with tempfile.TemporaryDirectory() as directory:
+                    output = Path(directory) / "run"
+                    request = evals.prepare("llm-council", case["id"], output)
+                    fixture_directory = Path(request["fixture_directory"])
+                    for name in case["files"]:
+                        source = cases_path.parent.parent / "fixtures" / name
+                        self.assertEqual(
+                            (fixture_directory / name).read_bytes(),
+                            source.read_bytes(),
+                        )
+
 
 class GatewayTests(unittest.TestCase):
     def test_publish_uses_verified_version_archive_and_preserves_notices(self):
         content, provenance = release.bundle(
-            ROOT / "plugins/engineering/skills/pull-request-lifecycle", "a" * 40
+            ROOT / "plugins/engineering/skills/feature-delivery-full-stop", "a" * 40
         )
 
         class Fake:
@@ -217,7 +263,7 @@ class GatewayTests(unittest.TestCase):
                 "sha256:" + hashlib.sha256(content).hexdigest(),
             )
             self.assertIn(
-                "/skill-hub/skills/pull-request-lifecycle/unpublish", fake.calls
+                "/skill-hub/skills/feature-delivery-full-stop/unpublish", fake.calls
             )
             (d / "skill.zip").write_bytes(b"corrupt")
             fake = Fake()
@@ -308,7 +354,7 @@ class TriggerTests(unittest.TestCase):
     def test_routing_request_hides_answer_and_scores_owner(self):
         import triggers
 
-        request, row = triggers.request_for("pull-request-lifecycle", "negative", 1)
+        request, row = triggers.request_for("feature-delivery-full-stop", "negative", 1)
         self.assertNotIn("expected", request)
         self.assertNotIn("skill", request)
         response = {
@@ -317,11 +363,11 @@ class TriggerTests(unittest.TestCase):
             "selected": ["code-review-and-quality"],
         }
         self.assertTrue(
-            triggers.assess("pull-request-lifecycle", "negative", row, response)
+            triggers.assess("feature-delivery-full-stop", "negative", row, response)
         )
-        response["selected"].append("pull-request-lifecycle")
+        response["selected"].append("feature-delivery-full-stop")
         self.assertFalse(
-            triggers.assess("pull-request-lifecycle", "negative", row, response)
+            triggers.assess("feature-delivery-full-stop", "negative", row, response)
         )
 
 

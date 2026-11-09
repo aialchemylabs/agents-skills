@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[3]
-SKILL = ROOT / "plugins/engineering/skills/programmatic-video-production"
+SKILL = ROOT / "plugins/engineering/skills/video-production"
 
 
 def run(command, cwd=None):

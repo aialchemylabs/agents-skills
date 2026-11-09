@@ -1,6 +1,6 @@
 ---
 name: code-simplification
-description: Simplify working code to reduce cognitive load, unnecessary structure, duplication, nesting, and indirection while preserving every observable behavior. Use when a function or module is correct but too clever, difficult to follow, over-abstracted, or hard for teammates to maintain, especially for a narrow refactor of recently changed code. Do not use for new features, root-cause diagnosis of broken behavior, feature redesign, or a review-only quality assessment.
+description: Simplify working code to reduce cognitive load, duplication, nesting, and indirection while preserving observable behavior. Use for narrow refactors of correct but hard-to-maintain code. Do not use for new features, root-cause diagnosis, contract redesign, or review-only assessments.
 ---
 
 # Code Simplification
@@ -9,122 +9,50 @@ Make the code easier to understand without changing what callers, users, tests, 
 
 ## Preserve the Boundary
 
-1. Resolve the exact files, symbols, and behavior in scope.
-2. Separate target code from unrelated dirty changes.
-3. Treat implementation authorization as limited to the requested or recently changed area.
-4. Do not add features, redesign contracts, upgrade dependencies, or clean up neighboring code without explicit approval.
-5. Do not commit, push, publish, or deploy unless the user separately requests that action.
+Resolve the requested files or symbols and preserve unrelated dirty changes. Existing implementation authorization covers ordinary edits and focused tests within that scope; do not ask again for each transformation.
 
-If the request is review-only, report opportunities and route the work to `code-review-and-quality`. If the code is broken and its cause is unknown, diagnose it or use a debugging/TDD workflow before simplifying it.
+Keep feature changes, bug fixes, contract redesigns, dependency changes, and neighboring cleanup separate from simplification. If already requested, identify them as distinct work rather than seeking the same authorization again; otherwise report them as out of scope. Do not commit, push, publish, or deploy unless authorized.
+
+For review-only requests, report opportunities without edits; use `code-review-and-quality` if available. If a target failure has an unknown cause, diagnose it directly when in scope or report it separately before attempting to simplify the affected code. Do not assume a companion skill is installed.
 
 ## Establish the Behavior Contract
 
-Before editing, inspect:
-
-- repository instructions and conventions;
-- the target implementation, callers, callees, public types, and exported surfaces;
-- neighboring implementations and canonical helpers;
-- tests, fixtures, snapshots, schemas, and generated artifacts that define behavior;
-- relevant history or blame when a construct's purpose is unclear;
-- performance-sensitive or platform-specific constraints.
+Inspect repository instructions, the target implementation, relevant callers and interfaces, and available tests. Consult history or blame when a construct's purpose is unclear. Check canonical helpers, generated artifacts, platform constraints, or performance requirements when the proposed change touches them.
 
 Apply Chesterton's Fence: do not remove or replace a construct until its reason is understood. A seemingly redundant branch may preserve an older format, error, event order, timing guarantee, or side effect.
 
-Write a compact behavior inventory covering all relevant observable dimensions:
+Scale the behavior inventory to the change. A tiny local rewrite may need only a brief statement of the invariant and a diff review, supported by existing focused checks. No exhaustive worksheet or new test is required for every trivial edit.
 
-| Dimension | Evidence to establish |
-|---|---|
-| Inputs and outputs | accepted forms, defaults, normalization, return values |
-| Errors | type, code, message when contractual, and when it is raised |
-| Ordering | output order, callback order, mutation order, stable tie-breaks |
-| Timing | sync versus async completion, retries, cancellation, timeouts |
-| Serialization | field names, omission versus null, formats, byte or text shape |
-| Side effects | writes, events, logs, metrics, network calls, cache behavior |
-| Compatibility | legacy inputs, callers, stored data, versions, feature flags |
-
-Do not proceed when a material behavior is unknown and the uncertainty cannot be resolved safely. State the missing evidence.
+For riskier transformations, make the affected contract explicit: accepted inputs and outputs, contractual errors, ordering and async timing, serialized shape, side effects, and compatibility with callers or stored data. Cover only relevant dimensions, with evidence rather than assumptions. If material uncertainty cannot be resolved safely, leave that transformation out and state what is missing.
 
 ## Establish Baseline Evidence
 
-1. Discover the repository-native focused test command and relevant broader checks.
-2. Run the narrowest existing tests before modification when safe.
-3. Record the exact command and observed result. Never treat a claim that tests pass as evidence.
-4. If tests do not cover a risky behavior, add a characterization test only when code changes are authorized.
-5. Make the characterization test assert current observable behavior, including unintuitive compatibility behavior; do not encode a preferred redesign.
-6. If tests cannot run, use the strongest available static or runtime evidence and describe the limitation before changing code.
+Run repository-native focused tests before editing when available and safe; record the command and observed result. For a risky transformation with coverage gaps, add characterization tests of current behavior, including unintuitive compatibility behavior. Do not rewrite expectations to encode a preferred redesign.
 
-A test failure unrelated to the target is not a valid baseline. Isolate it or stop and report it.
+Known unrelated baseline failures do not automatically block a bounded refactor. Establish that they predate the change and do not undermine the target's equivalence evidence; proceed when focused tests or other evidence support the boundary. Report those failures separately and leave their code untouched.
+
+Distinguish target failures, new failures, and uncertain failures from confirmed unrelated ones. Investigate them before relying on the affected checks; do not label a failure unrelated merely to proceed. If tests cannot run, use the strongest available static or runtime evidence, state its limits, and defer transformations whose equivalence remains uncertain.
 
 ## Find Complexity Worth Removing
 
-Target concrete sources of cognitive load:
-
-- deeply nested control flow that guard clauses can flatten;
-- duplicated logic that one canonical implementation can own;
-- pass-through wrappers that add no policy, invariant, translation, or lifecycle;
-- premature abstractions with no present variation;
-- repeated conditionals that obscure a stable concept;
-- misleading or overly generic names;
-- oversized functions with distinct responsibilities;
-- indirection that makes ownership or data flow harder to trace;
-- obsolete compatibility layers proven to have no remaining callers or data;
-- dead branches, imports, and comments proven to be obsolete.
-
-Prefer:
-
-- early returns that make exceptional paths explicit;
-- named predicates and domain terms over clever expressions;
-- direct types and explicit data flow;
-- existing canonical helpers over near-duplicates;
-- small units whose names clarify responsibility;
-- deletion of obsolete abstractions rather than relocating them.
+Prefer clear control flow, domain names, direct data flow, and existing canonical helpers. Useful targets include nesting, duplication, pass-through wrappers, premature abstractions, misleading names, and indirection that obscures ownership. Remove dead code or compatibility layers only with evidence that no supported callers or stored data still need them.
 
 Use judgment. Do not replace one readable loop with a dense chain merely to reduce lines. Do not split a cohesive function into many fragments that require more navigation. Do not remove an abstraction that owns a real boundary, invariant, test seam, or compatibility contract.
 
 ## Simplify Incrementally
 
-For each meaningful transformation:
+Make coherent, narrow changes and remove artifacts they render obsolete within the same boundary. Verify meaningful transformations with focused tests or equivalent evidence; trivial related edits can be checked together. Inspect the diff for behavior drift, unrelated churn, and complexity merely moved elsewhere.
 
-1. State the complexity being removed and the behavior that must remain.
-2. Make one coherent, narrow change.
-3. Remove now-obsolete wrappers, branches, types, imports, and comments within that same boundary.
-4. Run the focused tests or equivalent evidence.
-5. Inspect the diff for behavior drift and unrelated churn.
-6. Continue only when the transformation is demonstrably safe.
+If a test must change because a public result, error, order, timing, serialized shape, or side effect differs, the change is not behavior-preserving. Keep it out of the refactor and explain the separate behavior change; use existing authorization for any separately requested work.
 
-Keep refactoring separate from feature and bug-fix behavior. If the proposed simplification requires changing tests because the public result, error, order, timing, serialization, or side effect is different, it is a redesign. Stop and request explicit approval for that different task.
-
-For a broad mechanical change, prefer a repository-native codemod or syntax-aware transform and review its output. Do not introduce tooling or install dependencies without authorization.
+For broad mechanical changes, prefer an available repository-native codemod or syntax-aware transform and review its output. Add tooling or dependencies only within the authorized task.
 
 ## Verify Equivalence
 
-After the final transformation:
+Confirm focused checks cover the final diff, then run relevant broader tests, type checks, lint, or builds in proportion to risk. Compare the affected behavior before and after, including any compatibility or timing constraints. Undo only your own transformations that are harder to understand or cannot be shown equivalent; preserve others' work.
 
-1. Rerun focused tests.
-2. Run the relevant broader suite, type checker, linter, or build in proportion to risk.
-3. Compare before and after against the behavior inventory.
-4. Inspect the final diff for:
-   - new or weakened errors;
-   - changed ordering or async behavior;
-   - changed serialized shape;
-   - removed side effects;
-   - compatibility regressions;
-   - moved rather than removed complexity;
-   - unrelated formatting or cleanup.
-5. Revert a transformation that is harder to understand or cannot be shown equivalent.
-
-Passing tests are necessary evidence when available, but they are not proof of equivalence if the behavior inventory is broader than the coverage.
+Passing tests support equivalence but do not prove behavior outside their coverage. Do not repeat unchanged passing checks without a concrete reason.
 
 ## Report the Result
 
-Lead with the outcome, then include:
-
-- the narrow boundary simplified;
-- what concepts, branches, duplication, or indirection were removed;
-- why each removal was safe;
-- any characterization coverage added;
-- exact baseline and final verification commands with observed results;
-- behaviors checked outside automated coverage;
-- checks not run and residual uncertainty.
-
-Do not claim the code is simpler solely because it has fewer lines. Explain how the new structure reduces the concepts or control paths a reader must track.
+Briefly explain the boundary simplified, the cognitive load removed, and the evidence that behavior is preserved. Include characterization coverage when added, actual verification commands and results, unrelated baseline failures, and remaining uncertainty or unrun checks. Never claim an unrun check passed. Keep the report proportional to the change; fewer lines alone do not demonstrate simplification.

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "engineering",
-  "version": "0.6.1",
-  "description": "Research, design, build, verify and deliver software and product videos, then clean up session resources.",
+  "version": "0.7.0",
+  "description": "Deliver features through review and merge, build interfaces and videos, research designs, and maintain code and documentation.",
   "author": {
     "name": "AI Alchemy Labs"
   },
@@ -10,13 +10,10 @@
   "repository": "https://github.com/aialchemylabs/agents-skills",
   "keywords": [
     "engineering",
-    "frontend",
-    "testing",
-    "api-design",
+    "feature-delivery",
     "code-review",
-    "security",
+    "frontend",
     "performance",
-    "git",
     "documentation",
     "design-research",
     "video-production",

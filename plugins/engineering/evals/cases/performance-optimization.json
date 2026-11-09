@@ -25,12 +25,12 @@
     ],
     "negative": [
       {
-        "prompt": "Design the public interface for the billing module.",
-        "owner": "api-and-interface-design"
+        "prompt": "Use a council to compare public interface designs for the billing module.",
+        "owner": "llm-council"
       },
       {
         "prompt": "Perform a general security audit of our authentication code.",
-        "owner": "security-and-hardening"
+        "owner": "code-review-and-quality"
       },
       {
         "prompt": "Improve the form's visual hierarchy and keyboard accessibility; no performance problem has been reported.",

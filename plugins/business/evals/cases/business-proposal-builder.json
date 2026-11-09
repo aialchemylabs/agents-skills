@@ -34,7 +34,7 @@
       },
       {
         "prompt": "Estimate TAM, SAM, and SOM for this new market using current sources.",
-        "owner": "market-sizing-workflow"
+        "outside_catalog": "market-sizing-workflow"
       },
       {
         "prompt": "Build our monthly management accounts, cash forecast, and KPI controls.",
@@ -42,7 +42,7 @@
       },
       {
         "prompt": "Certify that these proposed contract clauses comply with procurement and privacy law.",
-        "owner": "qualified-legal-and-privacy-review"
+        "outside_catalog": "qualified-legal-and-privacy-review"
       }
     ]
   },

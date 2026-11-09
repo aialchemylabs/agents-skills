@@ -10,7 +10,7 @@
     "negative": [
       {
         "prompt": "Record yourself reproducing the UI animation issue.",
-        "owner": "browser-testing-with-devtools"
+        "owner": "frontend-ui-engineering"
       }
     ]
   },

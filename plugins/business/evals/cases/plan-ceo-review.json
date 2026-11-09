@@ -21,20 +21,20 @@
     ],
     "negative": [
       {
-        "prompt": "Review this implementation plan for schema migration, rollback, and test gaps.",
-        "owner": "plan-eng-review"
+        "prompt": "Use a council to review this implementation plan for schema migration, rollback, and test gaps.",
+        "owner": "llm-council"
       },
       {
-        "prompt": "Critique the responsive states and accessibility of this dashboard plan.",
-        "owner": "plan-design-review"
+        "prompt": "Use a council to critique the responsive states and accessibility of this dashboard plan.",
+        "owner": "llm-council"
       },
       {
         "prompt": "Calculate TAM, SAM, and SOM for this market using current sources.",
-        "owner": "market-sizing-workflow"
+        "outside_catalog": "market-sizing-workflow"
       },
       {
         "prompt": "Prepare this month's KPI scorecard against target.",
-        "owner": "kpi-reporting-workflow"
+        "outside_catalog": "kpi-reporting-workflow"
       },
       {
         "prompt": "Audit our finance pack, reconcile burn and runway, and design controls over payments and board metrics.",

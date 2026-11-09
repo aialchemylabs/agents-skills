@@ -10,7 +10,7 @@
     "negative": [
       {
         "prompt": "Fix this broken dropdown and verify the browser behavior.",
-        "owner": "browser-testing-with-devtools"
+        "owner": "frontend-ui-engineering"
       }
     ]
   },

@@ -1,0 +1,331 @@
+{
+  "fixture_version": 1,
+  "name": "non-code-decision",
+  "description": "Offline museum planning decision with qualitative review and no chairman.",
+  "manifest": {
+    "schema_version": 1,
+    "request_id": "fixture-museum-decision",
+    "mode": "decision",
+    "question": "Should a fictional museum extend evening hours or add weekend workshops?",
+    "decision_criteria": [
+      "visitor access",
+      "staff capacity",
+      "operating cost"
+    ],
+    "context": {
+      "evidence": [
+        {
+          "id": "E1",
+          "source": "fixture/staffing-notes",
+          "content": "Only one additional staffed session per week is feasible."
+        },
+        {
+          "id": "E2",
+          "source": "fixture/visitor-notes",
+          "content": "Visitor demand by time of day has not been measured."
+        }
+      ]
+    },
+    "roster": {
+      "members": [
+        {
+          "member_id": "architect",
+          "model": "fixture-model-a",
+          "family": "family-a",
+          "angle": "benefits and supporting evidence"
+        },
+        {
+          "member_id": "implementer",
+          "model": "fixture-model-b",
+          "family": "family-b",
+          "angle": "feasibility and capacity"
+        },
+        {
+          "member_id": "contrarian",
+          "model": "fixture-model-c",
+          "family": "family-c",
+          "angle": "risks, unknowns, and alternatives"
+        }
+      ]
+    },
+    "approval": {
+      "inference_approved": false
+    }
+  },
+  "gateway": {
+    "models": [
+      "fixture-model-a",
+      "fixture-model-b",
+      "fixture-model-c"
+    ],
+    "events": [
+      {
+        "stage": "independent",
+        "model": "fixture-model-a",
+        "status": "success",
+        "content": {
+          "recommendation": "Measure demand with a bounded pilot before choosing a permanent schedule.",
+          "rationale": [
+            "One staffed session permits a pilot, but demand is unknown."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E1",
+              "claim": "One additional session can be staffed."
+            },
+            {
+              "evidence_id": "E2",
+              "claim": "Demand by time of day is not measured."
+            }
+          ],
+          "assumptions": [],
+          "risks": [
+            {
+              "risk": "Staffing an unpopular session",
+              "severity": "medium",
+              "mitigation": "Collect pilot reservations."
+            }
+          ],
+          "unknowns": [
+            "Demand for each format"
+          ],
+          "confidence": 0.65
+        },
+        "usage": {
+          "prompt_tokens": 210,
+          "completion_tokens": 130,
+          "total_tokens": 340
+        },
+        "latency_ms": 31
+      },
+      {
+        "stage": "independent",
+        "model": "fixture-model-b",
+        "status": "success",
+        "content": {
+          "recommendation": "Measure demand with a bounded pilot before choosing a permanent schedule.",
+          "rationale": [
+            "One staffed session permits a pilot, but demand is unknown."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E1",
+              "claim": "One additional session can be staffed."
+            },
+            {
+              "evidence_id": "E2",
+              "claim": "Demand by time of day is not measured."
+            }
+          ],
+          "assumptions": [],
+          "risks": [
+            {
+              "risk": "Staffing an unpopular session",
+              "severity": "medium",
+              "mitigation": "Collect pilot reservations."
+            }
+          ],
+          "unknowns": [
+            "Demand for each format"
+          ],
+          "confidence": 0.65
+        },
+        "usage": {
+          "prompt_tokens": 212,
+          "completion_tokens": 125,
+          "total_tokens": 337
+        },
+        "latency_ms": 27
+      },
+      {
+        "stage": "independent",
+        "model": "fixture-model-c",
+        "status": "success",
+        "content": {
+          "recommendation": "Measure demand with a bounded pilot before choosing a permanent schedule.",
+          "rationale": [
+            "One staffed session permits a pilot, but demand is unknown."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E1",
+              "claim": "One additional session can be staffed."
+            },
+            {
+              "evidence_id": "E2",
+              "claim": "Demand by time of day is not measured."
+            }
+          ],
+          "assumptions": [],
+          "risks": [
+            {
+              "risk": "Staffing an unpopular session",
+              "severity": "medium",
+              "mitigation": "Collect pilot reservations."
+            }
+          ],
+          "unknowns": [
+            "Demand for each format"
+          ],
+          "confidence": 0.65
+        },
+        "usage": {
+          "prompt_tokens": 205,
+          "completion_tokens": 121,
+          "total_tokens": 326
+        },
+        "latency_ms": 24
+      },
+      {
+        "stage": "critique",
+        "model": "fixture-model-a",
+        "status": "success",
+        "content": {
+          "evaluations": [
+            {
+              "candidate_label": "Candidate A",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            },
+            {
+              "candidate_label": "Candidate B",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            },
+            {
+              "candidate_label": "Candidate C",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            }
+          ],
+          "revised_position": "Accept a bounded pilot (E1); reject immediate rollout without demand evidence (E2).",
+          "confidence": 0.65
+        },
+        "usage": {
+          "prompt_tokens": 410,
+          "completion_tokens": 190,
+          "total_tokens": 600
+        },
+        "latency_ms": 28
+      },
+      {
+        "stage": "critique",
+        "model": "fixture-model-b",
+        "status": "success",
+        "content_from_event": 3,
+        "usage": {
+          "prompt_tokens": 408,
+          "completion_tokens": 188,
+          "total_tokens": 596
+        },
+        "latency_ms": 25,
+        "content": {
+          "evaluations": [
+            {
+              "candidate_label": "Candidate A",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            },
+            {
+              "candidate_label": "Candidate B",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            },
+            {
+              "candidate_label": "Candidate C",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            }
+          ],
+          "revised_position": "Accept a bounded pilot (E1); reject immediate rollout without demand evidence (E2).",
+          "confidence": 0.65
+        }
+      },
+      {
+        "stage": "critique",
+        "model": "fixture-model-c",
+        "status": "success",
+        "content_from_event": 3,
+        "usage": {
+          "prompt_tokens": 405,
+          "completion_tokens": 187,
+          "total_tokens": 592
+        },
+        "latency_ms": 22,
+        "content": {
+          "evaluations": [
+            {
+              "candidate_label": "Candidate A",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            },
+            {
+              "candidate_label": "Candidate B",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            },
+            {
+              "candidate_label": "Candidate C",
+              "strengths": [
+                "Respects E1 staffing capacity."
+              ],
+              "weaknesses": [
+                "Pilot attendance alone may not predict a permanent schedule."
+              ],
+              "unsupported_claims": []
+            }
+          ],
+          "revised_position": "Accept a bounded pilot (E1); reject immediate rollout without demand evidence (E2).",
+          "confidence": 0.65
+        }
+      }
+    ]
+  },
+  "expected": {
+    "status": "complete",
+    "base_inference_requests": 6,
+    "recommendation_contains": "bounded pilot",
+    "chairman_status": "skipped",
+    "round_number": 1
+  }
+}

@@ -52,6 +52,7 @@ def _summary(result: Mapping[str, Any]) -> dict[str, Any]:
         "run_id": result["run_id"],
         "status": result["status"],
         "mode": result["mode"],
+        "execution_report": copy.deepcopy(result.get("execution_report")),
         "diversity": copy.deepcopy(result["diversity"]),
         "stages": copy.deepcopy(result["stages"]),
         "ranking": copy.deepcopy(result["ranking"]),

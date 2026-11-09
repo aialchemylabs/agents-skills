@@ -35,8 +35,10 @@ def render_result(result: Mapping[str, Any]) -> str:
         unknowns = chairman_response.get("material_unknowns", [])
         confidence = chairman_response.get("confidence")
     else:
-        if chairman.get("status") == "skipped":
+        if chairman.get("status") == "skipped" and obj["mode"] == "benchmark":
             recommendation = "Benchmark-only run completed; no paid chairman or quality judge was requested."
+        elif chairman.get("status") == "skipped":
+            recommendation = "Council evidence is ready for host reconciliation; no separate synthesis model was requested."
         else:
             recommendation = "Chairman unavailable; use the structured council dossier for a labeled host synthesis."
         why = []
@@ -72,10 +74,39 @@ def render_result(result: Mapping[str, Any]) -> str:
     if not risks and not next_steps:
         lines.append("- No validated chairman risk or next step was available.")
 
+    report = obj.get("execution_report", {})
+    if report:
+        lines.extend(["", "## Execution", "",
+                      f"Backend: {report['backend']}; round {report['round_number']} of at most {report['maximum_rounds']}.",
+                      report["stop_reason"]])
+        for member in report["roster"]:
+            lines.append(f"- {_escape(member['member_id'])}: {_escape(member['model'])} ({_escape(member['family'])}); {_escape(member['angle'])}.")
+
+    lines.extend(["", "## Findings and evidence", ""])
+    for candidate in obj["candidates"]:
+        response = candidate["response"]
+        lines.append(f"- {candidate['candidate_label']}: {response['recommendation']}")
+        for evidence in response["evidence"]:
+            lines.append(f"  - {evidence['evidence_id']}: {evidence['claim']}")
+        for risk in response["risks"]:
+            lines.append(f"  - {risk['severity']}: {risk['risk']} Mitigation: {risk['mitigation']}")
+        unknowns.extend(response["unknowns"])
+    lines.extend(["", "## Feedback disposition", ""])
+    revision = obj.get("revision")
+    if revision:
+        for item in revision["response"]["accepted_feedback"]:
+            lines.append(f"- Accepted: {item['feedback']} Reason/response: {item['response']}")
+        for item in revision["response"]["rejected_feedback"]:
+            lines.append(f"- Rejected: {item['feedback']} Reason: {item['reason']}")
+    else:
+        lines.append("- Host must record accepted/rejected material feedback with evidence-based reasons; no proposer reply was requested.")
+    for critique in obj["critiques"]:
+        lines.append(f"- Reviewer position: {critique['response']['revised_position']}")
+
     lines.extend(
         [
             "",
-            "## Council quality and benchmark",
+            "## Benchmark" if obj["mode"] == "benchmark" else "## Call accounting",
             "",
             "| Member | Family | Stage | Status | Latency | Tokens | Cost | Peer score |",
             "|---|---|---|---|---:|---:|---:|---:|",
@@ -121,6 +152,8 @@ def render_result(result: Mapping[str, Any]) -> str:
     limitations: list[str] = []
     if obj["status"] != "complete":
         limitations.append(f"Run status is {obj['status']}.")
+    if not chairman_response and obj["mode"] != "benchmark":
+        limitations.append("This is a review dossier, not a reconciled verdict. Host reconciliation must preserve dissent and disclose final verification evidence.")
     if obj["diversity"].get("status") != "verified":
         limitations.append(
             f"Council diversity status: {obj['diversity'].get('status', 'unverified')}."

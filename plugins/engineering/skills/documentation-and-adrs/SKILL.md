@@ -21,6 +21,19 @@ Classify the requested outcome before acting:
 
 Identify the intended audience, artifact, source of truth, desired status, and ownership. Preserve unrelated documentation and code changes. Do not infer permission to change code, public interfaces, release metadata, or remote state from permission to document them.
 
+Carry forward existing user authorization; ask only when a material scope or evidence gap cannot be resolved from available context.
+
+## Choose the form for the reader's need
+
+Use the [Diátaxis](https://diataxis.fr/) distinction to focus the requested content:
+
+- **Tutorial — learning:** guide a learner through a practical exercise with a clear outcome.
+- **How-to — task:** give a competent reader the steps needed to accomplish a specific goal.
+- **Reference — lookup:** organize precise facts, contracts, options, and defaults for quick retrieval.
+- **Explanation — understanding:** develop context, rationale, relationships, and tradeoffs.
+
+Choose the form that serves the immediate need while honoring the requested artifact and local conventions. Do not create all four forms or reorganize the documentation tree merely to fit this model. Link to existing complementary material when useful.
+
 ## Discover local conventions first
 
 Before selecting a location, filename, template, or terminology, inspect the available repository context:
@@ -111,7 +124,7 @@ Keep prerequisites, paths, environment names, commands, defaults, expected resul
 
 Check package manifests, lockfiles, runtime-version files, task definitions, and configuration before naming a package manager, runtime version, script, or startup command.
 
-Do not claim that a command is safe or successful without checking its effects and observed result. Do not install dependencies or call live services merely to validate prose unless separately authorized.
+Do not claim that a command is safe or successful without checking its effects and observed result. Use dependency installation or live-service checks only when covered by existing authorization; otherwise use bounded local checks and report the verification limits.
 
 ### Diagrams
 

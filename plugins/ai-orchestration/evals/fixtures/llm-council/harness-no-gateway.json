@@ -1,0 +1,31 @@
+{
+  "fixture_version": 1,
+  "name": "harness-no-gateway",
+  "description": "Fictional host capability scenario, not an executable tool implementation.",
+  "gateway_configured": false,
+  "native_capability": {
+    "tool": "spawn_agent",
+    "offered_models": [
+      "fixture-model-a",
+      "fixture-model-b"
+    ],
+    "provider": "fixture-provider",
+    "custom_settings_required": false,
+    "completion": "Use the host exposed completion mechanism and actual returned responses."
+  },
+  "authority": "interactive_pending_roster_approval",
+  "evidence": [
+    {
+      "id": "E1",
+      "source": "fixture/program-notes",
+      "content": "Only one additional session can be staffed; visitor demand is unknown."
+    }
+  ],
+  "expected": {
+    "backend": "native harness",
+    "minimum_distinct_models": 2,
+    "launch_before_approval": false,
+    "requires_gateway": false,
+    "maximum_full_rounds": 3
+  }
+}

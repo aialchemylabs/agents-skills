@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Production"
+  short_description: "Plan, record and render grounded product videos"
+  default_prompt: "Use $video-production to plan, record or render the requested video and verify the delivered artifacts."

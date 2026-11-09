@@ -1,9 +1,0 @@
-{
-  "name": "invoice-tdd-fixture",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "test": "node --test",
-    "test:invoice": "node --test test/invoice.test.js"
-  }
-}

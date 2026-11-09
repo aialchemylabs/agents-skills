@@ -168,7 +168,11 @@ def _planned_stages(manifest: Mapping[str, Any]) -> dict[str, bool]:
     revision = addy_setting is True or (
         addy_setting == "auto" and (mode == "code-review" or has_proposer)
     )
-    chairman = not (mode == "benchmark" and not critique)
+    if mode == "benchmark" and not critique:
+        revision = False
+    chairman = bool(manifest["roster"].get("chairman")) and not (
+        mode == "benchmark" and not critique
+    )
     return {
         "independent": True,
         "cross_critique": critique,
@@ -287,19 +291,24 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
         if role not in {"member", "proposer", "reviewer"}:
             raise _error(f"{path}.role", "must be member, proposer, or reviewer")
         member["role"] = role
-        if model in models and not obj.get("policy", {}).get("allow_perspective_only_fallback", False):
-            raise _error(f"{path}.model", "duplicate routes require perspective-only fallback permission")
+        if model in models:
+            raise _error(f"{path}.model", "must identify a distinct model; repeated roles are not a multi-model council")
         models.add(model)
     if sum(member.get("role") == "proposer" for member in members) > 1:
         raise _error("$.roster.members", "at most one member may be the proposer")
-    chairman = _object(roster.get("chairman"), "$.roster.chairman")
-    _allowed(chairman, {"model", "family"}, "$.roster.chairman")
-    _string(chairman.get("model"), "$.roster.chairman.model")
-    chairman["family"] = _string(
-        chairman.get("family", "unverified"), "$.roster.chairman.family"
-    ).lower()
+    roster.setdefault("chairman", None)
+    chairman = roster["chairman"]
+    if chairman is not None:
+        chairman = _object(chairman, "$.roster.chairman")
+        _allowed(chairman, {"model", "family"}, "$.roster.chairman")
+        _string(chairman.get("model"), "$.roster.chairman.model")
+        chairman["family"] = _string(
+            chairman.get("family", "unverified"), "$.roster.chairman.family"
+        ).lower()
     fallback = roster.get("fallback_chairman")
     if fallback is not None:
+        if chairman is None:
+            raise _error("$.roster.fallback_chairman", "requires a primary chairman")
         fallback = _object(fallback, "$.roster.fallback_chairman")
         _allowed(fallback, {"model", "family"}, "$.roster.fallback_chairman")
         _string(fallback.get("model"), "$.roster.fallback_chairman.model")
@@ -318,6 +327,7 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
     _allowed(
         execution,
         {
+            "round_number",
             "max_concurrency",
             "request_timeout_seconds",
             "connect_timeout_seconds",
@@ -327,6 +337,7 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
         },
         "$.execution",
     )
+    _integer(execution["round_number"], "$.execution.round_number", minimum=1, maximum=3)
     _integer(
         execution["max_concurrency"],
         "$.execution.max_concurrency",
@@ -409,6 +420,8 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
             "require_distinct_families",
             "allow_perspective_only_fallback",
             "run_cross_critique",
+            "score_candidates",
+            "anonymize_candidates",
             "run_addy_revision",
             "expose_model_identities_after_synthesis",
             "persist",
@@ -427,6 +440,8 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
         "require_distinct_families",
         "allow_perspective_only_fallback",
         "run_cross_critique",
+        "score_candidates",
+        "anonymize_candidates",
         "expose_model_identities_after_synthesis",
     ):
         if not isinstance(policy[key], bool):
@@ -465,8 +480,8 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
             raise _error("$.roster.members", "verified family metadata is required")
         if len(set(families)) < 2:
             raise _error("$.roster.members", "at least two distinct families are required")
-    elif len(set(families)) < 2 and not policy["allow_perspective_only_fallback"]:
-        raise _error("$.policy", "same-family roster requires explicit perspective-only permission")
+    # Distinct accessible models may share a provider. Label diversity honestly;
+    # provider diversity is a preference unless explicitly required by the caller.
 
     data_egress = _object(obj.get("data_egress", {}), "$.data_egress")
     _allowed(
@@ -521,7 +536,10 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
         raise _error("$.budget.max_output_tokens", "is below planned requested output tokens")
 
     approval = _object(obj.get("approval", {}), "$.approval")
-    _allowed(approval, {"inference_approved", "plan_fingerprint"}, "$.approval")
+    _allowed(approval, {"inference_approved", "plan_fingerprint", "authority"}, "$.approval")
+    approval.setdefault("authority", "interactive")
+    if approval["authority"] not in {"interactive", "autonomous"}:
+        raise _error("$.approval.authority", "must be interactive or autonomous")
     approval.setdefault("inference_approved", False)
     approval.setdefault("plan_fingerprint", None)
     if not isinstance(approval["inference_approved"], bool):
@@ -531,9 +549,9 @@ def validate_manifest(manifest: Any, command: str = "validate") -> dict[str, Any
         if not re.fullmatch(r"sha256:[0-9a-f]{64}", fingerprint):
             raise _error("$.approval.plan_fingerprint", "must be a sha256 fingerprint")
     if command == "run":
-        if not approval["inference_approved"]:
+        if not approval["inference_approved"] and approval["authority"] != "autonomous":
             raise _error("$.approval.inference_approved", "must be true for run")
-        if not approval["plan_fingerprint"]:
+        if not approval["plan_fingerprint"] and approval["authority"] != "autonomous":
             raise _error("$.approval.plan_fingerprint", "is required for run")
     obj["approval"] = approval
     return obj
@@ -602,19 +620,20 @@ def validate_critique(value: Any, labels: Iterable[str], *, partial: bool = Fals
         seen.add(label)
         for field in ("strengths", "weaknesses", "unsupported_claims"):
             _string_list(evaluation.get(field), f"{path}.{field}")
-        scores = _object(evaluation.get("scores"), f"{path}.scores")
-        _allowed(scores, set(CRITIQUE_CRITERIA), f"{path}.scores")
-        for criterion in CRITIQUE_CRITERIA:
-            _integer(scores.get(criterion), f"{path}.scores.{criterion}", minimum=1, maximum=5)
+        if "scores" in evaluation:
+            scores = _object(evaluation["scores"], f"{path}.scores")
+            _allowed(scores, set(CRITIQUE_CRITERIA), f"{path}.scores")
+            for criterion in CRITIQUE_CRITERIA:
+                _integer(scores.get(criterion), f"{path}.scores.{criterion}", minimum=1, maximum=5)
     is_partial = bool(obj.get("partial", partial))
     if not is_partial and seen != expected_set:
         raise _error("critique.evaluations", "must evaluate every candidate")
-    ranking = _string_list(obj.get("ranking"), "critique.ranking")
+    ranking = _string_list(obj.get("ranking", []), "critique.ranking")
     if len(set(ranking)) != len(ranking):
         raise _error("critique.ranking", "contains duplicate labels")
     if not set(ranking).issubset(expected_set):
         raise _error("critique.ranking", "contains an unknown label")
-    if not is_partial and set(ranking) != expected_set:
+    if "ranking" in obj and not is_partial and set(ranking) != expected_set:
         raise _error("critique.ranking", "must rank every candidate")
     _string(obj.get("revised_position"), "critique.revised_position")
     _number(obj.get("confidence"), "critique.confidence", minimum=0, maximum=1)
@@ -721,7 +740,22 @@ def validate_result(value: Any) -> dict[str, Any]:
         "failures",
         "persistence",
     }
-    _allowed(obj, required | {"revision", "transitions", "identity_mapping"}, "$")
+    _allowed(obj, required | {"revision", "transitions", "identity_mapping", "execution_report"}, "$")
+    if "execution_report" in obj:
+        report = _object(obj["execution_report"], "$.execution_report")
+        _allowed(report, {"backend", "roster", "round_number", "maximum_rounds", "stop_reason", "plan_fingerprint"}, "$.execution_report")
+        if report.get("backend") != "litellm":
+            raise _error("$.execution_report.backend", "must be litellm for gateway results")
+        _integer(report.get("round_number"), "$.execution_report.round_number", minimum=1, maximum=3)
+        if report.get("maximum_rounds") != 3:
+            raise _error("$.execution_report.maximum_rounds", "must equal 3")
+        _string(report.get("stop_reason"), "$.execution_report.stop_reason")
+        _string(report.get("plan_fingerprint"), "$.execution_report.plan_fingerprint")
+        for index, member in enumerate(_array(report.get("roster"), "$.execution_report.roster")):
+            path = f"$.execution_report.roster[{index}]"
+            _allowed(_object(member, path), {"member_id", "model", "family", "angle", "role"}, path)
+            for field in ("member_id", "model", "family", "angle", "role"):
+                _string(member.get(field), f"{path}.{field}")
     missing = required - set(obj)
     if missing:
         raise _error("$", "missing field(s): " + ", ".join(sorted(missing)))

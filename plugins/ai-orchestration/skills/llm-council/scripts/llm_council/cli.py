@@ -29,7 +29,7 @@ def _parser() -> argparse.ArgumentParser:
         prog="council_runner.py",
         description="Validate, preflight, run, or render one LLM council request.",
     )
-    parser.add_argument("subcommand", choices=("validate", "preflight", "run", "render"))
+    parser.add_argument("subcommand", choices=("models", "validate", "preflight", "run", "render"))
     return parser
 
 
@@ -75,6 +75,16 @@ def main(
         if threading.current_thread() is threading.main_thread():
             previous_sigint = signal.signal(signal.SIGINT, on_sigint)
         args = _parser().parse_args(argv)
+        if args.subcommand == "models":
+            runtime = load_runtime_config(environment, require_key=True)
+            client = client_factory(base_url=runtime.base_url, api_key=runtime.api_key)
+            _write_json(output_stream, {
+                "schema_version": 1,
+                "backend": "litellm",
+                "accessible_models": client.list_models(),
+                "inference_requests": 0,
+            })
+            return 0
         payload = _read_json(input_stream)
         if args.subcommand == "render":
             output_stream.write(render_result(payload))
@@ -93,7 +103,10 @@ def main(
                     "stages": planned_stages(normalized),
                     "base_inference_requests": planned_base_requests(normalized),
                     "planned_output_tokens": planned_output_tokens(normalized),
-                    "approval_required_for_run": True,
+                    "approval_required_for_run": not (
+                        normalized["approval"]["inference_approved"]
+                        or normalized["approval"]["authority"] == "autonomous"
+                    ),
                 },
             )
             return 0

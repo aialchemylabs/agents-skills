@@ -86,7 +86,7 @@ Prioritize exploitable paths over theoretical hardening. A missing control is a 
 - Make money movement, entitlement changes, destructive actions, and external side effects idempotent or safely deduplicated.
 - Use atomic checks and updates for quotas, inventory, permissions, uniqueness, and one-time tokens.
 - Guard against replay, double submission, lost updates, and time-of-check/time-of-use races.
-- Require explicit confirmation or additional authorization for irreversible or unusually sensitive actions.
+- Check that irreversible or unusually sensitive actions stay within the caller's authorization and any required platform gates; do not demand repeated confirmation for already authorized work.
 - Design retries so an unknown outcome cannot silently repeat a completed side effect.
 - Keep audit records sufficient to attribute sensitive actions without recording secret material.
 
@@ -97,7 +97,7 @@ Prioritize exploitable paths over theoretical hardening. A missing control is a 
 - Keep secrets, unrelated tenant data, and unnecessary system instructions out of model context.
 - Validate model output before using it in commands, queries, HTML, file paths, network destinations, or other interpreters.
 - Bound tokens, requests, retries, recursion, fan-out, and tool loops.
-- Require confirmation for destructive or irreversible tool actions.
+- Enforce the caller's authorization and required platform gates for destructive or irreversible tool actions; existing authorization does not bypass those gates.
 - Partition retrieval and memory data by the correct identity and tenant.
 
 ## Dependencies and Build Supply Chain

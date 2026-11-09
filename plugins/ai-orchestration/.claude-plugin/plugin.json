@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "ai-orchestration",
-  "version": "0.2.2",
-  "description": "Coordinate multiple models through LiteLLM into evidence-backed, cross-critiqued decisions.",
+  "version": "0.3.0",
+  "description": "Use multiple models to investigate questions, compare proposals, and review work through harness delegates or LiteLLM.",
   "author": {
     "name": "AI Alchemy Labs"
   },
@@ -12,8 +12,8 @@
     "orchestration",
     "llm-council",
     "multi-model",
-    "cross-critique",
-    "benchmarking",
+    "delegation",
+    "review",
     "litellm"
   ],
   "skills": "./skills/"

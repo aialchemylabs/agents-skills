@@ -60,7 +60,8 @@ def worktrees(path):
 
 
 def register(
-    ledger, data, path, purpose="task checkout", evidence="caller ownership declaration"
+    ledger, data, path, purpose="task checkout", evidence="caller ownership declaration",
+    consumers=(), host_managed=False,
 ):
     if path.is_symlink():
         raise ValueError("worktree path cannot be a symlink")
@@ -82,6 +83,8 @@ def register(
             "creation_evidence": evidence,
             "path": str(path),
             "identity": identity(path),
+            "consumers": consumer_records(consumers),
+            "host_managed": host_managed,
             "common_git_dir": git(
                 path, "rev-parse", "--path-format=absolute", "--git-common-dir"
             ),
@@ -90,10 +93,61 @@ def register(
     save(ledger, data)
 
 
+def consumer_records(handles):
+    if any(not handle.strip() for handle in handles) or len(set(handles)) != len(handles):
+        raise ValueError("consumer handles must be nonempty and unique")
+    return [{"handle": handle} for handle in handles]
+
+
+def resource(data, path, allow_removed=False):
+    if path is None:
+        raise ValueError("an exact registered --path is required")
+    matches = [item for item in data["resources"] if item["path"] == str(path.resolve())]
+    if len(matches) != 1 or (matches[0].get("removed") and not allow_removed):
+        raise ValueError("path is not a live registered resource")
+    return matches[0]
+
+
+def update_consumers(ledger, data, path, handles, release_evidence=None):
+    """Record consumers before use; release only after caller-observed closure."""
+    additions = consumer_records(handles)
+    if not additions:
+        raise ValueError("at least one --consumer handle is required")
+    item = resource(data, path)
+    consumers = item.get("consumers", [])
+    existing = {entry["handle"]: entry for entry in consumers}
+    if release_evidence is not None:
+        if not release_evidence.strip() or any(
+            handle not in existing for handle in handles
+        ):
+            raise ValueError(
+                "release requires known consumers and nonempty closure evidence"
+            )
+        for handle in handles:
+            existing[handle]["release_evidence"] = release_evidence
+    else:
+        if any(handle in existing for handle in handles):
+            raise ValueError(
+                "consumer handle is already recorded; use a new handle for new use"
+            )
+        consumers.extend(additions)
+        item["consumers"] = consumers
+    save(ledger, data)
+    return item
+
+
 def reason(item, ledger, retain, target, inactive):
     path = Path(item["path"])
     if item.get("removed"):
         return "already removed"
+    if item.get("host_managed"):
+        return "host-managed checkout requires retirement through its owning host"
+    held = [
+        entry["handle"] for entry in item.get("consumers", [])
+        if not entry.get("release_evidence")
+    ]
+    if held:
+        return "consumers have not been confirmed closed: " + ", ".join(held)
     if not path.exists() or path.is_symlink():
         return "missing or symlink resource"
     if identity(path) != item["identity"]:
@@ -159,9 +213,14 @@ def reason(item, ledger, retain, target, inactive):
     return None
 
 
-def cleanup(ledger, data, retain, target, inactive, apply):
+def cleanup(ledger, data, retain, target, inactive, apply, only_path=None):
+    selected = (
+        resource(data, only_path, allow_removed=True) if only_path is not None else None
+    )
     report = []
     for item in data["resources"]:
+        if selected is not None and item is not selected:
+            continue
         if item.get("removed"):
             report.append(
                 {
@@ -197,13 +256,24 @@ def cleanup(ledger, data, retain, target, inactive, apply):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["temp", "register-worktree", "cleanup"])
+    parser.add_argument(
+        "command", choices=["temp", "register-worktree", "hold", "release", "cleanup"]
+    )
     parser.add_argument("--ledger", type=Path, required=True)
     parser.add_argument("--session", required=True)
     parser.add_argument("--path", type=Path)
     parser.add_argument("--purpose")
     parser.add_argument("--creation-evidence")
     parser.add_argument("--created-by-session", action="store_true")
+    parser.add_argument(
+        "--consumer", action="append", default=[],
+        help="exact owning-workflow consumer handle; repeat for shared use",
+    )
+    parser.add_argument("--release-evidence", help="observed owning-workflow closure result")
+    parser.add_argument(
+        "--host-managed", action="store_true",
+        help="checkout must be retired by its owning host, never this helper",
+    )
     parser.add_argument("--merged-into")
     parser.add_argument("--inactive-worktrees", action="store_true")
     parser.add_argument("--retain", type=Path, action="append", default=[])
@@ -212,9 +282,10 @@ def main():
     try:
         ledger = args.ledger.absolute()
         data = load(ledger, args.session)
-        if args.command != "cleanup" and not args.purpose:
+        if args.command in ("temp", "register-worktree") and not args.purpose:
             raise ValueError("resource creation/registration requires --purpose")
         if args.command == "temp":
+            consumers = consumer_records(args.consumer)
             path = Path(tempfile.mkdtemp(prefix="aialchemy-session-")).resolve()
             data["resources"].append(
                 {
@@ -223,9 +294,14 @@ def main():
                     "creation_evidence": "created by helper tempfile.mkdtemp in this session",
                     "path": str(path),
                     "identity": identity(path),
+                    "consumers": consumers,
                 }
             )
-            save(ledger, data)
+            try:
+                save(ledger, data)
+            except OSError:
+                path.rmdir()  # Creation is not complete until ownership is recorded.
+                raise
             result = {"created": str(path)}
         elif args.command == "register-worktree":
             if (
@@ -236,8 +312,21 @@ def main():
                 raise ValueError(
                     "registration needs --path, --created-by-session and --creation-evidence"
                 )
-            register(ledger, data, args.path, args.purpose, args.creation_evidence)
+            register(
+                ledger, data, args.path, args.purpose, args.creation_evidence,
+                args.consumer, args.host_managed,
+            )
             result = {"registered": str(args.path.resolve())}
+        elif args.command in ("hold", "release"):
+            if args.command == "release" and not args.release_evidence:
+                raise ValueError(
+                    "release requires --release-evidence from the owning workflow"
+                )
+            item = update_consumers(
+                ledger, data, args.path, args.consumer,
+                args.release_evidence if args.command == "release" else None,
+            )
+            result = {"path": item["path"], "consumers": item["consumers"]}
         else:
             if not ledger.exists():
                 raise ValueError(
@@ -250,6 +339,7 @@ def main():
                 args.merged_into,
                 args.inactive_worktrees,
                 args.apply,
+                args.path,
             )
         print(json.dumps(result, indent=2))
     except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as error:

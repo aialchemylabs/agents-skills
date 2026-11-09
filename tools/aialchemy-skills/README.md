@@ -123,7 +123,7 @@ allows `sync --skill NAME` or `--all` against the same catalog:
 
 ```bash
 aialchemy-skills list --allow-git-source
-aialchemy-skills sync --skill browser-testing-with-devtools --agents codex --allow-git-source --require-pinned --dry-run
+aialchemy-skills sync --skill frontend-ui-engineering --agents codex --allow-git-source --require-pinned --dry-run
 ```
 
 Plugin bundles require an exact `source.sha`, matching manifest name/version,

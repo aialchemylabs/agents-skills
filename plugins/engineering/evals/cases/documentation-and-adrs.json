@@ -22,11 +22,11 @@
     "negative": [
       {
         "prompt": "Find the root cause of the memory leak in the worker.",
-        "owner": "test-driven-development"
+        "owner": "performance-optimization"
       },
       {
         "prompt": "Harden the login endpoint against brute force attacks.",
-        "owner": "security-and-hardening"
+        "owner": "feature-delivery-full-stop"
       },
       {
         "prompt": "Simplify this nested validation function without changing behavior.",
@@ -77,6 +77,26 @@
         "Claims npm start works when the script is absent",
         "Runs an installer or starts a service solely to review the guide",
         "Presents proposed commands as verified without running them"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Recommend one documentation form for each reader need: (A) a newcomer wants to learn a fictional task-queue library by building a small example; (B) an experienced operator needs steps to pause and resume a worker; (C) an integrator needs to look up every retry option, its type, and default; (D) a maintainer wants to understand why retries use backoff and what tradeoffs it introduces. Give one sentence per need naming the form and explaining the fit. This is a recommendation in chat, not a request to write the documents or change files.",
+      "expected_output": "Four concise recommendations: tutorial for A, how-to for B, reference for C, and explanation for D, each justified by the reader's immediate need, without producing documents or files.",
+      "expectations": [
+        "Chooses a tutorial for A because the newcomer learns through a practical exercise",
+        "Chooses a how-to guide for B because a competent operator needs to complete a specific task",
+        "Chooses reference for C because the integrator needs precise option facts for lookup",
+        "Chooses explanation for D because the maintainer needs rationale and tradeoffs",
+        "Returns one sentence per need in chat without drafting the documents, creating files, or proposing a documentation-tree reorganization",
+        "Uses the supplied context without asking for approval or clarification that is unnecessary for the recommendation"
+      ],
+      "failure_conditions": [
+        "Recommends all four forms for each need instead of selecting the best fit",
+        "Treats the operator's task as a beginner learning exercise or substitutes procedural steps for the maintainer's rationale",
+        "Writes full artifacts or changes repository files despite the recommendation-only scope",
+        "Requires approval before giving the already-requested recommendation"
       ]
     }
   ]

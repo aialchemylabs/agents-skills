@@ -30,11 +30,11 @@
       },
       {
         "prompt": "Calculate TAM, SAM, and SOM for our startup idea.",
-        "owner": "market-sizing-workflow"
+        "outside_catalog": "market-sizing-workflow"
       },
       {
         "prompt": "Draft final binding cofounder, employment, and securities agreements and certify their legality.",
-        "owner": "qualified-legal-review"
+        "outside_catalog": "qualified-legal-review"
       },
       {
         "prompt": "Create our venture strategy, product roadmap, and go-to-market plan.",

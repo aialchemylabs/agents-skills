@@ -1,4 +1,0 @@
-interface:
-  display_name: "Browser Testing with DevTools"
-  short_description: "Verify browser behavior with live evidence"
-  default_prompt: "Use $browser-testing-with-devtools to reproduce this browser issue, inspect runtime evidence, and report the verified cause."

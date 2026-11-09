@@ -30,7 +30,7 @@
       },
       {
         "prompt": "Prepare the company-wide weekly KPI scorecard and charts.",
-        "owner": "data-analytics:kpi-reporting"
+        "outside_catalog": "data-analytics:kpi-reporting"
       },
       {
         "prompt": "Price this fixed-price customer bid and prepare the commercial negotiation position.",
@@ -38,11 +38,11 @@
       },
       {
         "prompt": "Determine the correct tax treatment and file our return.",
-        "owner": "qualified-tax-professional"
+        "outside_catalog": "qualified-tax-professional"
       },
       {
         "prompt": "Issue an audit opinion on these financial statements.",
-        "owner": "qualified-auditor"
+        "outside_catalog": "qualified-auditor"
       },
       {
         "prompt": "Forecast daily laboratory consumption or historical revenue from a numeric time series with rolling-origin comparisons, without accounting or driver-based cash planning.",

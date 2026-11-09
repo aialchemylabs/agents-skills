@@ -1,4 +1,4 @@
 interface:
   display_name: "Code Review and Quality"
-  short_description: "Review code for high-impact quality risks"
-  default_prompt: "Use $code-review-and-quality to review this change for correctness, architecture, security, performance, and test risk."
+  short_description: "Review code with evidence-backed council findings"
+  default_prompt: "Use $code-review-and-quality with llm-council to review this change against its requirements and quality risks; keep the review read-only."

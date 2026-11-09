@@ -1,4 +1,0 @@
-interface:
-  display_name: "API and Interface Design"
-  short_description: "Design stable, evolvable software contracts"
-  default_prompt: "Use $api-and-interface-design to design an explicit, compatible interface contract."

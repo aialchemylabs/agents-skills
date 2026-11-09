@@ -1,4 +1,4 @@
 interface:
   display_name: "Frontend UI Engineering"
-  short_description: "Build accessible, production-quality interfaces"
-  default_prompt: "Use $frontend-ui-engineering to build a responsive, accessible interface that follows this repository's design system."
+  short_description: "Implement and verify accessible frontend behavior"
+  default_prompt: "Use $frontend-ui-engineering to implement this interface in the repository's existing design system and verify the affected behavior."

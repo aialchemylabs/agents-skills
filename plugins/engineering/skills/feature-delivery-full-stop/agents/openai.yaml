@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feature Delivery Full Stop"
+  short_description: "Deliver features through evidence, PR checks and merge"
+  default_prompt: "Use $feature-delivery-full-stop to deliver this feature through verified acceptance, a PR with useful screenshots and video, watched checks, fixes and green merge."

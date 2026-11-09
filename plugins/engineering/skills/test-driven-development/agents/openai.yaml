@@ -1,4 +1,0 @@
-interface:
-  display_name: "Test-Driven Development"
-  short_description: "Build behavior through evidence-driven TDD"
-  default_prompt: "Use $test-driven-development to implement this behavior with a verified red-green-refactor cycle."

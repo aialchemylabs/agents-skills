@@ -3,7 +3,7 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "Make this page responsive and WCAG compliant.",
+        "prompt": "Make this page responsive and fix its accessibility problems in the existing stack.",
         "top_k": 1
       },
       {
@@ -11,12 +11,20 @@
         "top_k": 3
       },
       {
-        "prompt": "Refactor the dashboard into reusable components with sane state management.",
+        "prompt": "Refactor the dashboard into reusable components with clear state ownership.",
         "top_k": 3
       },
       {
-        "prompt": "Rework this profile page so it feels production-quality without abandoning our design system.",
-        "top_k": 3
+        "prompt": "Implement this selected profile-page design using our existing tokens and components.",
+        "top_k": 1
+      },
+      {
+        "prompt": "Fix the drawer that loses focus and snaps when toggled quickly, and verify it in the running app.",
+        "top_k": 1
+      },
+      {
+        "prompt": "Implement the settings form so failed saves preserve input and browser back restores the correct route state.",
+        "top_k": 1
       }
     ],
     "negative": [
@@ -25,16 +33,16 @@
         "owner": "performance-optimization"
       },
       {
-        "prompt": "Review this proposed checkout flow before engineering starts.",
-        "owner": "plan-design-review"
+        "prompt": "Research how existing products organize their checkout screens and capture relevant references; do not implement anything.",
+        "owner": "design-reference-research"
       },
       {
-        "prompt": "Use DevTools to diagnose why this already-built button ignores clicks.",
-        "owner": "browser-testing-with-devtools"
+        "prompt": "Explore three original visual directions for this dashboard before choosing one; do not build production components yet.",
+        "owner": "ui-design-exploration"
       },
       {
-        "prompt": "Tag and publish the release.",
-        "owner": "git-workflow-and-versioning"
+        "prompt": "Review this frontend pull request for defects and missing coverage. Keep the review read-only.",
+        "owner": "code-review-and-quality"
       }
     ]
   },
@@ -42,57 +50,101 @@
     {
       "id": 1,
       "kind": "execution",
-      "prompt": "Build a dropdown menu component for the existing design system. It contains user actions, must work on mobile, and should handle loading, no available actions, disabled actions, and an action failure. Use the repository's current frontend stack and prove the result works.",
-      "expected_output": "A design-system-aligned command menu with semantic controls, complete keyboard and focus behavior, responsive placement, realistic states, focused tests, and concrete runtime verification evidence.",
+      "prompt": "Build a command dropdown in the supplied dependency-free design-system fixture. It contains user actions and must handle loading, no available actions, disabled actions and an action failure. Reuse the existing stack and tokens, including light/dark behavior. Add a minimal demonstration if needed for runtime verification; use only existing tools and dependencies. Keep unrelated components unchanged. Prove the changed behavior with actual evidence and identify any checks that cannot run.",
+      "expected_output": "A scoped command menu with complete keyboard/focus behavior, responsive placement, meaningful recovery states, focused behavioral tests and real runtime evidence, with unavailable checks explicitly separated from verified outcomes.",
       "files": [
         "frontend-ui-engineering"
       ],
       "expectations": [
-        "The repository framework, component conventions, tokens, primitives, state patterns, tests, and runtime commands are inspected before implementation",
-        "A semantic button and an appropriate menu interaction pattern are used rather than a clickable generic element or mismatched select semantics",
-        "Keyboard navigation covers opening, moving among actions, activation, Escape dismissal, and focus restoration",
-        "Accessible names, roles, expanded and disabled states, focus visibility, and non-color state cues are implemented",
-        "Loading, empty, disabled, failure, and success behavior are meaningful and recoverable where applicable",
-        "Long labels, narrow mobile layout, tablet, desktop, and wide behavior are considered using project breakpoints or representative viewports",
-        "Existing design tokens, primitives, spacing, typography, icons, and interaction patterns are reused",
-        "Focused unit or component tests and live-browser checks are treated as complementary evidence",
-        "The final report names the commands, routes, viewports, states, and keyboard paths actually verified"
+        "Inspects the supplied DOM-component API, tokens and existing test command instead of assuming a framework or installed browser runner",
+        "Uses a semantic trigger with an accessible name and expanded state, plus coherent command-menu roles and relationships rather than clickable generic elements or form-selection semantics",
+        "Implements keyboard opening, arrow navigation, activation, Escape and focus restoration, with Tab exiting rather than trapping focus",
+        "Disabled items are exposed as disabled and cannot activate; loading, empty and failure states do not leave focus in removed content",
+        "Uses existing visual tokens and light/dark behavior, with long labels and narrow placement that keep actions reachable",
+        "Runs focused behavioral tests, distinguishing their assertions from rendering, accessibility-tree and keyboard evidence observed in a real browser",
+        "Reports actual commands and outcomes plus runtime routes or demo entry points, states, viewports and input paths exercised; if runtime access is unavailable, identifies those checks as unverified and does not claim a verified working UI"
       ],
       "failure_conditions": [
-        "Adds a UI, state, icon, browser, or accessibility dependency without proving the current stack is insufficient and obtaining authorization",
-        "Claims the dropdown rendered correctly, passed accessibility tooling, or worked in a browser without runtime evidence",
-        "Forces React, Tailwind, or a specific browser tool onto a repository that uses another stack",
-        "Introduces arbitrary gradients, rounded cards, spacing values, or placeholder copy instead of following the existing product design"
+        "Adds a framework, UI, state, icon, browser or accessibility dependency to the dependency-free fixture",
+        "Claims real rendering, usable keyboard focus, accessibility-tool results or WCAG conformance based only on source inspection, a screenshot or the fixture's fake DOM",
+        "Builds unrelated screens, replaces the design system or requires a new research/exploration/approval stage before the selected implementation",
+        "Delegates required verification to a removed testing or debugging skill or invents unavailable tooling results"
       ]
     },
     {
       "id": 2,
       "kind": "dialogue",
-      "prompt": "Fix a drawer that loses focus and snaps when toggled quickly. Respect reduced motion and the product ban on continuous repainting.",
-      "expected_output": "A scoped correction with appropriate observable evidence.",
+      "prompt": "Fix the existing drawer that loses focus and snaps when toggled quickly. The observed sequence is open, start close, reopen before exit completes; the old exit callback then hides the drawer. Keep the product's motion tokens, respect reduced motion and its ban on continuous repainting. Existing task authority covers this correction, not a redesign. Use available code/runtime evidence; if either is unavailable, identify what is needed rather than inventing a patch or successful checks.",
+      "expected_output": "A scoped lifecycle/focus correction when code is accessible, with evidence for interrupted and reduced-motion behavior; explicit limits when the implementation or runtime cannot be inspected.",
       "expectations": [
-        "Tests interrupted/reversed transitions and focus restoration",
-        "Respects reduced motion for the changed interaction",
-        "Uses bounded motion tied to real state"
+        "Inspects available transition lifecycle and focus behavior, addressing stale completion callbacks and rapid reversal without changing unrelated styling",
+        "Keeps Escape, modal focus containment, inertness and restoration correct independently of transition completion, including canceled or zero-duration transitions",
+        "Verifies or explicitly leaves unverified the same open-close-reopen flow under normal and reduced motion, rather than treating one stylesheet as runtime proof",
+        "Reports observed behavioral checks and any actual recordings or frame evidence separately from proposed verification; missing code/runtime is identified without fabricated results"
       ],
       "failure_conditions": [
-        "Adds a continuous shimmer",
-        "Treats one unrelated reduced-motion stylesheet as proof"
+        "Adds continuous shimmer or decorative repainting despite the product constraint",
+        "Treats an unrelated reduced-motion stylesheet or a static screenshot as proof of interruption and focus behavior",
+        "Waits for a transition-end event as the sole means of cleaning up focus or inertness",
+        "Requires fresh approval for the already-authorized correction or routes the fix to a missing debugging skill"
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "Implement the selected reference-informed layout. The reference gallery has no error or keyboard states; our product requires both.",
-      "expected_output": "Complete the scoped workflow with concrete evidence and honest limitations.",
+      "prompt": "Implement the selected reference-informed layout in the current product, not the unselected alternatives. The reference gallery lacks error and keyboard states; our product requires both. Keep our existing tokens and component APIs. Use the selected artifact's evidence IDs if supplied. We already chose the direction and authorized implementation. Report any missing design/code/runtime inputs honestly.",
+      "expected_output": "The selected direction mapped to real components and product-required states, with runtime comparisons where possible and explicit evidence limits, without restarting design discovery.",
       "expectations": [
-        "Maps selected design to existing tokens/components",
-        "Implements required missing states as product decisions",
-        "Verifies matching viewports and states"
+        "Maps only the selected direction to existing layout, tokens, navigation, components and APIs; explains consequential accessibility/platform/data adaptations",
+        "Treats missing keyboard and error behavior as explicit product decisions, not facts inferred from external screenshots",
+        "Checks matching viewports and meaningful states in the actual runtime when accessible, identifying unavailable checks without claiming they passed",
+        "Preserves source/asset provenance and distinguishes observed product evidence from simulated examples",
+        "Continues the authorized implementation without requiring a new reference-research, exploration or council stage; explicitly handles any needed but unavailable companion"
       ],
       "failure_conditions": [
-        "Claims gallery evidence proves keyboard behavior",
-        "Copies the external app exactly"
+        "Claims gallery screenshots prove keyboard operation, error recovery or backend behavior",
+        "Copies the external app's branding or implements an unselected alternative as a requirement",
+        "Claims pixel or interaction verification without matching runtime observations",
+        "Invents companion-skill execution or multi-model review results when those capabilities were unavailable"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "execution",
+      "prompt": "Make one small CSS correction in the supplied fixture: a very long unbroken shared-button label overflows a narrow container; keep it within the container without obscuring focus. Keep the button API, tokens, themes and other styling intact. The design is known; no research or new libraries are needed. No browser/runtime tools are available for this evaluation. Use existing checks, keep the change focused and state what remains unverified.",
+      "expected_output": "A minimal CSS correction and existing-check results with explicit rendering, zoom and keyboard verification limits; no mandatory design stages or unnecessary tests/dependencies.",
+      "files": [
+        "frontend-ui-engineering"
+      ],
+      "expectations": [
+        "Inspects the actual button CSS/API and makes a narrow wrapping/width correction without changing unrelated tokens, component structure or themes",
+        "Runs the relevant existing fixture check and reports its actual result without treating the fake DOM test as layout or focus proof",
+        "Explicitly marks real narrow-layout rendering, zoom/reflow and focus visibility as unverified because browser/runtime access is unavailable",
+        "Proceeds under existing authority without requiring research, design exploration, a new test dependency or broad workflow stages"
+      ],
+      "failure_conditions": [
+        "Claims a browser viewport, keyboard path, screenshot or accessibility audit was verified despite the explicit tooling limit",
+        "Adds libraries, rewrites the component or changes unrelated design tokens",
+        "Invents a test that only asserts the new CSS text as evidence of working layout"
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "Implement the profile form in our existing routed app. Failed saves must preserve input, errors must be connected to fields, and the route must support direct links and browser back/forward. A user may edit again while a previous save is pending, and that older response must not overwrite the newer values. Keep current routing, form and data libraries. Verify with real runtime evidence where available, and identify any missing code or tool access.",
+      "expected_output": "A scoped implementation using existing form and routing conventions, coherent pending/error/retry behavior, safe async ordering, meaningful focus and honest runtime evidence limits.",
+      "expectations": [
+        "Uses the repository's actual router, form and data/state ownership conventions rather than introducing a new stack or duplicating derived state",
+        "Preserves newer input and handles stale save responses, repeated activation, recoverable errors and retry coherently",
+        "Connects labels/help/errors to fields and handles failed-submission focus deliberately without stealing focus on each keystroke",
+        "Exercises direct navigation, back/forward and affected focus/page context in the runtime when available, distinguishing observations from plans or unavailable checks",
+        "Checks or explicitly leaves unverified long/localized content, supported language direction and zoom/reflow for the affected form; does not claim success from source inspection"
+      ],
+      "failure_conditions": [
+        "Resets entered values after a recoverable failure or lets an older response overwrite newer edits",
+        "Updates only the visible URL without preserving the application's navigation contract",
+        "Claims keyboard, form recovery or route-history evidence without actually observing those paths",
+        "Adds a new router, form or state library or redesigns unrelated routes"
       ]
     }
   ]

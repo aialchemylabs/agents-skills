@@ -26,6 +26,7 @@ HARD_CAPS: dict[str, int] = {
 
 DEFAULTS: dict[str, Any] = {
     "execution": {
+        "round_number": 1,
         "max_concurrency": 3,
         "request_timeout_seconds": 120,
         "connect_timeout_seconds": 10,
@@ -47,9 +48,11 @@ DEFAULTS: dict[str, Any] = {
     },
     "policy": {
         "minimum_successful_members": 2,
-        "require_distinct_families": True,
+        "require_distinct_families": False,
         "allow_perspective_only_fallback": False,
         "run_cross_critique": True,
+        "score_candidates": False,
+        "anonymize_candidates": False,
         "run_addy_revision": "auto",
         "expose_model_identities_after_synthesis": True,
         "persist": "none",

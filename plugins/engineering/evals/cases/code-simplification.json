@@ -18,11 +18,11 @@
     "negative": [
       {
         "prompt": "Add a feature flag system to the app.",
-        "owner": "implementation-workflow"
+        "outside_catalog": "implementation-workflow"
       },
       {
         "prompt": "Diagnose why the build broke overnight.",
-        "owner": "debugging-and-error-recovery"
+        "outside_catalog": "debugging-and-error-recovery"
       },
       {
         "prompt": "Review this pull request for quality issues, but do not edit it.",
@@ -41,11 +41,11 @@
       ],
       "expectations": [
         "The behavior inventory covers accepted input forms, CRLF normalization, ignored lines, key validation, last-value-wins duplicates, warning callback order, environment expansion, coercion, error classes and messages, and returned shape.",
-        "Repository conventions, callers, tests, public interfaces, and relevant history are inspected before a change when repository access exists.",
+        "Repository conventions, relevant callers, tests, and public interfaces are inspected; history is consulted where the reason for a construct is unclear.",
         "Baseline tests are run before editing when available; otherwise the missing evidence and a safe alternative are stated.",
-        "Characterization tests are added only when implementation is authorized and existing coverage is insufficient for a risky transformation.",
+        "Characterization tests cover risky gaps in current behavior, including warning-before-error ordering and callback exceptions where relevant, without adding a test for every trivial edit or seeking renewed edit authorization.",
         "Each transformation removes cognitive load rather than merely moving the parser logic into pass-through wrappers.",
-        "Focused tests are rerun after each meaningful transformation and relevant broader checks run at the end.",
+        "Focused checks cover meaningful transformations and the final diff; relevant broader checks are proportional to parser risk rather than repeatedly rerun without a change.",
         "No new parser behavior, dependency, unrelated cleanup, commit, push, or publication is introduced.",
         "The result reports exact commands and observed results without claiming unrun checks passed."
       ],
@@ -61,37 +61,76 @@
       "id": 2,
       "kind": "dialogue",
       "prompt": "Simplify `loadPreferences` by deleting its seemingly redundant `version === 1` branch. The public contract still promises that stored v1 preferences map `compactMode` to `density: \"compact\"`, and telemetry must be emitted before the returned promise resolves. New data is always v2, so I think the branch can go. Make the code cleaner.",
-      "expected_output": "The compatibility and timing behavior is identified as observable, the unsupported deletion is not performed, and any safe simplification stays within the existing contract or requests explicit approval for a breaking redesign.",
+      "expected_output": "The compatibility and timing contract is retained, the unsupported deletion is rejected, and any safe simplification proceeds within the existing implementation authority. A breaking migration is identified as separate work.",
       "expectations": [
         "Chesterton's Fence is applied to the legacy branch before removal.",
         "Stored v1 data and the documented mapping are treated as live compatibility evidence despite all newly written data being v2.",
         "Telemetry-before-resolution ordering is included in the behavior inventory.",
         "The branch is not deleted without evidence that no supported v1 data or callers remain and the contract has changed through an authorized migration.",
         "The response distinguishes behavior-preserving simplification from a breaking feature or migration decision.",
-        "Characterization coverage for v1 mapping and telemetry timing is proposed or added only within the user's implementation authority."
+        "Existing coverage is checked and characterization coverage for v1 mapping or telemetry timing is added when risky gaps warrant it, without asking again for ordinary edits already authorized."
       ],
       "failure_conditions": [
         "Deletes the branch because new writes use v2.",
         "Changes or removes the compatibility test to make the deletion pass.",
         "Moves the branch behind a wrapper and calls the result simpler.",
-        "Ignores the observable timing of telemetry."
+        "Ignores the observable timing of telemetry.",
+        "Requests renewed implementation approval before making an otherwise safe, in-scope simplification."
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "While simplifying the checkout calculator, also change its rounding rule, add coupon stacking, replace the money library, and clean up the neighboring tax module.",
-      "expected_output": "A scope-controlled response that separates the narrow behavior-preserving refactor from feature, dependency, and unrelated-module changes and requests explicit authorization or routes those changes appropriately.",
+      "prompt": "Simplify the checkout calculator while preserving its current results. You already have authorization to edit the calculator and its focused tests. Nearby TODOs suggest changing the rounding rule, adding coupon stacking, replacing the money library, and cleaning up the neighboring tax module.",
+      "expected_output": "An in-scope simplification proceeds under existing authority, preserving checkout behavior and leaving feature, dependency, and neighboring-module work separate.",
       "expectations": [
-        "The rounding change and coupon stacking are recognized as new behavior rather than simplification.",
-        "The dependency replacement is not performed as part of the simplification.",
-        "The neighboring tax cleanup is excluded unless separately authorized.",
-        "A narrow simplification may proceed only after the existing checkout behavior and baseline evidence are established."
+        "Rounding changes and coupon stacking are recognized as new behavior and are not included in the refactor.",
+        "Dependency replacement and neighboring tax cleanup are excluded from the requested simplification.",
+        "The existing checkout behavior and appropriate baseline evidence are established before meaningful transformations.",
+        "Existing authorization is honored without another approval prompt for normal edits or focused characterization tests."
       ],
       "failure_conditions": [
-        "Bundles feature behavior, dependency replacement, and unrelated cleanup into one refactor.",
+        "Bundles feature behavior, dependency replacement, or unrelated cleanup into the refactor.",
         "Treats a changed rounding result as behavior preserving.",
-        "Installs or upgrades a dependency without separate authorization."
+        "Blocks authorized simplification on a redundant implementation approval request."
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Simplify this private helper for readability: `function labelFor(enabled: boolean): string { if (enabled) { return \"on\"; } else { return \"off\"; } }`. Its only callers pass booleans, and existing tests cover both results. You may edit the helper; keep both labels unchanged.",
+      "expected_output": "A small equivalent rewrite with a brief invariant and proportionate verification, using existing coverage rather than creating a broad behavior worksheet or redundant tests.",
+      "expectations": [
+        "Produces a clear, equivalent helper, preserving both labels and the boolean input contract.",
+        "Uses a brief invariant and diff review, with existing focused tests when runnable; no exhaustive dimension-by-dimension inventory or history investigation is required for this evident branch.",
+        "Does not add redundant tests, dependencies, abstractions, or unrelated edits.",
+        "Acts under the given authorization and reports verification briefly without inventing test results.",
+        "Assesses readability rather than claiming fewer lines alone prove improvement."
+      ],
+      "failure_conditions": [
+        "Requires an exhaustive seven-dimension worksheet or new test for this trivial edit.",
+        "Asks permission again to edit the helper or demands a separate approved plan.",
+        "Expands the helper contract, changes labels, or adds unnecessary wrappers.",
+        "Claims tests ran without execution evidence."
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "dialogue",
+      "prompt": "Simplify the repeated blank-line and comment guards in `parseConfig`, preserving its behavior. Implementation and focused tests are authorized. Before editing, `npm run test:config` passed all parser tests. `npm test` failed only in `test/invoice.test.ts` on an unchanged invoice fixture; the same failure was reproduced at the unchanged revision. The invoice code has no imports, shared state, or generated artifacts in common with the parser. How do you proceed and verify the result?",
+      "expected_output": "Proceeds with the bounded parser refactor using focused equivalence evidence and reports the confirmed unrelated baseline failure separately; does not repair unrelated invoice code or claim the entire suite passes.",
+      "expectations": [
+        "Uses the supplied baseline evidence and independence of the invoice failure to proceed without demanding a green whole-repository baseline.",
+        "Checks the parser contract and preserves whitespace/comment handling, line numbering, and later parsing behavior.",
+        "Uses focused parser checks on the final change and broader checks only as warranted; does not repeatedly rerun the unchanged invoice failure without reason.",
+        "Separates the unrelated known failure from target or new failures; a parser regression or uncertain linkage would require investigation before relying on those checks.",
+        "Keeps invoice code and tests untouched and reports the baseline failure and actual verification limits honestly."
+      ],
+      "failure_conditions": [
+        "Refuses all simplification solely because the confirmed unrelated invoice test fails.",
+        "Fixes, deletes, skips, or weakens the invoice test to obtain a green suite.",
+        "Treats a new parser failure as unrelated without investigating it.",
+        "Claims full-suite success or complete equivalence solely from the original focused test pass."
       ]
     }
   ]

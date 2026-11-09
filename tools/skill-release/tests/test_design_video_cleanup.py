@@ -22,7 +22,7 @@ def module(name, skill, script):
 
 
 sources = module("design_sources", "design-reference-research", "sources.py")
-video = module("production_video", "programmatic-video-production", "video.py")
+video = module("production_video", "video-production", "video.py")
 housekeeping = module("session_cleanup", "session-housekeeping", "housekeeping.py")
 
 
@@ -118,7 +118,7 @@ class WorkflowTests(unittest.TestCase):
             original = json.loads(
                 (
                     SKILLS
-                    / "programmatic-video-production/assets/remotion-starter/props.json"
+                    / "video-production/assets/remotion-starter/props.json"
                 ).read_text()
             )
             (project / "props.json").write_text(json.dumps(original))
@@ -149,7 +149,7 @@ class WorkflowTests(unittest.TestCase):
             root = Path(directory)
             project = root / "project"
             shutil.copytree(
-                SKILLS / "programmatic-video-production/assets/remotion-starter",
+                SKILLS / "video-production/assets/remotion-starter",
                 project,
             )
             for package in ("remotion", "@remotion/cli", "react", "react-dom"):

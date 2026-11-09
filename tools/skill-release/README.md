@@ -35,7 +35,7 @@ A publishable build requires a clean committed checkout. `--allow-dirty` is for 
 Prepare one case without exposing its rubric to the evaluated agent:
 
 ```sh
-python tools/skill-release/evals.py prepare --skill pull-request-lifecycle --case 1 --output /tmp/pr-eval
+python tools/skill-release/evals.py prepare --skill feature-delivery-full-stop --case 1 --output /tmp/pr-eval
 ```
 
 The request names the isolated skill/fixtures and user prompt. Give that request to an independent agent with only the tools and authority the case permits. Its response JSON must contain `model`, `harness`, `response` and `trace`; traces should include observed actions and artifact locations, with secrets removed.

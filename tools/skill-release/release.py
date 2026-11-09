@@ -89,6 +89,9 @@ def validate_cases(path, skill_names):
     trigger = data.get("trigger", {})
     if not trigger.get("positive") or not trigger.get("negative"):
         raise ValueError(f"{path}: positive and negative trigger cases required")
+    for case in trigger["negative"]:
+        if case.get("owner") is not None and case["owner"] not in skill_names:
+            raise ValueError(f"{path}: unknown trigger owner {case.get('owner')!r}")
     ids = set()
     for case in data.get("evals", []):
         if case.get("id") in ids or not isinstance(case.get("id"), int):

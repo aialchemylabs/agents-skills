@@ -43,13 +43,15 @@ def aggregate_rankings(
     for critique in validated:
         for evaluation in critique["evaluations"]:
             label = evaluation["candidate_label"]
+            evaluation_coverage[label] += 1
+            if "scores" not in evaluation:
+                continue
             score = sum(
                 float(evaluation["scores"][criterion]) * float(rubric[criterion])
                 for criterion in CRITIQUE_CRITERIA
             )
             weighted_values[label].append((score - 1.0) / 4.0)
-            evaluation_coverage[label] += 1
-        ranking = critique["ranking"]
+        ranking = critique.get("ranking", [])
         number_ranked = len(ranking)
         for index, label in enumerate(ranking):
             rank_points[label] += number_ranked - index - 1
@@ -72,6 +74,7 @@ def aggregate_rankings(
             "ranking_coverage": ranking_coverage[label],
         }
 
+    has_scores = any(weighted_values.values()) or any(ranking_coverage.values())
     order = sorted(
         labels,
         key=lambda label: (
@@ -87,7 +90,7 @@ def aggregate_rankings(
             ),
             label,
         ),
-    )
+    ) if has_scores else []
     return {
         "advisory": True,
         "subjective": True,

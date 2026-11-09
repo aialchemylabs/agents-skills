@@ -1,8 +1,0 @@
-{
-  "name": "git-workflow-fixture",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "test": "node --test test/timeout.test.ts"
-  }
-}

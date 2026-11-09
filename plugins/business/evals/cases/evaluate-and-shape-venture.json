@@ -42,7 +42,7 @@
       },
       {
         "prompt": "Design the technical architecture and implementation plan for the MVP.",
-        "owner": "engineering-planning-workflow"
+        "outside_catalog": "engineering-planning-workflow"
       }
     ]
   },

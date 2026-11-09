@@ -29,6 +29,6 @@ For an explicitly configured Superdesign integration, read [hosted-design.md](re
 
 Compare alternatives against the task and constraints. If the user requests selection, present the actual alternatives for that decision. If they authorize you to choose, recommend and proceed with reasons rather than introducing another approval gate.
 
-Provide the selected artifact, reused tokens/components, layout rules, responsive changes, interaction/focus behavior, meaningful states, assets and unresolved decisions. Tie acceptance criteria and intentional deviations to reference evidence IDs where available; an alternative that was not selected is not an implementation requirement. Distinguish a selected design from a working implementation. Route authorized implementation to `frontend-ui-engineering` and critique to `plan-design-review` when available, without requiring either to be installed.
+Provide the selected artifact, reused tokens/components, layout rules, responsive changes, interaction/focus behavior, meaningful states, assets and unresolved decisions. Tie acceptance criteria and intentional deviations to reference evidence IDs where available; an alternative that was not selected is not an implementation requirement. Distinguish a selected design from a working implementation. Route authorized implementation to `frontend-ui-engineering` and multi-model critique to `llm-council` when available, without requiring either to be installed.
 
 Read [provenance.md](references/provenance.md) for the upstream workflow source and notice.
