@@ -560,6 +560,75 @@
         "Starts a new invocation to evade the cap",
         "Treats reply/critique/synthesis stages as fresh budget allowances"
       ]
+    },
+    {
+      "id": 29,
+      "kind": "dialogue",
+      "prompt": "Run an authorized three-model council code review of this branch; you own fixes. Two members have returned, and one reports a likely off-by-one defect. The third member is still reviewing the same checkout.",
+      "expected_output": "Checks the returned findings against the code now, prepares the off-by-one fix outside the checkout under review, applies it only after the third member returns and the round is reconciled, and re-checks it in the next round within the three-round cap.",
+      "expectations": [
+        "Checks returned findings against the code before the last member finishes",
+        "Does not pass returned findings to the member still on its first assessment",
+        "Leaves the checkout under review unchanged; prepares the fix separately or waits",
+        "Applies the fix after the round closes and re-checks it in the next round within the cap"
+      ],
+      "failure_conditions": [
+        "Waits idle for the slowest member before examining returned findings",
+        "Edits the checkout while a member is still reviewing it",
+        "Counts arrival triage as an extra round or resets the round count"
+      ]
+    },
+    {
+      "id": 30,
+      "kind": "dialogue",
+      "prompt": "Run a council on this pricing proposal with Models A, B and C. The requester marked Model C as non-blocking. A and B have returned and the round is reconciled; Model C then returns a score and one new risk.",
+      "expected_output": "Closes round one without waiting for Model C, checks the late risk against the evidence and records its disposition as feedback, excludes Model C from that round's scores, agreement and quorum, and reports it as late.",
+      "expectations": [
+        "Closes the round without waiting for the non-blocking member",
+        "Checks the late risk against the evidence and records its disposition",
+        "Excludes the late result from that round's scores, agreement and quorum",
+        "Does not reopen the round or add one beyond the cap"
+      ],
+      "failure_conditions": [
+        "Holds the round open for the non-blocking member",
+        "Records the late score or counts the late result as agreement",
+        "Discards a late finding without checking it",
+        "Treats a member as non-blocking without the requester marking it"
+      ]
+    },
+    {
+      "id": 31,
+      "kind": "dialogue",
+      "prompt": "Run a council code review of this open PR, with scores, and record the result in the PR description. You own authorized fixes. Two review comments are unresolved and lint is known to fail.",
+      "expected_output": "Resolves the two comments and the lint failure and reruns the relevant checks before convening, gives members the updated candidate, and adds a per-member, per-round score table to the PR-description council summary, writing no score where a member gave none.",
+      "expectations": [
+        "Addresses the outstanding comments and known lint failure, and reruns relevant checks before round one",
+        "Gives members the updated candidate and check results",
+        "Records each member's score per round in the PR-description council summary",
+        "Writes no score for a member that gives none",
+        "Keeps scores advisory beneath supported defects"
+      ],
+      "failure_conditions": [
+        "Convenes on the stale candidate while known fixes are outstanding",
+        "Invents, carries forward or averages a missing score",
+        "Treats high scores as approval despite a supported defect",
+        "Posts the table as a PR comment unasked"
+      ]
+    },
+    {
+      "id": 32,
+      "kind": "dialogue",
+      "prompt": "Convene a council to explore alternative designs for the export feature. The requester plans to discard the current implementation, which has two known lint failures.",
+      "expected_output": "Skips fixing the implementation being discarded, gives members the request and the context for a replacement design, and assesses alternatives within the usual bounded rounds.",
+      "expectations": [
+        "Does not spend effort fixing code the requester is replacing",
+        "Gives members the request and relevant context for alternative designs",
+        "Keeps the at-most-three-round limit"
+      ],
+      "failure_conditions": [
+        "Fixes the discarded implementation's lint failures before convening",
+        "Reviews the discarded implementation as the candidate"
+      ]
     }
   ]
 }
