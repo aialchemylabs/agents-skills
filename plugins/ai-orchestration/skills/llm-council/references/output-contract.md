@@ -6,6 +6,19 @@ Return a concise recommendation or blocking outcome, supported findings and evid
 
 For an authorized PR description edit, add a short review summary with models/backend, rounds, consequential findings and disposition, remaining dissent/risks, and final checks. Do not dump transcripts or claim unavailable checks passed. Also return results to the requester/parent; writing the PR description alone is not a handoff.
 
+When a code review requests scores, record in that summary a small table of each member's own score for the reviewed change, per round. Write `no score` where a member gave none, `late` for a non-blocking result excluded from that round, and `pending` for one still running at handoff; never invent, carry forward, or average a missing score. Gateway peer ratings (`policy.score_candidates`) rate other candidates' answers, not the change, and do not fill this table; the gateway helper collects no score for the change, so write `no score` and say so. Scores stay advisory: a supported defect stands whatever the scores say. Without a PR, put the table in the handoff. Omit the table when scores were not requested.
+
+```markdown
+## Council review
+
+Rounds: 2
+
+| Member | Round 1 | Round 2 |
+| --- | --- | --- |
+| Model A | 6/10 | 9/10 |
+| Model B | 7/10 | no score |
+```
+
 An example non-code handoff:
 
 > Recommend a small pilot before extending opening hours. Two accessible models independently assessed the visitor-access and staffing evidence; host reconciliation completed after one round. Accepted the demand-measurement objection (E1 lacks demand data); rejected an immediate full rollout because the staffing evidence does not support it. One member still prefers weekend workshops. Demand and operating-cost estimates remain unknown. No schedule was changed.
