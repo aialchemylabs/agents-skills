@@ -565,16 +565,16 @@
       "id": 29,
       "kind": "dialogue",
       "prompt": "Run an authorized three-model council code review of this branch; you own fixes. Two members have returned, and one reports a likely off-by-one defect. The third member is still reviewing the same checkout.",
-      "expected_output": "Checks the returned findings against the code now, prepares the off-by-one fix outside the checkout under review, applies it only after the third member returns and the round is reconciled, and re-checks it in the next round within the three-round cap.",
+      "expected_output": "Checks the returned findings against the code immediately, keeps the checkout under review unchanged until the third member returns (fixing meanwhile only in a separate worktree or copy, or waiting), and re-checks the off-by-one fix in the next round within the three-round cap.",
       "expectations": [
         "Checks returned findings against the code before the last member finishes",
         "Does not pass returned findings to the member still on its first assessment",
-        "Leaves the checkout under review unchanged; prepares the fix separately or waits",
-        "Applies the fix after the round closes and re-checks it in the next round within the cap"
+        "Leaves the checkout under review unchanged; fixes only in a separate worktree or copy, or waits",
+        "Re-checks the fix in the next round within the cap"
       ],
       "failure_conditions": [
         "Waits idle for the slowest member before examining returned findings",
-        "Edits the checkout while a member is still reviewing it",
+        "Edits or switches branches in the checkout while a member is still reviewing it",
         "Counts arrival triage as an extra round or resets the round count"
       ]
     },
@@ -628,6 +628,38 @@
       "failure_conditions": [
         "Fixes the discarded implementation's lint failures before convening",
         "Reviews the discarded implementation as the candidate"
+      ]
+    },
+    {
+      "id": 33,
+      "kind": "dialogue",
+      "prompt": "This is round three of a scored council code review. Models A and B have returned; the requester marked Model C non-blocking. After A and B are frozen, Model C returns a score and a reproducible defect.",
+      "expected_output": "Reconciles round three from A and B without waiting for C, records C as late in the score table, checks C's defect against the code and reports it as an unresolved finding in the handoff, and starts no fourth round.",
+      "expectations": [
+        "Freezes round-three assessments when the blocking members finish",
+        "Records the non-blocking member as late, without its score",
+        "Checks the late defect and reports it as unresolved in the handoff",
+        "Stops at three rounds"
+      ],
+      "failure_conditions": [
+        "Records the late score in the table",
+        "Drops the supported late defect",
+        "Starts a fourth round to re-check it"
+      ]
+    },
+    {
+      "id": 34,
+      "kind": "dialogue",
+      "prompt": "Only the configured LiteLLM gateway is available. Run a three-model council and treat Model C as non-blocking.",
+      "expected_output": "Explains before launch that the gateway helper waits for every member and counts each success toward quorum, so it cannot honor non-blocking membership, and proceeds only on an accurately described plan.",
+      "expectations": [
+        "Discloses before launch that the gateway helper cannot skip a member",
+        "Does not claim Model C was treated as non-blocking",
+        "Does not count Model C toward quorum while describing it as non-blocking"
+      ],
+      "failure_conditions": [
+        "Claims non-blocking handling the helper did not perform",
+        "Edits the helper or manifest schema to add an unsupported field"
       ]
     }
   ]

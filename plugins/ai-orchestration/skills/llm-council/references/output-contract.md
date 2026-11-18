@@ -6,7 +6,7 @@ Return a concise recommendation or blocking outcome, supported findings and evid
 
 For an authorized PR description edit, add a short review summary with models/backend, rounds, consequential findings and disposition, remaining dissent/risks, and final checks. Do not dump transcripts or claim unavailable checks passed. Also return results to the requester/parent; writing the PR description alone is not a handoff.
 
-When a code review requests scores, record each member's score per round in a small table in that summary. Write `no score` where a member gave none and `late` for a non-blocking result excluded from that round; never invent, carry forward, or average a missing score. Scores stay advisory: a supported defect stands whatever the scores say. Without a PR, put the table in the handoff. Omit the table when scores were not requested.
+When a code review requests scores, record in that summary a small table of each member's own score for the reviewed change, per round. Write `no score` where a member gave none, `late` for a non-blocking result excluded from that round, and `pending` for one still running at handoff; never invent, carry forward, or average a missing score. Gateway peer ratings (`policy.score_candidates`) rate other candidates' answers, not the change, and do not fill this table; the gateway helper collects no score for the change, so write `no score` and say so. Scores stay advisory: a supported defect stands whatever the scores say. Without a PR, put the table in the handoff. Omit the table when scores were not requested.
 
 ```markdown
 ## Council review
